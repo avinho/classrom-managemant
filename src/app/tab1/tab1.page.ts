@@ -16,6 +16,11 @@ import {
   IonAvatar,
   IonIcon,
   IonNote,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonFab,
+  IonFabButton,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -24,6 +29,11 @@ import {
   styleUrls: ['tab1.page.scss'],
   standalone: true,
   imports: [
+    IonFabButton,
+    IonFab,
+    IonCol,
+    IonRow,
+    IonGrid,
     IonNote,
     IonIcon,
     IonAvatar,

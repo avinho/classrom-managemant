@@ -1,0 +1,19 @@
+ion-col:hover ion-card {
+  transform: scale(1.1);
+  transition: 0.3s ease-in-out;
+}
+
+ion-col ion-card:active {
+  transform: scale(1.2);
+}
+
+ion-col ion-card:not(:hover):not(:active) {
+  transform: scale(1);
+  transition: 0.3s ease-in-out;
+}
+
+ion-fab {
+  position: absolute;
+  right: 10px;
+  bottom: 8vh;
+}

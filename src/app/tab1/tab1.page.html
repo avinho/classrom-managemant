@@ -1,32 +1,148 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Turmas </ion-title>
+    <ion-title>Turmas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-card>
-  <ion-card-header color="dark"> </ion-card-header>
-  <ion-card-content>
-    <ion-list>
-      <ion-item [button]="true">
-        <ion-label>Turma 1</ion-label>
-        <ion-note slot="end">Alunos: 6</ion-note>
-      </ion-item>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+        >
+          <ion-card-header><strong>Turma 1</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+          ><ion-card-header><strong>Turma 2</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+        >
+          <ion-card-header><strong>Turma 3</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+          ><ion-card-header><strong>Turma 4</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+        >
+          <ion-card-header><strong>Turma 5</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+          ><ion-card-header><strong>Turma 6</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+        >
+          <ion-card-header><strong>Turma 7</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+      <ion-col size="6">
+        <ion-card
+          style="
+            border-radius: 10px;
+            height: 15vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          "
+          ><ion-card-header><strong>Turma 8</strong></ion-card-header></ion-card
+        >
+      </ion-col>
+    </ion-row>
+    <ion-fab vertical="bottom" horizontal="end">
+      <ion-fab-button size="small">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-grid>
+  <!--   <ion-card
+    style="
+      border-radius: 10px;
+      height: 75vh;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    "
+  >
+    <ion-card-content>
+      <ion-list>
+        <ion-item [button]="true">
+          <ion-label>Turma 1</ion-label>
+          <ion-note slot="end">Alunos: 6</ion-note>
+        </ion-item>
 
-      <ion-item [button]="true">
-        <ion-label>Turma 2</ion-label>
-        <ion-note slot="end">Alunos: 7</ion-note>
-      </ion-item>
+        <ion-item [button]="true">
+          <ion-label>Turma 2</ion-label>
+          <ion-note
+            slot="end"
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-items: center;
+            "
+            >Terças Quintas
+            <span style="font-size: 8px">17:30 - 19:00</span></ion-note
+          >
+        </ion-item>
 
-      <ion-item [button]="true">
-        <ion-label>Turma 3</ion-label>
-        <ion-note slot="end">Alunos: 8</ion-note>
-      </ion-item>
+        <ion-item [button]="true">
+          <ion-label>Turma 3</ion-label>
+          <ion-note slot="end">Alunos: 8</ion-note>
+        </ion-item>
 
-      <ion-item [button]="true" lines="none">
-        <ion-label>Turma 4</ion-label>
-        <ion-note slot="end">Alunos: 5</ion-note>
-      </ion-item>
-    </ion-list>
-  </ion-card-content>
-</ion-card>
+        <ion-item [button]="true" lines="none">
+          <ion-label>Turma 4</ion-label>
+          <ion-note slot="end">Alunos: 5</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card> -->
+</ion-content>
