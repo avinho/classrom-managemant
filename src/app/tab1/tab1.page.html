@@ -4,16 +4,29 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-card
-    style="
-      border-radius: 10px;
-      height: 80vh;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    "
-  >
-    <ion-card-content>
-      <h1>Livro</h1>
-    </ion-card-content>
-  </ion-card>
-</ion-content>
+<ion-card>
+  <ion-card-header color="dark"> </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item [button]="true">
+        <ion-label>Turma 1</ion-label>
+        <ion-note slot="end">Alunos: 6</ion-note>
+      </ion-item>
+
+      <ion-item [button]="true">
+        <ion-label>Turma 2</ion-label>
+        <ion-note slot="end">Alunos: 7</ion-note>
+      </ion-item>
+
+      <ion-item [button]="true">
+        <ion-label>Turma 3</ion-label>
+        <ion-note slot="end">Alunos: 8</ion-note>
+      </ion-item>
+
+      <ion-item [button]="true" lines="none">
+        <ion-label>Turma 4</ion-label>
+        <ion-note slot="end">Alunos: 5</ion-note>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
