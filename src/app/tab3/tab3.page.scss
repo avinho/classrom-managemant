@@ -1,7 +1,18 @@
 ion-header {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
-.solid {
-  border-top: 1px solid rgba(19, 19, 19, 0.);
+.select-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+ion-select {
+  --highlight-color-focused: none;
+  background-color: transparent;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
 }
