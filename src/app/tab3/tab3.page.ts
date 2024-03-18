@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   IonButton,
   IonCard,
@@ -25,16 +25,16 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { IonicSlides } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
-    IonInfiniteScrollContent,
     ScrollingModule,
-    IonInfiniteScroll,
     IonListHeader,
     IonToggle,
     IonNote,
@@ -60,6 +60,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   ],
 })
 export class Tab3Page {
+  swiperModules = [IonicSlides];
   selectedBook!: Book;
   selectedStudent!: Student;
 
@@ -73,6 +74,10 @@ export class Tab3Page {
     this.http.get<Student>('assets/students.json').subscribe((data) => {
       this.students = data;
     });
+  }
+
+  onSlideChange() {
+    console.log('Mudou');
   }
 
   onBookChange(book: Book) {
