@@ -1,6 +1,11 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  AfterViewInit,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+} from '@angular/core';
 import {
   IonButton,
   IonCard,
@@ -8,8 +13,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonItem,
   IonItemDivider,
   IonLabel,
@@ -23,9 +26,8 @@ import {
   IonTitle,
   IonToggle,
   IonToolbar,
+  IonicSlides,
 } from '@ionic/angular/standalone';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { IonicSlides } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-tab3',
@@ -59,10 +61,11 @@ import { IonicSlides } from '@ionic/angular/standalone';
     CommonModule,
   ],
 })
-export class Tab3Page {
+export class Tab3Page implements AfterViewInit {
   swiperModules = [IonicSlides];
   selectedBook!: Book;
   selectedStudent!: Student;
+  index = 0;
 
   books: any = [];
   students: any = [];
@@ -73,16 +76,26 @@ export class Tab3Page {
     });
     this.http.get<Student>('assets/students.json').subscribe((data) => {
       this.students = data;
+      this.selectedStudent = this.students[0];
+      console.log(this.selectedStudent);
     });
   }
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
-  onSlideChange() {
-    console.log('Mudou');
+  onSlideChange(data: any) {
+    this.selectedStudent = this.students[data.detail[0].activeIndex];
+    console.log(this.selectedStudent);
+  }
+
+  onChange(data: any) {
+    this.selectedStudent = data;
+    console.log(this.selectedStudent);
   }
 
   onBookChange(book: Book) {
     this.selectedBook = book;
-    console.log(this.selectedBook);
   }
 
   onTopicChange(topic: Topic) {
