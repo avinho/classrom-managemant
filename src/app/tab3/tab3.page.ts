@@ -61,12 +61,17 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 })
 export class Tab3Page {
   selectedBook!: Book;
+  selectedStudent!: Student;
 
   books: any = [];
+  students: any = [];
 
   constructor(private http: HttpClient) {
     this.http.get<Book>('assets/books.json').subscribe((data) => {
       this.books = data;
+    });
+    this.http.get<Student>('assets/students.json').subscribe((data) => {
+      this.students = data;
     });
   }
 
@@ -98,4 +103,11 @@ interface Topic {
   topic: string;
   done: boolean;
   conclusion: null | string;
+}
+
+interface Student {
+  name: string;
+  age: number;
+  class: string;
+  currentBook: Book;
 }
