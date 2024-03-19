@@ -1,14 +1,7 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {
-  AfterContentInit,
-  AfterViewInit,
-  CUSTOM_ELEMENTS_SCHEMA,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import {
   IonButton,
   IonCard,
@@ -31,7 +24,8 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
-import { first, tap } from 'rxjs';
+import { first } from 'rxjs';
+import { StorageServiceService } from '../storage-service.service';
 
 @Component({
   selector: 'app-tab3',
@@ -72,7 +66,12 @@ export class Tab3Page implements OnInit {
   selectedBook?: Book;
   selectedStudent?: Student;
 
-  constructor(private http: HttpClient) {}
+  test: any;
+
+  constructor(
+    private http: HttpClient,
+    private dbService: StorageServiceService
+  ) {}
 
   ngOnInit(): void {
     this.http
@@ -80,7 +79,8 @@ export class Tab3Page implements OnInit {
       .pipe(first())
       .subscribe((books: Book[]) => {
         this.books = books;
-        console.log('books loaded: ', this.books);
+        this.dbService.set('books', this.books);
+        this.dbService.get('books').then((x) => console.log(x));
       });
 
     this.http
@@ -88,7 +88,9 @@ export class Tab3Page implements OnInit {
       .pipe(first())
       .subscribe((students: Student[]) => {
         this.students = students;
-        this.addBookForStudent();
+        this.dbService.set('students', this.students);
+        this.dbService.get('students').then((x) => console.log(x));
+        //this.addBookForStudent();
         this.selectedStudent = this.students[0];
         this.selectedStudent!.currentBook = this.books[0];
         this.selectedBook = this.selectedStudent?.currentBook;
@@ -119,6 +121,8 @@ export class Tab3Page implements OnInit {
   onBookChange(book: Book) {
     this.selectedBook = book;
     this.selectedStudent!.currentBook = book;
+    this.dbService.set('students', this.students);
+    console.log('Selected book:', this.dbService.get('students'));
     console.log(this.selectedStudent!.currentBook);
   }
 
@@ -127,6 +131,10 @@ export class Tab3Page implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
+    //this.dbService.set('students', this.students)
+
+    this.dbService.get('students').then((x) => console.log(x));
+
     console.log(topic);
   }
 }
