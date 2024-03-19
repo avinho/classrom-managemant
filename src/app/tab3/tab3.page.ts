@@ -25,7 +25,7 @@ import {
   IonicSlides,
 } from '@ionic/angular/standalone';
 import { first } from 'rxjs';
-import { StorageServiceService } from '../storage-service.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-tab3',
@@ -68,35 +68,42 @@ export class Tab3Page implements OnInit {
 
   test: any;
 
-  constructor(
-    private http: HttpClient,
-    private dbService: StorageServiceService
-  ) {}
+  constructor(private http: HttpClient, private dbService: StorageService) {}
 
   ngOnInit(): void {
+    this.loadBooks();
+  }
+
+  loadBooks(): void {
     this.http
       .get<Book[]>('assets/books.json')
       .pipe(first())
-      .subscribe((books: Book[]) => {
-        this.books = books;
-        this.dbService.set('books', this.books);
-        this.dbService.get('books').then((x) => console.log(x));
+      .subscribe(async (books: Book[]) => {
+        //this.dbService.set('books', books);
+        await this.dbService.get('books').then((data: Book[]) => {
+          this.books = data;
+          console.log('books loaded:', data);
+          this.loadStudents();
+        });
       });
+  }
 
+  loadStudents(): void {
     this.http
       .get<Student[]>('assets/students.json')
       .pipe(first())
-      .subscribe((students: Student[]) => {
-        this.students = students;
-        this.dbService.set('students', this.students);
-        this.dbService.get('students').then((x) => console.log(x));
-        //this.addBookForStudent();
-        this.selectedStudent = this.students[0];
-        this.selectedStudent!.currentBook = this.books[0];
-        this.selectedBook = this.selectedStudent?.currentBook;
-        console.log('students loaded: ', this.students);
-        console.log('selected student: ', this.selectedStudent);
-        console.log('selected book: ', this.selectedBook);
+      .subscribe(async (students: Student[]) => {
+        //await this.dbService.set('students', students);
+        await this.dbService.get('students').then((data: Student[]) => {
+          this.students = data;
+          console.log('Students loaded:', data);
+          //this.addBookForStudent();
+          this.selectedStudent = this.students[0];
+          this.selectedStudent.currentBook = this.books[0];
+          this.selectedBook = this.selectedStudent?.currentBook;
+          console.log('Selected student:', this.selectedStudent);
+          console.log('Selected book:', this.selectedBook);
+        });
       });
   }
 

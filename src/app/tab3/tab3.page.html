@@ -9,7 +9,7 @@
     [modules]="swiperModules"
     (swiperslidechange)="onSlideChange($event)"
   >
-    <swiper-slide *ngFor="let student of students; let i=index">
+    <swiper-slide *ngFor="let student of students">
       <ion-card
         style="
           margin-top: 9px;

@@ -1,10 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StorageServiceService {
+export class StorageService {
   private _storage: Storage | null = null;
 
   constructor(private storage: Storage) {
@@ -15,6 +17,18 @@ export class StorageServiceService {
     // If using, define drivers here: await this.storage.defineDriver(/*...*/);
     const storage = await this.storage.create();
     this._storage = storage;
+    /* this.http
+      .get('assets/books.json')
+      .pipe(first())
+      .subscribe(async (books) => await this.set('books', books)); */
+  }
+
+  public loadBooks() {
+    let books: any;
+    this.get('books').then((data) => {
+      return (books = data);
+    });
+    return books;
   }
 
   // Create and expose methods that users of this service can
