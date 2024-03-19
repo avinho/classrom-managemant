@@ -1,402 +1,62 @@
 [
   {
     "name": "Ana Silva",
-    "age": 18,
+    "age": "18/06/2001",
     "class": "A",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "João Oliveira",
-    "age": 17,
+    "age": "16/06/2004",
     "class": "B",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Maria Santos",
-    "age": 16,
+    "age": "12/02/2008",
     "class": "C",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Pedro Lima",
-    "age": 19,
+    "age": "03/01/2000",
     "class": "A",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Luana Costa",
-    "age": 18,
+    "age": "01/02/1998",
     "class": "B",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Rafaela Oliveira",
-    "age": 17,
+    "age": "03/03/2000",
     "class": "C",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Mariana Ferreira",
-    "age": 16,
+    "age": "07/12/2002",
     "class": "A",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Gabriel Silva",
-    "age": 19,
+    "age": "01/01/2000",
     "class": "B",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Lucas Oliveira",
-    "age": 17,
+    "age": "11/11/1997",
     "class": "C",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   },
   {
     "name": "Isabella Santos",
-    "age": 18,
+    "age": "06/11/1999",
     "class": "A",
-    "currentBook": {
-      "name": "Essentials 1",
-      "lessons": [
-        {
-          "lesson": "lesson 1",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        },
-        {
-          "lesson": "lesson 2",
-          "topics": [
-            {
-              "topic": "Topic 1",
-              "done": false,
-              "conclusion": null
-            },
-            {
-              "topic": "Topic 2",
-              "done": false,
-              "conclusion": null
-            }
-          ]
-        }
-      ]
-    }
+    "currentBook": null
   }
 ]

@@ -2,9 +2,12 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
+  AfterContentInit,
   AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  Input,
+  OnInit,
 } from '@angular/core';
 import {
   IonButton,
@@ -28,6 +31,7 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
+import { first, tap } from 'rxjs';
 
 @Component({
   selector: 'app-tab3',
@@ -61,41 +65,61 @@ import {
     CommonModule,
   ],
 })
-export class Tab3Page implements AfterViewInit {
+export class Tab3Page implements OnInit {
   swiperModules = [IonicSlides];
-  selectedBook!: Book;
-  selectedStudent!: Student;
-  index = 0;
+  books: Book[] = [];
+  students: Student[] = [];
+  selectedBook?: Book;
+  selectedStudent?: Student;
 
-  books: any = [];
-  students: any = [];
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-    this.http.get<Book>('assets/books.json').subscribe((data) => {
-      this.books = data;
-    });
-    this.http.get<Student>('assets/students.json').subscribe((data) => {
-      this.students = data;
-      this.selectedStudent = this.students[0];
-      console.log(this.selectedStudent);
-    });
+  ngOnInit(): void {
+    this.http
+      .get<Book[]>('assets/books.json')
+      .pipe(first())
+      .subscribe((books: Book[]) => {
+        this.books = books;
+        console.log('books loaded: ', this.books);
+      });
+
+    this.http
+      .get<Student[]>('assets/students.json')
+      .pipe(first())
+      .subscribe((students: Student[]) => {
+        this.students = students;
+        this.addBookForStudent();
+        this.selectedStudent = this.students[0];
+        this.selectedStudent!.currentBook = this.books[0];
+        this.selectedBook = this.selectedStudent?.currentBook;
+        console.log('students loaded: ', this.students);
+        console.log('selected student: ', this.selectedStudent);
+        console.log('selected book: ', this.selectedBook);
+      });
   }
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
+
+  addBookForStudent() {
+    this.students.forEach((student) => {
+      student.currentBook =
+        this.books[Math.floor(Math.random() * this.books.length)];
+    });
   }
 
   onSlideChange(data: any) {
-    this.selectedStudent = this.students[data.detail[0].activeIndex];
-    console.log(this.selectedStudent);
-  }
-
-  onChange(data: any) {
-    this.selectedStudent = data;
-    console.log(this.selectedStudent);
+    const activeIndex = data.detail[0].activeIndex;
+    if (activeIndex >= 0 && activeIndex < this.students.length) {
+      this.selectedStudent = this.students[activeIndex];
+      this.selectedBook = this.selectedStudent?.currentBook;
+      console.log('Selected student:', this.selectedStudent);
+    } else {
+      console.warn('Invalid slide index:', activeIndex);
+    }
   }
 
   onBookChange(book: Book) {
     this.selectedBook = book;
+    this.selectedStudent!.currentBook = book;
+    console.log(this.selectedStudent!.currentBook);
   }
 
   onTopicChange(topic: Topic) {
@@ -125,7 +149,7 @@ interface Topic {
 
 interface Student {
   name: string;
-  age: number;
+  age: string;
   class: string;
   currentBook: Book;
 }

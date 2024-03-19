@@ -38,64 +38,68 @@
           </ion-list>
         </ion-card-content>
       </ion-card>
+
+      <ion-list
+        lines="inset"
+        style="
+          height: 6vh;
+          align-self: flex-start;
+          padding-left: 20px;
+          padding-top: 0;
+          padding-bottom: 0;
+          --ion-item-background: transparent;
+        "
+      >
+        <div class="select-wrapper">
+          <ion-icon name="book" style="margin-right: 5px"></ion-icon>
+          <ion-select
+            placeholder="Select a book"
+            (ionChange)="onBookChange($event.detail.value)"
+            interface="popover"
+            [value]="selectedBook"
+          >
+            <ion-select-option *ngFor="let book of books" [value]="book"
+              >{{ book.book }}</ion-select-option
+            >
+          </ion-select>
+        </div>
+      </ion-list>
+
+      <ion-card
+        style="
+          margin-top: 0;
+          border-radius: 10px;
+          height: 58vh;
+          width: 90%;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        "
+        *ngIf="student.currentBook?.lessons"
+      >
+        <cdk-virtual-scroll-viewport
+          itemSize="{{ student!.currentBook.lessons.length }}"
+        >
+          <ion-list
+            *cdkVirtualFor="let lesson of student.currentBook.lessons"
+            class="ion-content-scroll-host"
+          >
+            <ion-list-header
+              lines="full"
+              style="font-weight: bold; font-size: 16px"
+            >
+              <ion-label style="flex: none">{{ lesson.lesson}}</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let topic of lesson.topics">
+              <ion-toggle
+                [enableOnOffLabels]="true"
+                (ionChange)="onTopicChange(topic)"
+                mode="md"
+                size="small"
+                >{{ topic.topic }}
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
+        </cdk-virtual-scroll-viewport>
+      </ion-card>
     </swiper-slide>
   </swiper-container>
-
-  <ion-list
-    lines="inset"
-    style="
-      height: 6vh;
-      padding-left: 15px;
-      padding-top: 0;
-      padding-bottom: 0;
-      --ion-item-background: transparent;
-    "
-  >
-    <div class="select-wrapper">
-      <ion-icon name="book" style="margin-right: 5px"></ion-icon>
-      <ion-select
-        placeholder="Select a book"
-        (ionChange)="onBookChange($event.detail.value)"
-        [value]="selectedBook"
-        interface="popover"
-      >
-        <ion-select-option *ngFor="let book of books" [value]="book"
-          >{{ book.book }}</ion-select-option
-        >
-      </ion-select>
-    </div>
-  </ion-list>
-
-  <ion-card
-    style="
-      margin-top: 0;
-      border-radius: 10px;
-      height: 54vh;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    "
-    *ngIf="selectedBook"
-  >
-    <cdk-virtual-scroll-viewport itemSize="{{ selectedBook.lessons.length }}">
-      <ion-list
-        *cdkVirtualFor="let lesson of selectedBook.lessons"
-        class="ion-content-scroll-host"
-      >
-        <ion-list-header
-          lines="full"
-          style="font-weight: bold; font-size: 16px"
-        >
-          <ion-label>{{ lesson.lesson}}</ion-label>
-        </ion-list-header>
-        <ion-item *ngFor="let topic of lesson.topics">
-          <ion-toggle
-            [enableOnOffLabels]="true"
-            (ionChange)="onTopicChange(topic)"
-            mode="md"
-            size="small"
-            >{{ topic.topic }}
-          </ion-toggle>
-        </ion-item>
-      </ion-list>
-    </cdk-virtual-scroll-viewport>
-  </ion-card>
 </ion-content>
