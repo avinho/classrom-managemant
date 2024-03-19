@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Alunos </ion-title>
+    <ion-title> Alunos - Turma X</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -56,7 +56,7 @@
             placeholder="Select a book"
             (ionChange)="onBookChange($event.detail.value)"
             interface="popover"
-            [value]="selectedBook"
+            [value]="student.currentBook"
           >
             <ion-select-option *ngFor="let book of books" [value]="book"
               >{{ book.book }}</ion-select-option
@@ -68,7 +68,7 @@
       <cdk-virtual-scroll-viewport
         style="height: 60vh; width: 100%"
         *ngIf="student.currentBook?.lessons"
-        itemSize="{{ student!.currentBook.lessons.length }}"
+        itemSize="{{ student.currentBook.lessons.length }}"
       >
         <ion-accordion-group expand="inset" style="padding-top: 0">
           <ion-accordion *ngFor="let lesson of student.currentBook.lessons">
@@ -79,6 +79,7 @@
                   <ion-toggle
                     [enableOnOffLabels]="true"
                     (ionChange)="onTopicChange(topic)"
+                    [checked]="topic.done ? true : false"
                     mode="md"
                     size="small"
                     >{{ topic.topic }}
@@ -87,14 +88,8 @@
               </ion-list>
             </div>
           </ion-accordion>
-        </ion-accordion-group> </cdk-virtual-scroll-viewport
-      ><!--
-      <ion-card
-        style="margin-top: 0; border-radius: 10px; height: 58vh; width: 90%"
-        *ngIf="student.currentBook?.lessons"
-      >
-
-      </ion-card> -->
+        </ion-accordion-group>
+      </cdk-virtual-scroll-viewport>
     </swiper-slide>
   </swiper-container>
 </ion-content>

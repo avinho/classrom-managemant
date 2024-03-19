@@ -99,8 +99,14 @@ export class Tab3Page implements OnInit {
           console.log('Students loaded:', data);
           //this.addBookForStudent();
           this.selectedStudent = this.students[0];
-          this.selectedStudent.currentBook = this.books[0];
-          this.selectedBook = this.selectedStudent?.currentBook;
+          this.selectedBook = this.selectedStudent.currentBook;
+          //this.selectedBook = this.books[0];
+          let loadBook = (student: Student) => {
+            return student.currentBook;
+          };
+
+          this.selectedBook = loadBook(this.selectedStudent);
+
           console.log('Selected student:', this.selectedStudent);
           console.log('Selected book:', this.selectedBook);
         });
@@ -120,6 +126,7 @@ export class Tab3Page implements OnInit {
       this.selectedStudent = this.students[activeIndex];
       this.selectedBook = this.selectedStudent?.currentBook;
       console.log('Selected student:', this.selectedStudent);
+      console.log('Selected book:', this.selectedBook);
     } else {
       console.warn('Invalid slide index:', activeIndex);
     }
@@ -138,9 +145,9 @@ export class Tab3Page implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    //this.dbService.set('students', this.students)
+    this.dbService.set('students', this.students);
 
-    this.dbService.get('students').then((x) => console.log(x));
+    //this.dbService.get('students').then((x) => console.log(x));
 
     console.log(topic);
   }
