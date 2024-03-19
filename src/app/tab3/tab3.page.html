@@ -16,7 +16,7 @@
           border-radius: 10px;
           width: 90%;
           margin-bottom: 2px;
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 6px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 2px;
         "
       >
         <ion-card-content style="padding: 0">
@@ -42,10 +42,10 @@
       <ion-list
         lines="inset"
         style="
-          height: 6vh;
+          height: 5vh;
           align-self: flex-start;
           padding-left: 20px;
-          padding-top: 0;
+          padding-top: 5px;
           padding-bottom: 0;
           --ion-item-background: transparent;
         "
@@ -65,41 +65,36 @@
         </div>
       </ion-list>
 
+      <cdk-virtual-scroll-viewport
+        style="height: 60vh; width: 100%"
+        *ngIf="student.currentBook?.lessons"
+        itemSize="{{ student!.currentBook.lessons.length }}"
+      >
+        <ion-accordion-group expand="inset" style="padding-top: 0">
+          <ion-accordion *ngFor="let lesson of student.currentBook.lessons">
+            <ion-item slot="header"> {{ lesson.lesson }} </ion-item>
+            <div slot="content" class="ion-padding">
+              <ion-list>
+                <ion-item *ngFor="let topic of lesson.topics">
+                  <ion-toggle
+                    [enableOnOffLabels]="true"
+                    (ionChange)="onTopicChange(topic)"
+                    mode="md"
+                    size="small"
+                    >{{ topic.topic }}
+                  </ion-toggle>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group> </cdk-virtual-scroll-viewport
+      ><!--
       <ion-card
-        style="
-          margin-top: 0;
-          border-radius: 10px;
-          height: 58vh;
-          width: 90%;
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        "
+        style="margin-top: 0; border-radius: 10px; height: 58vh; width: 90%"
         *ngIf="student.currentBook?.lessons"
       >
-        <cdk-virtual-scroll-viewport
-          itemSize="{{ student!.currentBook.lessons.length }}"
-        >
-          <ion-list
-            *cdkVirtualFor="let lesson of student.currentBook.lessons"
-            class="ion-content-scroll-host"
-          >
-            <ion-list-header
-              lines="full"
-              style="font-weight: bold; font-size: 16px"
-            >
-              <ion-label style="flex: none">{{ lesson.lesson}}</ion-label>
-            </ion-list-header>
-            <ion-item *ngFor="let topic of lesson.topics">
-              <ion-toggle
-                [enableOnOffLabels]="true"
-                (ionChange)="onTopicChange(topic)"
-                mode="md"
-                size="small"
-                >{{ topic.topic }}
-              </ion-toggle>
-            </ion-item>
-          </ion-list>
-        </cdk-virtual-scroll-viewport>
-      </ion-card>
+
+      </ion-card> -->
     </swiper-slide>
   </swiper-container>
 </ion-content>
