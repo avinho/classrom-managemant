@@ -122,10 +122,11 @@ export class Tab3Page implements OnInit {
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
     this.dbService.set('students', this.students);
-
-    //this.dbService.get('students').then((x) => console.log(x));
-
     console.log(topic);
+  }
+
+  compareWith(o1: Book, o2: Book) {
+    return o1 && o2 ? o1.name === o2.name : o1 === o2;
   }
 }
 

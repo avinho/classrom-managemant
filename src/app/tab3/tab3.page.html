@@ -59,7 +59,8 @@
           <ion-icon name="book" style="margin-right: 5px"></ion-icon>
           <ion-select
             placeholder="Select a book"
-            [selectedText]="selectedBook?.name"
+            [value]="student.currentBook"
+            [compareWith]="compareWith"
             (ionChange)="onBookChange($event.detail.value)"
             interface="popover"
           >
