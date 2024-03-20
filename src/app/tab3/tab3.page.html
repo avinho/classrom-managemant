@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content fullscreen>
+  @if (!students) {
+  <div class="spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else {
   <swiper-container
     [modules]="swiperModules"
     (swiperslidechange)="onSlideChange($event)"
@@ -92,4 +97,5 @@
       </cdk-virtual-scroll-viewport>
     </swiper-slide>
   </swiper-container>
+  }
 </ion-content>

@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import {
   IonButton,
@@ -24,7 +24,7 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
-import { first } from 'rxjs';
+import { first, repeat } from 'rxjs';
 import { StorageService } from '../storage.service';
 
 @Component({
@@ -55,76 +55,51 @@ import { StorageService } from '../storage.service';
     IonSelect,
     IonSelect,
     IonSelectOption,
-    HttpClientModule,
     CommonModule,
   ],
 })
 export class Tab3Page implements OnInit {
   swiperModules = [IonicSlides];
-  books: Book[] = [];
-  students: Student[] = [];
+  books?: Book[] = [];
+  students?: Student[] = [];
   selectedBook?: Book;
   selectedStudent?: Student;
 
-  test: any;
-
-  constructor(private http: HttpClient, private dbService: StorageService) {}
+  constructor(private dbService: StorageService) {
+    this.loadBooks().then(() => {
+      this.loadStudents().then(() => {
+        console.log('students loaded:', this.students);
+        this.selectedStudent = this.students![0];
+        this.selectedBook = this.selectedStudent?.currentBook;
+      });
+      console.log('books loaded:', this.books);
+    });
+  }
 
   ngOnInit(): void {
-    this.loadBooks();
+    return;
   }
 
-  loadBooks(): void {
-    this.http
-      .get<Book[]>('assets/books.json')
-      .pipe(first())
-      .subscribe(async (books: Book[]) => {
-        //this.dbService.set('books', books);
-        await this.dbService.get('books').then((data: Book[]) => {
-          this.books = data;
-          console.log('books loaded:', data);
-          this.loadStudents();
-        });
-      });
+  async loadBooks() {
+    this.books = await this.dbService.loadBooks();
   }
 
-  loadStudents(): void {
-    this.http
-      .get<Student[]>('assets/students.json')
-      .pipe(first())
-      .subscribe(async (students: Student[]) => {
-        //await this.dbService.set('students', students);
-        await this.dbService.get('students').then((data: Student[]) => {
-          this.students = data;
-          console.log('Students loaded:', data);
-          //this.addBookForStudent();
-          this.selectedStudent = this.students[0];
-          this.selectedBook = this.selectedStudent.currentBook;
-          //this.selectedBook = this.books[0];
-          let loadBook = (student: Student) => {
-            return student.currentBook;
-          };
-
-          this.selectedBook = loadBook(this.selectedStudent);
-
-          console.log('Selected student:', this.selectedStudent);
-          console.log('Selected book:', this.selectedBook);
-        });
-      });
+  async loadStudents() {
+    this.students = await this.dbService.loadStudents();
   }
 
   addBookForStudent() {
-    this.students.forEach((student) => {
+    this.students?.forEach((student) => {
       student.currentBook =
-        this.books[Math.floor(Math.random() * this.books.length)];
+        this.books![Math.floor(Math.random() * this.books!.length)];
     });
   }
 
   onSlideChange(data: any) {
     const activeIndex = data.detail[0].activeIndex;
-    if (activeIndex >= 0 && activeIndex < this.students.length) {
-      this.selectedStudent = this.students[activeIndex];
-      this.selectedBook = this.selectedStudent?.currentBook;
+    if (activeIndex >= 0 && activeIndex < this.students!.length) {
+      this.selectedStudent = this.students![activeIndex];
+      this.selectedBook = this.selectedStudent.currentBook;
       console.log('Selected student:', this.selectedStudent);
       console.log('Selected book:', this.selectedBook);
     } else {
@@ -153,7 +128,7 @@ export class Tab3Page implements OnInit {
   }
 }
 
-interface Book {
+export interface Book {
   book: string;
   lessons: Lesson[];
 }
@@ -169,7 +144,7 @@ interface Topic {
   conclusion: null | string;
 }
 
-interface Student {
+export interface Student {
   name: string;
   age: string;
   class: string;

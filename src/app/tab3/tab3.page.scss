@@ -16,3 +16,15 @@ cdk-virtual-scroll-viewport {
   height: 100%;
   width: 100%;
 }
+
+ion-spinner {
+  width: 70px;
+  height: 70px;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
