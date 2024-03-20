@@ -71,6 +71,7 @@ export class Tab3Page implements OnInit {
         console.log('students loaded:', this.students);
         this.selectedStudent = this.students![0];
         this.selectedBook = this.selectedStudent?.currentBook;
+        console.log('Current student:', this.selectedStudent);
       });
       console.log('books loaded:', this.books);
     });
@@ -129,17 +130,17 @@ export class Tab3Page implements OnInit {
 }
 
 export interface Book {
-  book: string;
-  lessons: Lesson[];
+  name: string;
+  lessons?: Lesson[];
 }
 
 interface Lesson {
-  lesson: string;
+  name: string;
   topics: Topic[];
 }
 
 interface Topic {
-  topic: string;
+  name: string;
   done: boolean;
   conclusion: null | string;
 }

@@ -59,12 +59,12 @@
           <ion-icon name="book" style="margin-right: 5px"></ion-icon>
           <ion-select
             placeholder="Select a book"
+            [selectedText]="selectedBook?.name"
             (ionChange)="onBookChange($event.detail.value)"
             interface="popover"
-            [value]="student.currentBook"
           >
             <ion-select-option *ngFor="let book of books" [value]="book"
-              >{{ book.book }}</ion-select-option
+              >{{ book.name }}</ion-select-option
             >
           </ion-select>
         </div>
@@ -73,11 +73,11 @@
       <cdk-virtual-scroll-viewport
         style="height: 60vh; width: 100%"
         *ngIf="student.currentBook?.lessons"
-        itemSize="{{ student.currentBook.lessons.length }}"
+        itemSize="{{ student.currentBook.lessons?.length }}"
       >
         <ion-accordion-group expand="inset" style="padding-top: 0">
           <ion-accordion *ngFor="let lesson of student.currentBook.lessons">
-            <ion-item slot="header"> {{ lesson.lesson }} </ion-item>
+            <ion-item slot="header"> {{ lesson.name }} </ion-item>
             <div slot="content" class="ion-padding">
               <ion-list>
                 <ion-item *ngFor="let topic of lesson.topics">
@@ -87,7 +87,7 @@
                     [checked]="topic.done ? true : false"
                     mode="md"
                     size="small"
-                    >{{ topic.topic }}
+                    >{{ topic.name }}
                   </ion-toggle>
                 </ion-item>
               </ion-list>

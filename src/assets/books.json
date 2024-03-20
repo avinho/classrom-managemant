@@ -1,152 +1,152 @@
 [
   {
-    "book": "Essentials 1",
+    "name": "Essentials 1",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 3",
+        "name": "Lesson 3",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 4",
+        "name": "Lesson 4",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 5",
+        "name": "Lesson 5",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 6",
+        "name": "Lesson 6",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 7",
+        "name": "Lesson 7",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 8",
+        "name": "Lesson 8",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 9",
+        "name": "Lesson 9",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 10",
+        "name": "Lesson 10",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -155,48 +155,48 @@
     ]
   },
   {
-    "book": "Essentials 2",
+    "name": "Essentials 2",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 3",
+        "name": "Lesson 3",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -205,33 +205,33 @@
     ]
   },
   {
-    "book": "Transitions 1",
+    "name": "Transitions 1",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -240,33 +240,33 @@
     ]
   },
   {
-    "book": "Transitions 2",
+    "name": "Transitions 2",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -275,33 +275,33 @@
     ]
   },
   {
-    "book": "Fluency 1",
+    "name": "Fluency 1",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -310,33 +310,33 @@
     ]
   },
   {
-    "book": "Fluency 2",
+    "name": "Fluency 2",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -345,33 +345,33 @@
     ]
   },
   {
-    "book": "In Focus",
+    "name": "In Focus",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -380,33 +380,33 @@
     ]
   },
   {
-    "book": "Teens Elementary 1",
+    "name": "Teens Elementary 1",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -415,33 +415,33 @@
     ]
   },
   {
-    "book": "Teens Elementary 2",
+    "name": "Teens Elementary 2",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -450,33 +450,33 @@
     ]
   },
   {
-    "book": "Teens Elementary 2",
+    "name": "Teens Elementary 2",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -485,33 +485,33 @@
     ]
   },
   {
-    "book": "Teens Pre-intermediate",
+    "name": "Teens Pre-intermediate",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -520,33 +520,33 @@
     ]
   },
   {
-    "book": "Teens Intermediate",
+    "name": "Teens Intermediate",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -555,33 +555,33 @@
     ]
   },
   {
-    "book": "Teens Upper-intermediate",
+    "name": "Teens Upper-intermediate",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -590,33 +590,33 @@
     ]
   },
   {
-    "book": "Teens Advanced",
+    "name": "Teens Advanced",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -625,33 +625,33 @@
     ]
   },
   {
-    "book": "Teens Higher 1",
+    "name": "Teens Higher 1",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
@@ -660,33 +660,33 @@
     ]
   },
   {
-    "book": "Teens Higher 2",
+    "name": "Teens Higher 2",
     "lessons": [
       {
-        "lesson": "Lesson 1",
+        "name": "Lesson 1",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
         ]
       },
       {
-        "lesson": "Lesson 2",
+        "name": "Lesson 2",
         "topics": [
           {
-            "topic": "Topic 1",
+            "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "topic": "Topic 2",
+            "name": "Topic 2",
             "done": false,
             "conclusion": null
           }
