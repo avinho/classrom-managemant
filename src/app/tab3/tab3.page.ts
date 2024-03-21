@@ -24,7 +24,7 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
-import { first, repeat } from 'rxjs';
+import { first, repeat, takeWhile } from 'rxjs';
 import { StorageService } from '../storage.service';
 
 @Component({
@@ -60,13 +60,16 @@ import { StorageService } from '../storage.service';
 })
 export class Tab3Page implements OnInit {
   swiperModules = [IonicSlides];
-  books?: Book[] = [];
-  students?: Student[] = [];
+  books?: Book[];
+  students?: Student[];
   selectedBook?: Book;
   selectedStudent?: Student;
 
+  $book: any;
+  $students: any;
+
   constructor(private dbService: StorageService) {
-    this.loadBooks().then(() => {
+    /*     this.loadBooks().then(() => {
       this.loadStudents().then(() => {
         console.log('students loaded:', this.students);
         this.selectedStudent = this.students![0];
@@ -74,20 +77,36 @@ export class Tab3Page implements OnInit {
         console.log('Current student:', this.selectedStudent);
       });
       console.log('books loaded:', this.books);
-    });
+    }); */
   }
 
   ngOnInit(): void {
-    return;
+    this.dbService
+      .loadStudentsObservable()
+      .pipe()
+      .subscribe({
+        next: async (data: Promise<Student[]>) => {
+          this.students = await data;
+          this.selectedStudent = this.students![0];
+          this.selectedBook = this.selectedStudent?.currentBook;
+          console.log('Current student:', this.selectedStudent);
+        },
+        error: (error) => console.log(error),
+        complete: () => {},
+      });
+
+    this.dbService.loadBooksObservable().subscribe(async (data) => {
+      this.books = await data;
+    });
   }
 
-  async loadBooks() {
+  /*   async loadBooks() {
     this.books = await this.dbService.loadBooks();
   }
 
   async loadStudents() {
     this.students = await this.dbService.loadStudents();
-  }
+  } */
 
   addBookForStudent() {
     this.students?.forEach((student) => {
