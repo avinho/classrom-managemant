@@ -78,10 +78,18 @@ export class Tab3Page implements OnInit {
       });
       console.log('books loaded:', this.books);
     }); */
+    setTimeout(() => {
+      this.loadStudents().then(() => {
+        console.log('students loaded:', this.students);
+        this.selectedStudent = this.students![0];
+        this.selectedBook = this.selectedStudent?.currentBook;
+        console.log('Current student:', this.selectedStudent);
+      });
+    }, 2000);
   }
 
   ngOnInit(): void {
-    this.dbService
+    /*     this.dbService
       .loadStudentsObservable()
       .pipe()
       .subscribe({
@@ -93,7 +101,7 @@ export class Tab3Page implements OnInit {
         },
         error: (error) => console.log(error),
         complete: () => {},
-      });
+      }); */
 
     this.dbService.loadBooksObservable().subscribe(async (data) => {
       this.books = await data;
@@ -103,10 +111,10 @@ export class Tab3Page implements OnInit {
   /*   async loadBooks() {
     this.books = await this.dbService.loadBooks();
   }
-
+*/
   async loadStudents() {
     this.students = await this.dbService.loadStudents();
-  } */
+  }
 
   addBookForStudent() {
     this.students?.forEach((student) => {

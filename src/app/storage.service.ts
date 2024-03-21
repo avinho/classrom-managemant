@@ -52,6 +52,14 @@ export class StorageService {
     return of(this.storage.get('students')).pipe(delay(2000));
   }
 
+  async loadStudents(): Promise<Student[]> {
+    return this.storage.get('students');
+  }
+
+  async loadBooks(): Promise<Book[]> {
+    return this.storage.get('books');
+  }
+
   public async set(key: string, value: any) {
     await this.storage.set(key, value);
   }
