@@ -16,6 +16,9 @@ import {
   IonGrid,
   IonCol,
   IonChip,
+  IonDatetimeButton,
+  IonModal,
+  IonDatetime,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -24,6 +27,9 @@ import {
   styleUrls: ['tab2.page.scss'],
   standalone: true,
   imports: [
+    IonDatetime,
+    IonModal,
+    IonDatetimeButton,
     IonChip,
     IonCol,
     IonGrid,

@@ -10,14 +10,13 @@
     <ion-card-content>
       <ion-list>
         <ion-item [button]="true">
-          <ion-avatar slot="start">
-            <img
-              alt="Silhouette of mountains"
-              src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-            />
-          </ion-avatar>
-          <ion-label>João Paulo</ion-label>
-          <ion-note slot="end">Turma: 1</ion-note>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime"></ion-datetime>
+            </ng-template>
+          </ion-modal>
         </ion-item>
       </ion-list>
     </ion-card-content>

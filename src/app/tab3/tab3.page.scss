@@ -28,3 +28,8 @@ ion-spinner {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+ion-badge {
+  --background: rgb(214, 132, 94);
+  font-size: 11px;
+  margin-right: 2rem;
+}

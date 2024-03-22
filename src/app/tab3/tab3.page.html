@@ -82,14 +82,37 @@
             <div slot="content" class="ion-padding">
               <ion-list>
                 <ion-item *ngFor="let topic of lesson.topics">
+                  <ion-label>{{ topic.name }}</ion-label>
+                  <!-- <ion-badge *ngIf="topic.done"
+                    >{{ topic.conclusion}}</ion-badge
+                  > -->
+
                   <ion-toggle
+                    slot="end"
+                    aria-label="Toggle topic"
                     [enableOnOffLabels]="true"
                     (ionChange)="onTopicChange(topic)"
-                    [checked]="topic.done ? true : false"
+                    [checked]="topic.done"
                     mode="md"
                     size="small"
-                    >{{ topic.name }}
+                  >
                   </ion-toggle>
+                  <ion-datetime-button
+                    *ngIf="topic.done"
+                    datetime="datetime"
+                  ></ion-datetime-button>
+
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime
+                        (ionChange)="onDateChange(topic, $event.detail.value)"
+                        showDefaultButtons="true"
+                        [(ngModel)]="topic.conclusion"
+                        presentation="date"
+                        id="datetime"
+                      ></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
                 </ion-item>
               </ion-list>
             </div>

@@ -11,6 +11,7 @@ import {
   add,
   book,
   calendarNumber,
+  calendarClear,
   create,
   pencil,
   people,
@@ -30,6 +31,7 @@ export class TabsPage {
 
   constructor() {
     addIcons({
+      calendarClear,
       pencil,
       create,
       calendarNumber,

@@ -1,12 +1,13 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import {
   IonButton,
   IonCard,
   IonCardContent,
   IonContent,
+  IonDatetime,
+  IonDatetimeButton,
   IonHeader,
   IonIcon,
   IonItem,
@@ -14,6 +15,7 @@ import {
   IonLabel,
   IonList,
   IonListHeader,
+  IonModal,
   IonNote,
   IonSegment,
   IonSegmentButton,
@@ -24,7 +26,6 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
-import { first, repeat, takeWhile } from 'rxjs';
 import { StorageService } from '../storage.service';
 
 @Component({
@@ -53,9 +54,11 @@ import { StorageService } from '../storage.service';
     IonTitle,
     IonContent,
     IonSelect,
-    IonSelect,
     IonSelectOption,
     CommonModule,
+    IonDatetimeButton,
+    IonModal,
+    IonDatetime,
   ],
 })
 export class Tab3Page implements OnInit {
@@ -69,49 +72,25 @@ export class Tab3Page implements OnInit {
   $students: any;
 
   constructor(private dbService: StorageService) {
-    /*     this.loadBooks().then(() => {
-      this.loadStudents().then(() => {
-        console.log('students loaded:', this.students);
-        this.selectedStudent = this.students![0];
-        this.selectedBook = this.selectedStudent?.currentBook;
-        console.log('Current student:', this.selectedStudent);
-      });
-      console.log('books loaded:', this.books);
-    }); */
-    setTimeout(() => {
-      this.loadStudents().then(() => {
-        console.log('students loaded:', this.students);
-        this.selectedStudent = this.students![0];
-        this.selectedBook = this.selectedStudent?.currentBook;
-        console.log('Current student:', this.selectedStudent);
-      });
-    }, 2000);
-  }
-
-  ngOnInit(): void {
-    /*     this.dbService
-      .loadStudentsObservable()
-      .pipe()
-      .subscribe({
-        next: async (data: Promise<Student[]>) => {
-          this.students = await data;
-          this.selectedStudent = this.students![0];
-          this.selectedBook = this.selectedStudent?.currentBook;
-          console.log('Current student:', this.selectedStudent);
-        },
-        error: (error) => console.log(error),
-        complete: () => {},
-      }); */
-
-    this.dbService.loadBooksObservable().subscribe(async (data) => {
-      this.books = await data;
+    this.loadBooks().then(() => {
+      console.log('books loaded from DB:', this.books);
+    });
+    this.loadStudents().then(() => {
+      console.log('students loaded from DB:', this.students);
+      this.selectedStudent = this.students![0];
+      this.selectedBook = this.selectedStudent?.currentBook;
+      console.log('Current student:', this.selectedStudent);
     });
   }
 
-  /*   async loadBooks() {
+  ngOnInit() {
+    return;
+  }
+
+  async loadBooks() {
     this.books = await this.dbService.loadBooks();
   }
-*/
+
   async loadStudents() {
     this.students = await this.dbService.loadStudents();
   }
@@ -121,6 +100,10 @@ export class Tab3Page implements OnInit {
       student.currentBook =
         this.books![Math.floor(Math.random() * this.books!.length)];
     });
+  }
+
+  converteDate(date: string) {
+    return new Date(date).toISOString();
   }
 
   onSlideChange(data: any) {
@@ -139,7 +122,6 @@ export class Tab3Page implements OnInit {
     this.selectedBook = book;
     this.selectedStudent!.currentBook = book;
     this.dbService.set('students', this.students);
-    console.log('Selected book:', this.dbService.get('students'));
     console.log(this.selectedStudent!.currentBook);
   }
 
@@ -148,6 +130,12 @@ export class Tab3Page implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
+    this.dbService.set('students', this.students);
+    console.log(topic);
+  }
+
+  onDateChange(topic: Topic, date: any) {
+    topic.conclusion = date;
     this.dbService.set('students', this.students);
     console.log(topic);
   }
