@@ -81,14 +81,28 @@
             <ion-item slot="header">
               <ion-title>{{ lesson.name }}</ion-title>
               <ion-badge
-                style="background: rgba(38, 116, 38, 0.637)"
+                style="
+                  background: rgba(38, 116, 38, 0.637);
+                  display: inline-flex;
+                  align-items: center;
+                "
                 *ngIf="isLessonDone(lesson.topics)"
-                >Done <ion-icon name="checkmark-done"></ion-icon
+              >
+                Done
+                <ion-icon
+                  style="font-size: 1rem; margin-left: 5px"
+                  name="checkmark-done-sharp"
+                ></ion-icon
               ></ion-badge>
             </ion-item>
 
             <div slot="content" class="ion-padding" style="padding-top: 0">
-              <ion-list>
+              <ion-list
+                style="
+                  border-bottom-left-radius: 6px;
+                  border-bottom-right-radius: 6px;
+                "
+              >
                 <ion-item>
                   <ion-toggle
                     slot="end"
@@ -99,7 +113,7 @@
                     (ionChange)="doneLesson(lesson, $event.detail.checked)"
                     size="small"
                   >
-                    Done Lesson
+                    Lesson Done
                   </ion-toggle>
                 </ion-item>
                 <ion-item *ngFor="let topic of lesson.topics">

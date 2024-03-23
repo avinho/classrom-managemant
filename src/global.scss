@@ -24,6 +24,7 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 swiper-container {
   --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
@@ -56,4 +57,8 @@ swiper-slide img {
   max-width: 100%;
   height: auto;
   max-height: 100%;
+}
+
+:root{
+  --ion-font-family: 'Comfortaa', sans-serif;
 }

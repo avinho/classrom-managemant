@@ -13,6 +13,7 @@ import {
   calendarNumber,
   calendarClear,
   checkmarkDone,
+  checkmarkDoneSharp,
   create,
   pencil,
   people,
@@ -34,6 +35,7 @@ export class TabsPage {
     addIcons({
       calendarClear,
       checkmarkDone,
+      checkmarkDoneSharp,
       pencil,
       create,
       calendarNumber,

@@ -143,9 +143,9 @@ export class Tab3Page implements OnInit {
   doneLesson(lesson: Lesson, event: any) {
     lesson.topics.forEach((topic) => {
       if (!topic.done) {
-        this.onTopicChange(topic, event);
+        return this.onTopicChange(topic, event);
       }
-      this.onTopicChange(topic, event);
+      return this.onTopicChange(topic, event);
     });
   }
 
