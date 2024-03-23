@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Alunos - Turma X</ion-title>
+    <ion-title> Student - Class X</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -78,41 +78,66 @@
       >
         <ion-accordion-group expand="inset" style="padding-top: 0">
           <ion-accordion *ngFor="let lesson of student.currentBook.lessons">
-            <ion-item slot="header"> {{ lesson.name }} </ion-item>
-            <div slot="content" class="ion-padding">
+            <ion-item slot="header">
+              <ion-title>{{ lesson.name }}</ion-title>
+              <ion-badge
+                style="background: rgba(38, 116, 38, 0.637)"
+                *ngIf="isLessonDone(lesson.topics)"
+                >Done <ion-icon name="checkmark-done"></ion-icon
+              ></ion-badge>
+            </ion-item>
+
+            <div slot="content" class="ion-padding" style="padding-top: 0">
               <ion-list>
+                <ion-item>
+                  <ion-toggle
+                    slot="end"
+                    aria-label="Toggle topic"
+                    [enableOnOffLabels]="true"
+                    [checked]="isLessonDone(lesson.topics)"
+                    mode="md"
+                    (ionChange)="doneLesson(lesson, $event.detail.checked)"
+                    size="small"
+                  >
+                    Done Lesson
+                  </ion-toggle>
+                </ion-item>
                 <ion-item *ngFor="let topic of lesson.topics">
                   <ion-label>{{ topic.name }}</ion-label>
-                  <!-- <ion-badge *ngIf="topic.done"
-                    >{{ topic.conclusion}}</ion-badge
-                  > -->
+                  <ion-badge *ngIf="topic.done"
+                    >{{ converteDate(topic.conclusion) }}</ion-badge
+                  >
 
                   <ion-toggle
                     slot="end"
                     aria-label="Toggle topic"
                     [enableOnOffLabels]="true"
-                    (ionChange)="onTopicChange(topic)"
+                    (ionChange)="onTopicChange(topic, $event.detail.checked)"
                     [checked]="topic.done"
                     mode="md"
                     size="small"
                   >
                   </ion-toggle>
-                  <ion-datetime-button
-                    *ngIf="topic.done"
-                    datetime="datetime"
-                  ></ion-datetime-button>
-
-                  <ion-modal [keepContentsMounted]="true">
+                  <ion-button slot="end" (click)="popover.present()">
+                    <ion-icon name="calendar-clear"></ion-icon>
+                  </ion-button>
+                  <ion-popover
+                    #popover
+                    size="auto"
+                    reference="event"
+                    [keepContentsMounted]="true"
+                    show-backdrop="false"
+                  >
                     <ng-template>
                       <ion-datetime
+                        [value]="topic.conclusion"
+                        locale="en-US"
+                        presentation="date"
                         (ionChange)="onDateChange(topic, $event.detail.value)"
                         showDefaultButtons="true"
-                        [(ngModel)]="topic.conclusion"
-                        presentation="date"
-                        id="datetime"
                       ></ion-datetime>
                     </ng-template>
-                  </ion-modal>
+                  </ion-popover>
                 </ion-item>
               </ion-list>
             </div>

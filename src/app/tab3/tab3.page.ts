@@ -17,6 +17,7 @@ import {
   IonListHeader,
   IonModal,
   IonNote,
+  IonPopover,
   IonSegment,
   IonSegmentButton,
   IonSelect,
@@ -59,6 +60,7 @@ import { StorageService } from '../storage.service';
     IonDatetimeButton,
     IonModal,
     IonDatetime,
+    IonPopover,
   ],
 })
 export class Tab3Page implements OnInit {
@@ -102,8 +104,12 @@ export class Tab3Page implements OnInit {
     });
   }
 
-  converteDate(date: string) {
-    return new Date(date).toISOString();
+  converteDate(date: any) {
+    return new Date(date!).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   }
 
   onSlideChange(data: any) {
@@ -125,8 +131,8 @@ export class Tab3Page implements OnInit {
     console.log(this.selectedStudent!.currentBook);
   }
 
-  onTopicChange(topic: Topic) {
-    topic.done = !topic.done;
+  onTopicChange(topic: Topic, event: any) {
+    topic.done = event;
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
@@ -134,10 +140,23 @@ export class Tab3Page implements OnInit {
     console.log(topic);
   }
 
+  doneLesson(lesson: Lesson, event: any) {
+    lesson.topics.forEach((topic) => {
+      if (!topic.done) {
+        this.onTopicChange(topic, event);
+      }
+      this.onTopicChange(topic, event);
+    });
+  }
+
+  isLessonDone(topics: Topic[]) {
+    return topics.every((topic) => topic.done);
+  }
+
   onDateChange(topic: Topic, date: any) {
+    topic.done = true;
     topic.conclusion = date;
     this.dbService.set('students', this.students);
-    console.log(topic);
   }
 
   compareWith(o1: Book, o2: Book) {
