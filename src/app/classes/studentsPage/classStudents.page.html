@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Student - {{ selectedStudent?.class?.name}}</ion-title>
+    <div class="toolbar">
+      <ion-button size="small" fill="clear" (click)="onCloseModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-label>{{ class?.name}} - Students</ion-label>
+    </div>
   </ion-toolbar>
 </ion-header>
 

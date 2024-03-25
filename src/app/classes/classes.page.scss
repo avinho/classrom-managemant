@@ -1,0 +1,25 @@
+ion-header {
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+ion-grid {
+  --ion-grid-padding: 10px;
+  --ion-grid-column-padding: 0.05px;
+}
+
+ion-card {
+  border-radius: 10px;
+  height: 16vh;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  ion-card-header {
+      display: flex;
+      align-items: center;
+      top: 60%
+    }
+}
+
+ion-fab {
+  position: absolute;
+  right: 10px;
+  bottom: 8vh;
+}

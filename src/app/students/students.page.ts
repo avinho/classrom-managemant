@@ -22,9 +22,9 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss'],
+  selector: 'app-students-page',
+  templateUrl: 'students.page.html',
+  styleUrls: ['students.page.scss'],
   standalone: true,
   imports: [
     IonDatetime,
@@ -48,6 +48,6 @@ import {
     IonContent,
   ],
 })
-export class Tab2Page {
+export class StudentsPage {
   constructor() {}
 }

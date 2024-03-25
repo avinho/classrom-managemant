@@ -18,6 +18,7 @@ import {
   pencil,
   people,
   person,
+  arrowBack,
   school,
 } from 'ionicons/icons';
 
@@ -38,6 +39,7 @@ export class TabsPage {
       checkmarkDoneSharp,
       pencil,
       create,
+      arrowBack,
       calendarNumber,
       person,
       people,

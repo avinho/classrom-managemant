@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import bookJson from '../assets/books.json';
 import studentJson from '../assets/students.json';
-import { Book, Student } from './tab3/tab3.page';
+import classesJson from '../assets/classes.json';
+import { Student, Book, Class } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,14 @@ export class StorageService {
       return this.storage.get('books');
     }
     return this.storage.get('books');
+  }
+
+  async loadClasses(): Promise<Class[]> {
+    if (!(await this.has('classes'))) {
+      await this.storage.set('classes', classesJson);
+      return this.storage.get('classes');
+    }
+    return this.storage.get('classes');
   }
 
   public async set(key: string, value: any) {

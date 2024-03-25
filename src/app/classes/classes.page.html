@@ -1,57 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Turmas</ion-title>
+    <ion-title>Classes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="6">
-        <ion-card>
-          <ion-card-header><strong>Turma 1</strong></ion-card-header></ion-card
+      <ion-col size="6" *ngFor="let class of classes">
+        <ion-card id="{{ class.id }}">
+          <ion-card-header
+            ><strong>{{ class.name }}</strong></ion-card-header
+          ></ion-card
         >
-      </ion-col>
-      <ion-col size="6">
-        <ion-card
-          ><ion-card-header><strong>Turma 2</strong></ion-card-header></ion-card
-        >
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="6">
-        <ion-card>
-          <ion-card-header><strong>Turma 3</strong></ion-card-header></ion-card
-        >
-      </ion-col>
-      <ion-col size="6">
-        <ion-card
-          ><ion-card-header><strong>Turma 4</strong></ion-card-header></ion-card
-        >
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="6">
-        <ion-card>
-          <ion-card-header><strong>Turma 5</strong></ion-card-header></ion-card
-        >
-      </ion-col>
-      <ion-col size="6">
-        <ion-card
-          ><ion-card-header><strong>Turma 6</strong></ion-card-header></ion-card
-        >
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="6">
-        <ion-card>
-          <ion-card-header><strong>Turma 7</strong></ion-card-header></ion-card
-        >
-      </ion-col>
-      <ion-col size="6">
-        <ion-card
-          ><ion-card-header><strong>Turma 8</strong></ion-card-header></ion-card
-        >
+        <ion-modal trigger="{{ class.id }}" #modal>
+          <ng-template
+            ><app-class-students
+              (closeModal)="closeModal(modal)"
+              style="height: 100%"
+              [students]="class.students"
+              [class]="class"
+            ></app-class-students
+          ></ng-template>
+        </ion-modal>
       </ion-col>
     </ion-row>
     <ion-fab vertical="bottom" horizontal="end">

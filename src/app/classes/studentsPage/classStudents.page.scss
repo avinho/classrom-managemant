@@ -1,0 +1,44 @@
+ion-header {
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.select-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar {
+  display: inline-flex!important;
+  align-items: center!important;
+}
+
+ion-select {
+  --highlight-color-focused: none;
+  background-color: transparent;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
+}
+
+ion-spinner {
+  width: 70px;
+  height: 70px;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+ion-badge {
+  --background: rgb(214, 132, 94);
+  font-size: 11px;
+  margin-right: 1.4rem;
+}
+
+ion-title {
+  font-size: 1rem;
+}

@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import {
   IonButton,
@@ -32,13 +34,13 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
-import { StorageService } from '../storage.service';
-import { Book, Lesson, Student, Topic } from '../models';
+import { Book, Class, Lesson, Student, Topic } from '../../models';
+import { StorageService } from '../../storage.service';
 
 @Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss'],
+  selector: 'app-class-students',
+  templateUrl: 'classStudents.page.html',
+  styleUrls: ['classStudents.page.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -69,36 +71,28 @@ import { Book, Lesson, Student, Topic } from '../models';
     IonPopover,
   ],
 })
-export class Tab3Page implements OnInit {
+export class ClassStudentsPage implements OnInit {
   swiperModules = [IonicSlides];
   books?: Book[];
   @Input() students?: Student[];
+  @Input() class?: Class;
   selectedBook?: Book;
   selectedStudent?: Student;
+  @Output() closeModal = new EventEmitter(false);
 
-  constructor(private dbService: StorageService) {
-    console.log(this.students);
+  constructor(private dbService: StorageService) {}
+
+  ngOnInit() {
+    this.selectedStudent = this.students![0];
+    console.log('Current student:', this.selectedStudent);
+    this.selectedBook = this.selectedStudent?.currentBook;
     this.loadBooks().then(() => {
       console.log('books loaded from DB:', this.books);
     });
-    this.loadStudents().then(() => {
-      console.log('students loaded from DB:', this.students);
-      this.selectedStudent = this.students![0];
-      this.selectedBook = this.selectedStudent?.currentBook;
-      console.log('Current student:', this.selectedStudent);
-    });
-  }
-
-  ngOnInit() {
-    return;
   }
 
   async loadBooks() {
     this.books = await this.dbService.loadBooks();
-  }
-
-  async loadStudents() {
-    this.students = await this.dbService.loadStudents();
   }
 
   addBookForStudent() {
@@ -106,6 +100,10 @@ export class Tab3Page implements OnInit {
       student.currentBook =
         this.books![Math.floor(Math.random() * this.books!.length)];
     });
+  }
+
+  onCloseModal() {
+    this.closeModal.emit(false);
   }
 
   converteDate(date: any) {
@@ -132,7 +130,6 @@ export class Tab3Page implements OnInit {
     this.selectedBook = book;
     this.selectedStudent!.currentBook = book;
     this.dbService.set('students', this.students);
-    console.log(this.selectedStudent!.currentBook);
   }
 
   onTopicChange(topic: Topic, event: any) {
