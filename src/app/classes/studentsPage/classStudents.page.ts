@@ -73,7 +73,7 @@ import { StorageService } from '../../storage.service';
 })
 export class ClassStudentsPage implements OnInit {
   swiperModules = [IonicSlides];
-  books?: Book[];
+  @Input() books?: Book[];
   @Input() students?: Student[];
   @Input() class?: Class;
   selectedBook?: Book;
@@ -86,9 +86,9 @@ export class ClassStudentsPage implements OnInit {
     this.selectedStudent = this.students![0];
     console.log('Current student:', this.selectedStudent);
     this.selectedBook = this.selectedStudent?.currentBook;
-    this.loadBooks().then(() => {
+    /*     this.loadBooks().then(() => {
       console.log('books loaded from DB:', this.books);
-    });
+    }); */
   }
 
   async loadBooks() {

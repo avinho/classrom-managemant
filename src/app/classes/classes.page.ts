@@ -24,8 +24,9 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  IonSpinner,
 } from '@ionic/angular/standalone';
-import { Class, Student } from '../models';
+import { Book, Class, Student } from '../models';
 import { StorageService } from '../storage.service';
 import { ClassStudentsPage } from './studentsPage/classStudents.page';
 
@@ -35,6 +36,7 @@ import { ClassStudentsPage } from './studentsPage/classStudents.page';
   styleUrls: ['classes.page.scss'],
   standalone: true,
   imports: [
+    IonSpinner,
     IonButton,
     IonModal,
     IonFabButton,
@@ -65,8 +67,10 @@ import { ClassStudentsPage } from './studentsPage/classStudents.page';
 export class ClassesPage {
   classes?: Class[];
   students?: Student[];
+  books?: Book[];
 
   constructor(private storage: StorageService) {
+    this.loadBooks();
     this.loadStudents();
     this.loadClasses();
   }
@@ -89,5 +93,9 @@ export class ClassesPage {
 
   async loadStudents() {
     this.students = await this.storage.loadStudents();
+  }
+
+  async loadBooks() {
+    this.books = await this.storage.loadBooks();
   }
 }

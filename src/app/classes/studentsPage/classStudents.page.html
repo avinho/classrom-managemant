@@ -139,8 +139,12 @@
                     size="small"
                   >
                   </ion-toggle>
-                  <ion-button slot="end" (click)="popover.present()">
-                    <ion-icon name="calendar-clear"></ion-icon>
+                  <ion-button
+                    slot="end"
+                    fill="clear"
+                    (click)="popover.present()"
+                  >
+                    <ion-icon color="medium" name="calendar-clear"></ion-icon>
                   </ion-button>
                   <ion-popover
                     #popover
