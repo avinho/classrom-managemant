@@ -18,8 +18,8 @@ ion-card {
     }
 }
 
-ion-fab {
-  position: absolute;
-  right: 10px;
-  bottom: 8vh;
+.addClassModal {
+  --height: 20%;
+  --width: 80%;
+  --border-radius: 10px;
 }

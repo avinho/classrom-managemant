@@ -14,8 +14,21 @@
           ></ion-card
         >
         <ion-modal trigger="{{ class.id }}" #modal>
-          <ng-template
-            ><app-class-students
+          <!-- <ng-template>
+            @if (class.students!.length > 0) {
+            <app-class-students
+              (closeModal)="closeModal(modal)"
+              style="height: 100%"
+              [students]="class.students"
+              [class]="class"
+              [books]="books"
+            ></app-class-students
+            >} @else {
+            <p>No students in this class</p>
+            }</ng-template
+          > -->
+          <ng-template>
+            <app-class-students
               (closeModal)="closeModal(modal)"
               style="height: 100%"
               [students]="class.students"
@@ -26,19 +39,50 @@
         </ion-modal>
       </ion-col>
     </ion-row>
-    <ion-fab vertical="bottom" horizontal="end">
-      <ion-fab-button size="small" id="teste">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-    <ion-modal
-      trigger="teste"
-      #modal
-      style="height: 50%; width: 50%; background-color: white !important"
-    >
+
+    <ion-modal trigger="teste" #modal class="addClassModal" #addClassModal>
       <ng-template>
-        <h1>Teste</h1>
+        <div
+          class="ion-padding"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+          "
+        >
+          <ion-input
+            label="Class Name"
+            label-placement="stacked"
+            fill="outline"
+            placeholder="Enter class name"
+            #inputClassName
+            type="text"
+          ></ion-input>
+          <div
+            class="ion-padding"
+            style="display: flex; justify-content: space-between"
+          >
+            <ion-buttons slot="start">
+              <ion-button color="medium" (click)="closeModal(addClassModal)"
+                >Cancel</ion-button
+              >
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button
+                (click)="onAddClass(addClassModal, inputClassName.value)"
+                [strong]="true"
+                >Confirm</ion-button
+              >
+            </ion-buttons>
+          </div>
+        </div>
       </ng-template>
     </ion-modal>
   </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="small" id="teste">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

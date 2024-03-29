@@ -34,6 +34,8 @@ swiper-container {
   --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
 }
 
+
+
 swiper-slide {
   display: flex;
   position: relative;
@@ -61,4 +63,5 @@ swiper-slide img {
 
 :root{
   --ion-font-family: 'Comfortaa', sans-serif;
+  --ion-safe-area-bottom: 15px;
 }

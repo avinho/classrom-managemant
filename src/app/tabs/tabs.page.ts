@@ -18,6 +18,7 @@ import {
   pencil,
   people,
   person,
+  personCircle,
   arrowBack,
   school,
 } from 'ionicons/icons';
@@ -35,6 +36,7 @@ export class TabsPage {
   constructor() {
     addIcons({
       calendarClear,
+      personCircle,
       checkmarkDone,
       checkmarkDoneSharp,
       pencil,

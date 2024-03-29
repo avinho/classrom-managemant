@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {
   IonAvatar,
   IonButton,
+  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -15,16 +16,17 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
   IonList,
   IonModal,
   IonNote,
   IonRow,
+  IonSpinner,
   IonThumbnail,
   IonTitle,
   IonToolbar,
-  IonSpinner,
 } from '@ionic/angular/standalone';
 import { Book, Class, Student } from '../models';
 import { StorageService } from '../storage.service';
@@ -36,6 +38,8 @@ import { ClassStudentsPage } from './studentsPage/classStudents.page';
   styleUrls: ['classes.page.scss'],
   standalone: true,
   imports: [
+    IonButtons,
+    IonInput,
     IonSpinner,
     IonButton,
     IonModal,
@@ -88,6 +92,17 @@ export class ClassesPage {
   }
 
   closeModal(modal: IonModal) {
+    modal.dismiss();
+  }
+
+  async onAddClass(modal: IonModal, name: any) {
+    console.log(name);
+    const newClass: Class = {
+      id: Math.floor(Math.random() * 1000),
+      name: name,
+    };
+    this.classes?.push(newClass);
+    await this.storage.set('classes', this.classes);
     modal.dismiss();
   }
 
