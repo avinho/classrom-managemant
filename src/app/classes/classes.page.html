@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  @if (!classes) {
+  <div class="spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else{
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="6" *ngFor="let class of classes">
@@ -30,6 +35,7 @@
           <ng-template>
             <app-class-students
               (closeModal)="closeModal(modal)"
+              (deleteClass)="deleteClass($event)"
               style="height: 100%"
               [students]="class.students"
               [class]="class"
@@ -58,6 +64,7 @@
             placeholder="Enter class name"
             #inputClassName
             type="text"
+            required
           ></ion-input>
           <div
             class="ion-padding"
@@ -80,9 +87,11 @@
       </ng-template>
     </ion-modal>
   </ion-grid>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button size="small" id="teste">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  }
 </ion-content>

@@ -21,6 +21,9 @@ import {
   personCircle,
   arrowBack,
   school,
+  trash,
+  close,
+  pin,
 } from 'ionicons/icons';
 
 @Component({
@@ -48,6 +51,9 @@ export class TabsPage {
       school,
       book,
       add,
+      trash,
+      close,
+      pin,
     });
   }
 }

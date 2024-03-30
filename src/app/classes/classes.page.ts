@@ -95,11 +95,22 @@ export class ClassesPage {
     modal.dismiss();
   }
 
+  async deleteClass(classItem: Class) {
+    console.log('classItem', classItem);
+    const index = this.classes?.indexOf(classItem);
+    if (index !== undefined) {
+      this.classes?.splice(index, 1);
+      await this.storage.set('classes', this.classes);
+    }
+  }
+
   async onAddClass(modal: IonModal, name: any) {
+    if (!name) return;
     console.log(name);
     const newClass: Class = {
       id: Math.floor(Math.random() * 1000),
       name: name,
+      students: [],
     };
     this.classes?.push(newClass);
     await this.storage.set('classes', this.classes);

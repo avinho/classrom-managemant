@@ -79,8 +79,13 @@ export class ClassStudentsPage implements OnInit {
   selectedBook?: Book;
   selectedStudent?: Student;
   @Output() closeModal = new EventEmitter(false);
+  @Output() deleteClass = new EventEmitter(false);
 
-  constructor(private dbService: StorageService) {}
+  $students?: Student[];
+
+  constructor(private dbService: StorageService) {
+    this.loadStudents();
+  }
 
   ngOnInit() {
     this.selectedStudent = this.students![0];
@@ -91,8 +96,25 @@ export class ClassStudentsPage implements OnInit {
     }); */
   }
 
+  onAddStudents(e: Student[]) {
+    e.forEach((value) => {
+      value.class = this.class!;
+      this.students?.push(value);
+      this.selectedStudent = this.students![0];
+    });
+  }
+
+  onDeleteClass(data: Class) {
+    this.deleteClass.emit(data);
+    this.onCloseModal();
+  }
+
   async loadBooks() {
     this.books = await this.dbService.loadBooks();
+  }
+
+  async loadStudents() {
+    this.$students = await this.dbService.loadStudents();
   }
 
   addBookForStudent() {

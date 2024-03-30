@@ -12,7 +12,7 @@ ion-header {
   align-items: center!important;
 }
 
-ion-select {
+.bookSelect {
   --highlight-color-focused: none;
   background-color: transparent;
 }
@@ -41,4 +41,9 @@ ion-badge {
 
 ion-title {
   font-size: 1rem;
+}
+
+ion-modal {
+  --height: 20%;
+  --width: 80%;
 }

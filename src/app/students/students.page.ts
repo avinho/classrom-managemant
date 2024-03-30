@@ -19,7 +19,14 @@ import {
   IonDatetimeButton,
   IonModal,
   IonDatetime,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonSpinner,
 } from '@ionic/angular/standalone';
+import { StorageService } from '../storage.service';
+import { Student } from '../models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-students-page',
@@ -27,6 +34,10 @@ import {
   styleUrls: ['students.page.scss'],
   standalone: true,
   imports: [
+    IonSpinner,
+    IonIcon,
+    IonFabButton,
+    IonFab,
     IonDatetime,
     IonModal,
     IonDatetimeButton,
@@ -46,8 +57,16 @@ import {
     IonToolbar,
     IonTitle,
     IonContent,
+    CommonModule,
   ],
 })
 export class StudentsPage {
-  constructor() {}
+  students?: Student[];
+  constructor(private store: StorageService) {
+    this.loadStudents();
+  }
+
+  async loadStudents() {
+    this.students = await this.store.loadStudents();
+  }
 }
