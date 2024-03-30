@@ -19,19 +19,6 @@
           ></ion-card
         >
         <ion-modal trigger="{{ class.id }}" #modal>
-          <!-- <ng-template>
-            @if (class.students!.length > 0) {
-            <app-class-students
-              (closeModal)="closeModal(modal)"
-              style="height: 100%"
-              [students]="class.students"
-              [class]="class"
-              [books]="books"
-            ></app-class-students
-            >} @else {
-            <p>No students in this class</p>
-            }</ng-template
-          > -->
           <ng-template>
             <app-class-students
               (closeModal)="closeModal(modal)"
@@ -46,7 +33,12 @@
       </ion-col>
     </ion-row>
 
-    <ion-modal trigger="teste" #modal class="addClassModal" #addClassModal>
+    <ion-modal
+      trigger="addClassTrigger"
+      #modal
+      class="addClassModal"
+      #addClassModal
+    >
       <ng-template>
         <div
           class="ion-padding"
@@ -89,7 +81,7 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" id="teste">
+    <ion-fab-button size="small" id="addClassTrigger">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

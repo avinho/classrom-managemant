@@ -68,5 +68,6 @@ export class StudentsPage {
 
   async loadStudents() {
     this.students = await this.store.loadStudents();
+    this.students.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 }
