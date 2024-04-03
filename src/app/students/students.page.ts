@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -23,6 +23,8 @@ import {
   IonFabButton,
   IonIcon,
   IonSpinner,
+  IonButtons,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { StorageService } from '../storage.service';
 import { Student } from '../models';
@@ -34,6 +36,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['students.page.scss'],
   standalone: true,
   imports: [
+    IonButton,
+    IonButtons,
     IonSpinner,
     IonIcon,
     IonFabButton,
@@ -60,10 +64,13 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
 })
-export class StudentsPage {
+export class StudentsPage implements AfterViewInit {
   students?: Student[];
   constructor(private store: StorageService) {
     this.loadStudents();
+  }
+  ngAfterViewInit(): void {
+    console.log('teste');
   }
 
   async loadStudents() {

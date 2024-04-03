@@ -74,8 +74,6 @@ export class ClassesPage {
   books?: Book[];
 
   constructor(private storage: StorageService) {
-    this.loadBooks();
-    this.loadStudents();
     this.loadClasses();
   }
 
@@ -117,8 +115,10 @@ export class ClassesPage {
     modal.dismiss();
   }
 
-  async loadStudents() {
-    this.students = await this.storage.loadStudents();
+  async loadStudents(classId: number) {
+    return (await this.storage.loadStudents()).filter((student) => {
+      return student.class.id === classId;
+    });
   }
 
   async loadBooks() {

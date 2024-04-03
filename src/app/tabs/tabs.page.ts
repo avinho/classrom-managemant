@@ -24,6 +24,7 @@ import {
   trash,
   close,
   pin,
+  refresh,
 } from 'ionicons/icons';
 
 @Component({
@@ -54,6 +55,7 @@ export class TabsPage {
       trash,
       close,
       pin,
+      refresh,
     });
   }
 }

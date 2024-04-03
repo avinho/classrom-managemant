@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   IonButton,
@@ -73,27 +74,37 @@ import { StorageService } from '../../storage.service';
 })
 export class ClassStudentsPage implements OnInit {
   swiperModules = [IonicSlides];
-  @Input() books?: Book[];
-  @Input() students?: Student[];
+  books?: Book[];
+  students?: Student[];
   @Input() class?: Class;
   selectedBook?: Book;
   selectedStudent?: Student;
   @Output() closeModal = new EventEmitter(false);
   @Output() deleteClass = new EventEmitter(false);
+  @ViewChild('mySelect', { static: false }) selectRef?: IonSelect;
 
   $students?: Student[];
 
-  constructor(private dbService: StorageService) {
-    this.loadStudents();
-  }
+  AllStudents?: Student[];
+
+  constructor(private dbService: StorageService) {}
 
   ngOnInit() {
-    this.selectedStudent = this.students![0];
-    console.log('Current student:', this.selectedStudent);
-    this.selectedBook = this.selectedStudent?.currentBook;
-    /*     this.loadBooks().then(() => {
-      console.log('books loaded from DB:', this.books);
-    }); */
+    this.loadBooks();
+    this.loadStudents(this.class?.id!).then(() => {
+      this.selectedStudent = this.students![0];
+      console.log('Current student:', this.selectedStudent);
+      this.selectedBook = this.selectedStudent?.currentBook;
+    });
+    console.log(this.class?.id);
+    this.loadOthersStudents(this.class?.id!).then((data) => {
+      this.$students = data;
+    });
+    this.loadAllStudents();
+  }
+
+  openSelect() {
+    this.selectRef!.open();
   }
 
   onAddStudents(e: Student[]) {
@@ -101,6 +112,16 @@ export class ClassStudentsPage implements OnInit {
       value.class = this.class!;
       this.students?.push(value);
       this.selectedStudent = this.students![0];
+      this.AllStudents?.map((student) => {
+        this.students?.forEach((data) => {
+          if (student.id === data.id) {
+            student.currentBook = data.currentBook;
+            student.class = this.class!;
+          }
+        });
+      });
+      console.log(this.AllStudents);
+      this.dbService.set('students', this.AllStudents!);
     });
   }
 
@@ -113,15 +134,20 @@ export class ClassStudentsPage implements OnInit {
     this.books = await this.dbService.loadBooks();
   }
 
-  async loadStudents() {
-    this.$students = await this.dbService.loadStudents();
+  async loadStudents(classId: number) {
+    this.students = (await this.dbService.loadStudents()).filter((student) => {
+      return student.class.id === classId;
+    });
   }
 
-  addBookForStudent() {
-    this.students?.forEach((student) => {
-      student.currentBook =
-        this.books![Math.floor(Math.random() * this.books!.length)];
+  async loadOthersStudents(classId: number) {
+    return (await this.dbService.loadStudents()).filter((student) => {
+      return student.class.id !== classId;
     });
+  }
+
+  async loadAllStudents() {
+    this.AllStudents = await this.dbService.loadStudents();
   }
 
   onCloseModal() {
@@ -183,6 +209,9 @@ export class ClassStudentsPage implements OnInit {
   }
 
   compareWith(o1: Book, o2: Book) {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+  compareWithStudents(o1: Student, o2: Student) {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 }

@@ -45,16 +45,6 @@
   @if (students?.length === 0) {
   <div style="display: flex; flex-direction: column; align-items: center">
     <h4>There are no students in this class</h4>
-    <ion-select
-      aria-label="Students"
-      placeholder="Select all students that apply"
-      [multiple]="true"
-      (ionChange)="onAddStudents($event.detail.value)"
-    >
-      <ion-select-option *ngFor="let std of $students" [value]="std"
-        >{{ std.name }}</ion-select-option
-      >
-    </ion-select>
   </div>
   } @if (!students) {
   <div class="spinner">
@@ -219,4 +209,26 @@
     </swiper-slide>
   </swiper-container>
   }
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    style="padding-bottom: 60px"
+  >
+    <ion-fab-button size="small" id="teste" (click)="openSelect()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div [hidden]="true">
+    <ion-select
+      [multiple]="true"
+      #mySelect
+      (ionChange)="onAddStudents($event.detail.value)"
+      (compareWith)="compareWithStudents"
+    >
+      <ion-select-option *ngFor="let std of $students" [value]="std"
+        >{{ std.name }}</ion-select-option
+      >
+    </ion-select>
+  </div>
 </ion-content>
