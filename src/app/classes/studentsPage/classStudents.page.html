@@ -170,7 +170,7 @@
                     slot="end"
                     aria-label="Toggle topic"
                     [enableOnOffLabels]="true"
-                    (ionChange)="onTopicChange(topic, $event.detail.checked)"
+                    (ionChange)="onTopicChange(lesson, topic, $event.detail.checked)"
                     [checked]="topic.done"
                     mode="md"
                     size="small"

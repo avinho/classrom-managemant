@@ -64,13 +64,10 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
 })
-export class StudentsPage implements AfterViewInit {
+export class StudentsPage {
   students?: Student[];
   constructor(private store: StorageService) {
     this.loadStudents();
-  }
-  ngAfterViewInit(): void {
-    console.log('teste');
   }
 
   async loadStudents() {

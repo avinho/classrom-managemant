@@ -5,11 +5,13 @@ export interface Book {
 }
 
 export interface Lesson {
+  id: number;
   name: string;
   topics: Topic[];
 }
 
 export interface Topic {
+  id: number;
   name: string;
   done: boolean;
   conclusion: null | string;

@@ -108,7 +108,7 @@ export class ClassStudentsPage implements OnInit {
   }
 
   onAddStudents(e: Student[]) {
-    e.forEach((value) => {
+    e.forEach(async (value) => {
       value.class = this.class!;
       this.students?.push(value);
       this.selectedStudent = this.students![0];
@@ -121,7 +121,7 @@ export class ClassStudentsPage implements OnInit {
         });
       });
       console.log(this.AllStudents);
-      this.dbService.set('students', this.AllStudents!);
+      await this.dbService.set('students', this.AllStudents!);
     });
   }
 
@@ -174,27 +174,49 @@ export class ClassStudentsPage implements OnInit {
     }
   }
 
-  onBookChange(book: Book) {
+  async onBookChange(book: Book) {
     this.selectedBook = book;
     this.selectedStudent!.currentBook = book;
-    this.dbService.set('students', this.students);
+    this.AllStudents?.map((student) => {
+      if (student.id === this.selectedStudent?.id) {
+        student.currentBook = book;
+      }
+    });
+    await this.dbService.set('students', this.AllStudents);
   }
 
-  onTopicChange(topic: Topic, event: any) {
+  onTopicChange(lesson: Lesson, topic: Topic, event: any) {
     topic.done = event;
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    this.dbService.set('students', this.students);
+    this.AllStudents?.map((student) => {
+      if (student.id === this.selectedStudent?.id) {
+        student.currentBook.lessons?.map((data) => {
+          if (data.id === lesson.id) {
+            data.topics.map(async (topic) => {
+              if (topic.id === topic.id) {
+                topic.done = event;
+                topic.done
+                  ? (topic.conclusion = new Date().toISOString())
+                  : (topic.conclusion = null);
+                await this.dbService.set('students', this.AllStudents);
+              }
+            });
+          }
+        });
+      }
+    });
+
     console.log(topic);
   }
 
   doneLesson(lesson: Lesson, event: any) {
     lesson.topics.forEach((topic) => {
       if (!topic.done) {
-        return this.onTopicChange(topic, event);
+        return this.onTopicChange(lesson, topic, event);
       }
-      return this.onTopicChange(topic, event);
+      return this.onTopicChange(lesson, topic, event);
     });
   }
 
@@ -202,10 +224,10 @@ export class ClassStudentsPage implements OnInit {
     return topics.every((topic) => topic.done);
   }
 
-  onDateChange(topic: Topic, date: any) {
+  async onDateChange(topic: Topic, date: any) {
     topic.done = true;
     topic.conclusion = date;
-    this.dbService.set('students', this.students);
+    await this.dbService.set('students', this.AllStudents);
   }
 
   compareWith(o1: Book, o2: Book) {
