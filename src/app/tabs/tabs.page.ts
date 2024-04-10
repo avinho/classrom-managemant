@@ -9,6 +9,7 @@ import {
 import { addIcons } from 'ionicons';
 import {
   add,
+  arrowUndoSharp,
   book,
   calendarNumber,
   calendarClear,
@@ -18,6 +19,7 @@ import {
   pencil,
   people,
   person,
+  personAdd,
   personCircle,
   arrowBack,
   school,
@@ -46,8 +48,10 @@ export class TabsPage {
       pencil,
       create,
       arrowBack,
+      arrowUndoSharp,
       calendarNumber,
       person,
+      personAdd,
       people,
       school,
       book,

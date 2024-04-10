@@ -70,7 +70,24 @@ export class StorageService {
     return await this.storage.length();
   }
 
-  public async enumerated(key: string) {
-    this.storage.forEach((key, value, index) => {});
+  public async enumerated(key: string, value: any, index: number) {
+    return this.storage.forEach((key, value, index) => {});
+  }
+
+  public async loadById(id: number) {
+    const students = await this.loadStudents();
+    try {
+      return students.find((student) => student.id === id);
+    } catch (error) {
+      console.log(error);
+    }
+    return students.find((student) => student.id === id);
+  }
+
+  public async updateStudent(student: Student) {
+    const students = await this.loadStudents();
+    const index = students.findIndex((s) => s.id === student.id);
+    students[index] = student;
+    await this.storage.set('students', students);
   }
 }

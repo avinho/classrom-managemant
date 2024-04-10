@@ -1,100 +1,100 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "name": "Ana Silva",
     "age": "18/06/2001",
     "class": {
-      "id": 1,
+      "id": 0,
+      "name": "Class 1"
+    },
+    "currentBook": null
+  },
+  {
+    "id": 1,
+    "name": "João Oliveira",
+    "age": "16/06/2004",
+    "class": {
+      "id": 0,
       "name": "Class 1"
     },
     "currentBook": null
   },
   {
     "id": 2,
-    "name": "João Oliveira",
-    "age": "16/06/2004",
+    "name": "Maria Santos",
+    "age": "12/02/2008",
     "class": {
-      "id": 1,
+      "id": 0,
       "name": "Class 1"
     },
     "currentBook": null
   },
   {
     "id": 3,
-    "name": "Maria Santos",
-    "age": "12/02/2008",
+    "name": "Pedro Lima",
+    "age": "03/01/2000",
     "class": {
-      "id": 1,
+      "id": 0,
       "name": "Class 1"
     },
     "currentBook": null
   },
   {
     "id": 4,
-    "name": "Pedro Lima",
-    "age": "03/01/2000",
+    "name": "Luana Costa",
+    "age": "01/02/1998",
     "class": {
-      "id": 1,
+      "id": 0,
       "name": "Class 1"
     },
     "currentBook": null
   },
   {
     "id": 5,
-    "name": "Luana Costa",
-    "age": "01/02/1998",
+    "name": "Rafaela Oliveira",
+    "age": "03/03/2000",
     "class": {
       "id": 1,
-      "name": "Class 1"
+      "name": "Class 2"
     },
     "currentBook": null
   },
   {
     "id": 6,
-    "name": "Rafaela Oliveira",
-    "age": "03/03/2000",
+    "name": "Mariana Ferreira",
+    "age": "07/12/2002",
     "class": {
-      "id": 2,
+      "id": 1,
       "name": "Class 2"
     },
     "currentBook": null
   },
   {
     "id": 7,
-    "name": "Mariana Ferreira",
-    "age": "07/12/2002",
+    "name": "Gabriel Silva",
+    "age": "01/01/2000",
     "class": {
-      "id": 2,
+      "id": 1,
       "name": "Class 2"
     },
     "currentBook": null
   },
   {
     "id": 8,
-    "name": "Gabriel Silva",
-    "age": "01/01/2000",
+    "name": "Lucas Oliveira",
+    "age": "11/11/1997",
     "class": {
-      "id": 2,
+      "id": 1,
       "name": "Class 2"
     },
     "currentBook": null
   },
   {
     "id": 9,
-    "name": "Lucas Oliveira",
-    "age": "11/11/1997",
-    "class": {
-      "id": 2,
-      "name": "Class 2"
-    },
-    "currentBook": null
-  },
-  {
-    "id": 10,
     "name": "Isabella Santos",
     "age": "06/11/1999",
     "class": {
-      "id": 2,
+      "id": 1,
       "name": "Class 2"
     },
     "currentBook": null

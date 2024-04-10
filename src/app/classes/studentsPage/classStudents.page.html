@@ -170,7 +170,7 @@
                     slot="end"
                     aria-label="Toggle topic"
                     [enableOnOffLabels]="true"
-                    (ionChange)="onTopicChange(lesson, topic, $event.detail.checked)"
+                    (ionChange)="onTopicChange(topic, $event.detail.checked, student)"
                     [checked]="topic.done"
                     mode="md"
                     size="small"
@@ -213,11 +213,19 @@
     vertical="bottom"
     horizontal="end"
     slot="fixed"
-    style="padding-bottom: 60px"
+    style="margin-bottom: 55px"
   >
-    <ion-fab-button size="small" id="teste" (click)="openSelect()">
+    <ion-fab-button size="small" id="teste">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="openSelect()">
+        <ion-icon name="arrow-undo-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="newStudent">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
   <div [hidden]="true">
     <ion-select
@@ -231,4 +239,50 @@
       >
     </ion-select>
   </div>
+
+  <ion-modal trigger="newStudent" #newStudentModal showBackdrop="true">
+    <ng-template>
+      <ion-content>
+        <div
+          class="ion-padding"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+          "
+        >
+          <ion-input
+            label="Student Name"
+            label-placement="stacked"
+            fill="outline"
+            placeholder="Enter student name"
+            #inputClassName
+            type="text"
+            required
+          ></ion-input>
+          <ion-input
+            label="Birthdate"
+            label-placement="stacked"
+            fill="outline"
+            placeholder="dd/mm/yyyy"
+            #inputClassName
+            type="text"
+            required
+          ></ion-input>
+          <div
+            class="ion-padding"
+            style="display: flex; justify-content: space-between"
+          >
+            <ion-buttons slot="start">
+              <ion-button color="medium">Cancel</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button [strong]="true">Confirm</ion-button>
+            </ion-buttons>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

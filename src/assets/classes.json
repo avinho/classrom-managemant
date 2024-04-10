@@ -1,12 +1,11 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "name": "Class 1",
-    "students": [
-      ]
+    "students": []
   },
   {
-    "id": 2,
+    "id": 1,
     "name": "Class 2",
     "students": []
   }

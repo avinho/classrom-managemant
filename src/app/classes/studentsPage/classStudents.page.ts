@@ -96,7 +96,6 @@ export class ClassStudentsPage implements OnInit {
       console.log('Current student:', this.selectedStudent);
       this.selectedBook = this.selectedStudent?.currentBook;
     });
-    console.log(this.class?.id);
     this.loadOthersStudents(this.class?.id!).then((data) => {
       this.$students = data;
     });
@@ -167,8 +166,6 @@ export class ClassStudentsPage implements OnInit {
     if (activeIndex >= 0 && activeIndex < this.students!.length) {
       this.selectedStudent = this.students![activeIndex];
       this.selectedBook = this.selectedStudent.currentBook;
-      console.log('Selected student:', this.selectedStudent);
-      console.log('Selected book:', this.selectedBook);
     } else {
       console.warn('Invalid slide index:', activeIndex);
     }
@@ -177,46 +174,23 @@ export class ClassStudentsPage implements OnInit {
   async onBookChange(book: Book) {
     this.selectedBook = book;
     this.selectedStudent!.currentBook = book;
-    this.AllStudents?.map((student) => {
-      if (student.id === this.selectedStudent?.id) {
-        student.currentBook = book;
-      }
-    });
-    await this.dbService.set('students', this.AllStudents);
+    await this.dbService.updateStudent(this.selectedStudent!);
   }
 
-  onTopicChange(lesson: Lesson, topic: Topic, event: any) {
+  async onTopicChange(topic: Topic, event: any, teste?: any) {
     topic.done = event;
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    this.AllStudents?.map((student) => {
-      if (student.id === this.selectedStudent?.id) {
-        student.currentBook.lessons?.map((data) => {
-          if (data.id === lesson.id) {
-            data.topics.map(async (topic) => {
-              if (topic.id === topic.id) {
-                topic.done = event;
-                topic.done
-                  ? (topic.conclusion = new Date().toISOString())
-                  : (topic.conclusion = null);
-                await this.dbService.set('students', this.AllStudents);
-              }
-            });
-          }
-        });
-      }
-    });
-
-    console.log(topic);
+    await this.dbService.updateStudent(this.selectedStudent!);
   }
 
   doneLesson(lesson: Lesson, event: any) {
     lesson.topics.forEach((topic) => {
       if (!topic.done) {
-        return this.onTopicChange(lesson, topic, event);
+        return this.onTopicChange(topic, event);
       }
-      return this.onTopicChange(lesson, topic, event);
+      return this.onTopicChange(topic, event);
     });
   }
 

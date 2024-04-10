@@ -1,20 +1,38 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "name": "Essentials 1",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "name": "Lesson 2",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -23,16 +41,184 @@
       },
       {
         "id": 2,
-        "name": "Lesson 2",
+        "name": "Lesson 3",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Lesson 4",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Lesson 5",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Lesson 6",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Lesson 7",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Lesson 8",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Lesson 9",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "Lesson 10",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Essentials 2",
+    "lessons": [
+      {
+        "id": 0,
+        "name": "Lesson 1",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
+            "name": "Topic 2",
+            "done": false,
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "name": "Lesson 2",
+        "topics": [
+          {
+            "id": 0,
+            "name": "Topic 1",
+            "done": false,
+            "conclusion": null
+          },
+          {
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -44,139 +230,13 @@
         "name": "Lesson 3",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "name": "Lesson 4",
-        "topics": [
-          {
             "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "name": "Lesson 5",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "name": "Lesson 6",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "name": "Lesson 7",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 8,
-        "name": "Lesson 8",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 9,
-        "name": "Lesson 9",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 10,
-        "name": "Lesson 10",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -187,20 +247,20 @@
   },
   {
     "id": 2,
-    "name": "Essentials 2",
+    "name": "Transitions 1",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -208,35 +268,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Lesson 3",
-        "topics": [
-          {
             "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -247,20 +289,20 @@
   },
   {
     "id": 3,
-    "name": "Transitions 1",
+    "name": "Transitions 2",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -268,17 +310,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -289,20 +331,20 @@
   },
   {
     "id": 4,
-    "name": "Transitions 2",
+    "name": "Fluency 1",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -310,17 +352,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -331,20 +373,20 @@
   },
   {
     "id": 5,
-    "name": "Fluency 1",
+    "name": "Fluency 2",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -352,17 +394,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -373,20 +415,20 @@
   },
   {
     "id": 6,
-    "name": "Fluency 2",
+    "name": "In Focus",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -394,17 +436,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -415,20 +457,20 @@
   },
   {
     "id": 7,
-    "name": "In Focus",
+    "name": "Teens Elementary 1",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -436,17 +478,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -457,20 +499,20 @@
   },
   {
     "id": 8,
-    "name": "Teens Elementary 1",
+    "name": "Teens Elementary 2",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -478,17 +520,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -502,17 +544,17 @@
     "name": "Teens Elementary 2",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -520,17 +562,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -541,20 +583,20 @@
   },
   {
     "id": 10,
-    "name": "Teens Elementary 2",
+    "name": "Teens Pre-intermediate",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -562,17 +604,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -583,20 +625,20 @@
   },
   {
     "id": 11,
-    "name": "Teens Pre-intermediate",
+    "name": "Teens Intermediate",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -604,17 +646,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -625,20 +667,20 @@
   },
   {
     "id": 12,
-    "name": "Teens Intermediate",
+    "name": "Teens Upper-intermediate",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -646,17 +688,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -667,20 +709,20 @@
   },
   {
     "id": 13,
-    "name": "Teens Upper-intermediate",
+    "name": "Teens Advanced",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -688,17 +730,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -709,20 +751,20 @@
   },
   {
     "id": 14,
-    "name": "Teens Advanced",
+    "name": "Teens Higher 1",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -730,17 +772,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -751,62 +793,20 @@
   },
   {
     "id": 15,
-    "name": "Teens Higher 1",
-    "lessons": [
-      {
-        "id": 1,
-        "name": "Lesson 1",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "name": "Lesson 2",
-        "topics": [
-          {
-            "id": 1,
-            "name": "Topic 1",
-            "done": false,
-            "conclusion": null
-          },
-          {
-            "id": 2,
-            "name": "Topic 2",
-            "done": false,
-            "conclusion": null
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 16,
     "name": "Teens Higher 2",
     "lessons": [
       {
-        "id": 1,
+        "id": 0,
         "name": "Lesson 1",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null
@@ -814,17 +814,17 @@
         ]
       },
       {
-        "id": 2,
+        "id": 1,
         "name": "Lesson 2",
         "topics": [
           {
-            "id": 1,
+            "id": 0,
             "name": "Topic 1",
             "done": false,
             "conclusion": null
           },
           {
-            "id": 2,
+            "id": 1,
             "name": "Topic 2",
             "done": false,
             "conclusion": null

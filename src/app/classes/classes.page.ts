@@ -104,7 +104,6 @@ export class ClassesPage {
 
   async onAddClass(modal: IonModal, name: any) {
     if (!name) return;
-    console.log(name);
     const newClass: Class = {
       id: Math.floor(Math.random() * 1000),
       name: name,
