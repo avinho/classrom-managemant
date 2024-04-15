@@ -20,9 +20,9 @@ export interface Topic {
 export interface Student {
   id: number;
   name: string;
-  age: string;
-  class: Class;
-  currentBook: Book;
+  birthdate: string;
+  class?: Class;
+  currentBook?: Book;
 }
 
 export interface Class {

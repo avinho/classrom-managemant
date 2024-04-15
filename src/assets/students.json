@@ -2,7 +2,7 @@
   {
     "id": 0,
     "name": "Ana Silva",
-    "age": "18/06/2001",
+    "birthdate": "18/06/2001",
     "class": {
       "id": 0,
       "name": "Class 1"
@@ -12,7 +12,7 @@
   {
     "id": 1,
     "name": "João Oliveira",
-    "age": "16/06/2004",
+    "birthdate": "16/06/2004",
     "class": {
       "id": 0,
       "name": "Class 1"
@@ -22,7 +22,7 @@
   {
     "id": 2,
     "name": "Maria Santos",
-    "age": "12/02/2008",
+    "birthdate": "12/02/2008",
     "class": {
       "id": 0,
       "name": "Class 1"
@@ -32,7 +32,7 @@
   {
     "id": 3,
     "name": "Pedro Lima",
-    "age": "03/01/2000",
+    "birthdate": "03/01/2000",
     "class": {
       "id": 0,
       "name": "Class 1"
@@ -42,7 +42,7 @@
   {
     "id": 4,
     "name": "Luana Costa",
-    "age": "01/02/1998",
+    "birthdate": "01/02/1998",
     "class": {
       "id": 0,
       "name": "Class 1"
@@ -52,7 +52,7 @@
   {
     "id": 5,
     "name": "Rafaela Oliveira",
-    "age": "03/03/2000",
+    "birthdate": "03/03/2000",
     "class": {
       "id": 1,
       "name": "Class 2"
@@ -62,7 +62,7 @@
   {
     "id": 6,
     "name": "Mariana Ferreira",
-    "age": "07/12/2002",
+    "birthdate": "07/12/2002",
     "class": {
       "id": 1,
       "name": "Class 2"
@@ -72,7 +72,7 @@
   {
     "id": 7,
     "name": "Gabriel Silva",
-    "age": "01/01/2000",
+    "birthdate": "01/01/2000",
     "class": {
       "id": 1,
       "name": "Class 2"
@@ -82,7 +82,7 @@
   {
     "id": 8,
     "name": "Lucas Oliveira",
-    "age": "11/11/1997",
+    "birthdate": "11/11/1997",
     "class": {
       "id": 1,
       "name": "Class 2"
@@ -92,7 +92,7 @@
   {
     "id": 9,
     "name": "Isabella Santos",
-    "age": "06/11/1999",
+    "birthdate": "06/11/1999",
     "class": {
       "id": 1,
       "name": "Class 2"

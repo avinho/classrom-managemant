@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -22,7 +23,7 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonListHeader,
+  IonListHeader /*  */,
   IonModal,
   IonNote,
   IonPopover,
@@ -35,13 +36,17 @@ import {
   IonToolbar,
   IonicSlides,
 } from '@ionic/angular/standalone';
-import { Book, Class, Lesson, Student, Topic } from '../../models';
+import { MaskitoDirective } from '@maskito/angular';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
+import Swiper from 'swiper';
+import { Book, Class, Student } from '../../models';
 import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-class-students',
-  templateUrl: 'classStudents.page.html',
-  styleUrls: ['classStudents.page.scss'],
+  templateUrl: 'class-students.component.html',
+  styleUrls: ['class-students.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -70,11 +75,11 @@ import { StorageService } from '../../storage.service';
     IonModal,
     IonDatetime,
     IonPopover,
+    MaskitoDirective,
+    StudentProfileComponent,
   ],
 })
-export class ClassStudentsPage implements OnInit {
-  swiperModules = [IonicSlides];
-  books?: Book[];
+export class ClassStudentsComponent implements OnInit {
   students?: Student[];
   @Input() class?: Class;
   selectedBook?: Book;
@@ -82,6 +87,16 @@ export class ClassStudentsPage implements OnInit {
   @Output() closeModal = new EventEmitter(false);
   @Output() deleteClass = new EventEmitter(false);
   @ViewChild('mySelect', { static: false }) selectRef?: IonSelect;
+  swiperModules = [IonicSlides];
+
+  teste: boolean = false;
+
+  readonly birthdateMask: MaskitoOptions = {
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicate = async (el) =>
+    (el as HTMLIonInputElement).getInputElement();
 
   $students?: Student[];
 
@@ -90,7 +105,6 @@ export class ClassStudentsPage implements OnInit {
   constructor(private dbService: StorageService) {}
 
   ngOnInit() {
-    this.loadBooks();
     this.loadStudents(this.class?.id!).then(() => {
       this.selectedStudent = this.students![0];
       console.log('Current student:', this.selectedStudent);
@@ -104,6 +118,11 @@ export class ClassStudentsPage implements OnInit {
 
   openSelect() {
     this.selectRef!.open();
+  }
+
+  onTeste() {
+    this.teste = !this.teste;
+    console.log(this.teste);
   }
 
   onAddStudents(e: Student[]) {
@@ -129,19 +148,15 @@ export class ClassStudentsPage implements OnInit {
     this.onCloseModal();
   }
 
-  async loadBooks() {
-    this.books = await this.dbService.loadBooks();
-  }
-
   async loadStudents(classId: number) {
     this.students = (await this.dbService.loadStudents()).filter((student) => {
-      return student.class.id === classId;
+      return student.class?.id === classId;
     });
   }
 
   async loadOthersStudents(classId: number) {
     return (await this.dbService.loadStudents()).filter((student) => {
-      return student.class.id !== classId;
+      return student.class?.id !== classId;
     });
   }
 
@@ -151,14 +166,6 @@ export class ClassStudentsPage implements OnInit {
 
   onCloseModal() {
     this.closeModal.emit(false);
-  }
-
-  converteDate(date: any) {
-    return new Date(date!).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   }
 
   onSlideChange(data: any) {
@@ -171,42 +178,27 @@ export class ClassStudentsPage implements OnInit {
     }
   }
 
-  async onBookChange(book: Book) {
-    this.selectedBook = book;
-    this.selectedStudent!.currentBook = book;
-    await this.dbService.updateStudent(this.selectedStudent!);
+  async newStudent(modal: IonModal, name: any, birthdate: any) {
+    const _data: Student = {
+      id: Math.floor(Math.random() * 1000),
+      name: name,
+      birthdate: new Date(birthdate).toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      }),
+      class: this.class!,
+    };
+
+    await this.dbService.addStudent(_data);
+    modal.dismiss();
+    console.log(_data);
   }
 
-  async onTopicChange(topic: Topic, event: any, teste?: any) {
-    topic.done = event;
-    topic.done
-      ? (topic.conclusion = new Date().toISOString())
-      : (topic.conclusion = null);
-    await this.dbService.updateStudent(this.selectedStudent!);
+  dismissModal(modal: IonModal) {
+    modal.dismiss();
   }
 
-  doneLesson(lesson: Lesson, event: any) {
-    lesson.topics.forEach((topic) => {
-      if (!topic.done) {
-        return this.onTopicChange(topic, event);
-      }
-      return this.onTopicChange(topic, event);
-    });
-  }
-
-  isLessonDone(topics: Topic[]) {
-    return topics.every((topic) => topic.done);
-  }
-
-  async onDateChange(topic: Topic, date: any) {
-    topic.done = true;
-    topic.conclusion = date;
-    await this.dbService.set('students', this.AllStudents);
-  }
-
-  compareWith(o1: Book, o2: Book) {
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  }
   compareWithStudents(o1: Student, o2: Student) {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }

@@ -1,0 +1,212 @@
+<div style="height: 1000px">
+  <ion-card class="studentCard">
+    <ion-card-content style="padding: 0">
+      <ion-list>
+        <ion-item>
+          <ion-icon name="person"></ion-icon>
+          <ion-label class="cardLabel">{{ student.name }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="calendar-number"></ion-icon>
+          <ion-labe class="cardLabel" l>{{ student.birthdate }}</ion-labe>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-icon name="school"></ion-icon>
+          <ion-label class="cardLabel">{{ student.class?.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list lines="inset" class="bookList">
+    <div class="select-wrapper">
+      <ion-icon name="book" style="margin-right: 5px"></ion-icon>
+      <ion-select
+        class="bookSelect"
+        placeholder="Select a book"
+        [value]="student.currentBook"
+        [compareWith]="compareWith"
+        (ionChange)="onBookChange($event.detail.value)"
+        interface="popover"
+      >
+        <ion-select-option *ngFor="let book of books" [value]="book">{{
+          book.name
+        }}</ion-select-option>
+      </ion-select>
+    </div>
+  </ion-list>
+
+  <ion-accordion-group
+    *ngIf="student.currentBook"
+    expand="inset"
+    style="padding-top: 0"
+  >
+    <ion-accordion *ngFor="let lesson of student.currentBook?.lessons">
+      <ion-item slot="header">
+        <ion-title>{{ lesson.name }}</ion-title>
+        <ion-badge
+          style="
+            background: rgba(38, 116, 38, 0.637);
+            display: inline-flex;
+            align-items: center;
+          "
+          *ngIf="isLessonDone(lesson.topics)"
+        >
+          Done
+          <ion-icon
+            style="font-size: 1rem; margin-left: 5px"
+            name="checkmark-done-sharp"
+          ></ion-icon
+        ></ion-badge>
+      </ion-item>
+
+      <div slot="content" class="ion-padding" style="padding-top: 0">
+        <ion-list
+          style="
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+          "
+        >
+          <ion-item>
+            <ion-toggle
+              slot="end"
+              aria-label="Toggle topic"
+              [enableOnOffLabels]="true"
+              [checked]="isLessonDone(lesson.topics)"
+              mode="md"
+              (ionChange)="doneLesson(lesson, $event.detail.checked)"
+              size="small"
+            >
+              Lesson Done
+            </ion-toggle>
+          </ion-item>
+          <ion-item *ngFor="let topic of lesson.topics">
+            <ion-label>{{ topic.name }}</ion-label>
+            <ion-badge *ngIf="topic.done">{{
+              converteDate(topic.conclusion)
+            }}</ion-badge>
+
+            <ion-toggle
+              slot="end"
+              aria-label="Toggle topic"
+              [enableOnOffLabels]="true"
+              (ionChange)="onTopicChange(topic, $event.detail.checked, student)"
+              [checked]="topic.done"
+              mode="md"
+              size="small"
+            >
+            </ion-toggle>
+            <ion-button slot="end" fill="clear" (click)="popover.present()">
+              <ion-icon color="medium" name="calendar-clear"></ion-icon>
+            </ion-button>
+            <ion-popover
+              #popover
+              size="auto"
+              reference="event"
+              [keepContentsMounted]="true"
+              show-backdrop="false"
+            >
+              <ng-template>
+                <ion-datetime
+                  [value]="topic.conclusion"
+                  locale="en-US"
+                  presentation="date"
+                  (ionChange)="onDateChange(topic, $event.detail.value)"
+                  showDefaultButtons="true"
+                ></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</div>
+<!--
+<cdk-virtual-scroll-viewport
+  style="width: 100%"
+  *ngIf="student.currentBook?.lessons"
+  itemSize="{{ student.currentBook?.lessons?.length }}"
+>
+  <ion-accordion-group expand="inset" style="padding-top: 0">
+    <ion-accordion *ngFor="let lesson of student?.currentBook?.lessons">
+      <ion-item slot="header">
+        <ion-title>{{ lesson.name }}</ion-title>
+        <ion-badge
+          style="
+            background: rgba(38, 116, 38, 0.637);
+            display: inline-flex;
+            align-items: center;
+          "
+          *ngIf="isLessonDone(lesson.topics)"
+        >
+          Done
+          <ion-icon
+            style="font-size: 1rem; margin-left: 5px"
+            name="checkmark-done-sharp"
+          ></ion-icon
+        ></ion-badge>
+      </ion-item>
+
+      <div slot="content" class="ion-padding" style="padding-top: 0">
+        <ion-list
+          style="
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+          "
+        >
+          <ion-item>
+            <ion-toggle
+              slot="end"
+              aria-label="Toggle topic"
+              [enableOnOffLabels]="true"
+              [checked]="isLessonDone(lesson.topics)"
+              mode="md"
+              (ionChange)="doneLesson(lesson, $event.detail.checked)"
+              size="small"
+            >
+              Lesson Done
+            </ion-toggle>
+          </ion-item>
+          <ion-item *ngFor="let topic of lesson.topics">
+            <ion-label>{{ topic.name }}</ion-label>
+            <ion-badge *ngIf="topic.done">{{
+              converteDate(topic.conclusion)
+            }}</ion-badge>
+
+            <ion-toggle
+              slot="end"
+              aria-label="Toggle topic"
+              [enableOnOffLabels]="true"
+              (ionChange)="onTopicChange(topic, $event.detail.checked, student)"
+              [checked]="topic.done"
+              mode="md"
+              size="small"
+            >
+            </ion-toggle>
+            <ion-button slot="end" fill="clear" (click)="popover.present()">
+              <ion-icon color="medium" name="calendar-clear"></ion-icon>
+            </ion-button>
+            <ion-popover
+              #popover
+              size="auto"
+              reference="event"
+              [keepContentsMounted]="true"
+              show-backdrop="false"
+            >
+              <ng-template>
+                <ion-datetime
+                  [value]="topic.conclusion"
+                  locale="en-US"
+                  presentation="date"
+                  (ionChange)="onDateChange(topic, $event.detail.value)"
+                  showDefaultButtons="true"
+                ></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</cdk-virtual-scroll-viewport> -->

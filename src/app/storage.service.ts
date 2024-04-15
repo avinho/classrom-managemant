@@ -74,14 +74,49 @@ export class StorageService {
     return this.storage.forEach((key, value, index) => {});
   }
 
-  public async loadById(id: number) {
-    const students = await this.loadStudents();
+  public async loadStudentById(id: number) {
     try {
+      const students = await this.loadStudents();
       return students.find((student) => student.id === id);
     } catch (error) {
-      console.log(error);
+      throw console.error(error);
     }
-    return students.find((student) => student.id === id);
+  }
+
+  public async loadClassById(id: number) {
+    try {
+      const classes = await this.loadClasses();
+      return classes.find((data) => data.id === id);
+    } catch (error) {
+      throw console.error(error);
+    }
+  }
+
+  public async loadBookById(id: number) {
+    try {
+      const books = await this.loadBooks();
+      return books.find((data) => data.id === id);
+    } catch (error) {
+      throw console.error(error);
+    }
+  }
+
+  public async addStudent(student: Student) {
+    const students = await this.loadStudents();
+    students.push(student);
+    await this.storage.set('students', students);
+  }
+
+  public async addBook(book: Book) {
+    const books = await this.loadBooks();
+    books.push(book);
+    await this.storage.set('books', books);
+  }
+
+  public async addClass(newClass: Class) {
+    const classes = await this.loadClasses();
+    classes.push(newClass);
+    await this.storage.set('classes', classes);
   }
 
   public async updateStudent(student: Student) {

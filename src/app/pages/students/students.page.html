@@ -1,0 +1,96 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Students </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button fill="clear" (click)="loadStudents()" color="medium">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  @if(!students) {
+  <div class="spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else {
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let student of students" [button]="true"
+          ><ion-label>{{ student.name }}</ion-label>
+          <ion-chip *ngIf="student.class" (click)="clicou(student)">
+            <ion-icon name="school"></ion-icon>
+            <ion-label>{{ student.class.name }}</ion-label>
+          </ion-chip>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="small" id="newStudent">
+      <ion-icon size="small" name="person-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-modal trigger="newStudent" #newStudentModal>
+    <ng-template>
+      <ion-content>
+        <form
+          class="ion-padding"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+          "
+        >
+          <ion-input
+            label="Student Name"
+            label-placement="stacked"
+            fill="outline"
+            placeholder="Enter student name"
+            #inputName
+            type="text"
+            maxlength="40"
+            minlenght="2"
+            required
+          ></ion-input>
+          <ion-input
+            label="Birthdate"
+            type="date"
+            label-placement="stacked"
+            fill="outline"
+            placeholder="dd/mm/yyyy"
+            #inputBirthdate
+            required
+          ></ion-input>
+          <div
+            class="ion-padding"
+            style="display: flex; justify-content: space-between"
+          >
+            <ion-buttons slot="start">
+              <ion-button color="medium" (click)="dismissModal(newStudentModal)"
+                >Cancel</ion-button
+              >
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button
+                [strong]="true"
+                (click)="
+                  newStudent(
+                    newStudentModal,
+                    inputName.value,
+                    inputBirthdate.value
+                  )
+                "
+                >Confirm</ion-button
+              >
+            </ion-buttons>
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  }
+</ion-content>

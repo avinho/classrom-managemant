@@ -12,16 +12,6 @@ ion-header {
   align-items: center!important;
 }
 
-.bookSelect {
-  --highlight-color-focused: none;
-  background-color: transparent;
-}
-
-cdk-virtual-scroll-viewport {
-  height: 100%;
-  width: 100%;
-}
-
 ion-spinner {
   width: 70px;
   height: 70px;
@@ -33,27 +23,22 @@ ion-spinner {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-ion-badge {
-  --background: rgb(214, 132, 94);
-  font-size: 11px;
-  margin-right: 1.4rem;
-}
 
 ion-title {
   font-size: 1rem;
 }
 
-ion-modal {
+/* ion-modal {
   --height: 40%;
   --width: 80%;
   --border-radius: 16px;
   --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-
+} */
+/*
 .addStudentModal {
   --height: 20%;
   --width: 80%;
   --border-radius: 10px;
   --background: rgba(0, 0, 0, 0.3);
   --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
-}
+} */

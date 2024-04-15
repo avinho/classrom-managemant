@@ -9,17 +9,17 @@ export const routes: Routes = [
       {
         path: 'classes',
         loadComponent: () =>
-          import('../classes/classes.page').then((m) => m.ClassesPage),
+          import('../pages/classes/classes.page').then((m) => m.ClassesPage),
       },
       {
         path: 'students',
         loadComponent: () =>
-          import('../students/students.page').then((m) => m.StudentsPage),
+          import('../pages/students/students.page').then((m) => m.StudentsPage),
       },
       {
         path: 'books',
         loadComponent: () =>
-          import('../books/books.page').then((m) => m.BooksPage),
+          import('../pages/books/books.page').then((m) => m.BooksPage),
       },
       {
         path: '',

@@ -28,9 +28,9 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { Book, Class, Student } from '../models';
-import { StorageService } from '../storage.service';
-import { ClassStudentsPage } from './studentsPage/classStudents.page';
+import { Book, Class, Student } from '../../models';
+import { StorageService } from '../../storage.service';
+import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
 
 @Component({
   selector: 'app-classes',
@@ -65,7 +65,7 @@ import { ClassStudentsPage } from './studentsPage/classStudents.page';
     IonContent,
     IonThumbnail,
     CommonModule,
-    ClassStudentsPage,
+    ClassStudentsComponent,
   ],
 })
 export class ClassesPage {
@@ -82,7 +82,7 @@ export class ClassesPage {
     this.classes.forEach(async (classItem) => {
       classItem.students = (await this.storage.loadStudents()).filter(
         (student) => {
-          return student.class.id === classItem.id;
+          return student.class?.id === classItem.id;
         }
       );
       console.log(classItem);
@@ -110,13 +110,13 @@ export class ClassesPage {
       students: [],
     };
     this.classes?.push(newClass);
-    await this.storage.set('classes', this.classes);
+    await this.storage.addClass(newClass);
     modal.dismiss();
   }
 
   async loadStudents(classId: number) {
     return (await this.storage.loadStudents()).filter((student) => {
-      return student.class.id === classId;
+      return student.class!.id === classId;
     });
   }
 
