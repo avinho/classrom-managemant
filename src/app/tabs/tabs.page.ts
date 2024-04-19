@@ -28,6 +28,7 @@ import {
   pin,
   refresh,
   listOutline,
+  arrowBackOutline,
 } from 'ionicons/icons';
 
 @Component({
@@ -62,6 +63,7 @@ export class TabsPage {
       pin,
       refresh,
       listOutline,
+      arrowBackOutline,
     });
   }
 }

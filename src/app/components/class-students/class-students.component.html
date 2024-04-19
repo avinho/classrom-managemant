@@ -1,13 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button
-        default-href="#"
-        (click)="onCloseModal()"
-      ></ion-back-button>
+      <ion-button default-href="#" (click)="onCloseModal()"
+        ><ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon
+      ></ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button fill="clear" (click)="onTeste()">
+      <ion-button fill="clear" (click)="teste = !teste">
         <ion-icon slot="icon-only" name="list-outline"></ion-icon>
       </ion-button>
       <ion-button fill="clear" id="delete-trigger" color="danger">
@@ -73,10 +72,10 @@
     [pagination]="true"
   >
     <swiper-slide style="display: block" *ngFor="let student of students"
-      ><app-student-profile
+      ><app-student-data
         class="ion-padding"
         [student]="student"
-      ></app-student-profile>
+      ></app-student-data>
     </swiper-slide>
   </swiper-container>
   }
@@ -103,7 +102,7 @@
     </ion-select>
   </div>
 
-  <ion-modal trigger="newStudent" #newStudentModal showBackdrop="true">
+  <ion-modal #newStudentModal showBackdrop="true">
     <ng-template>
       <ion-content>
         <form

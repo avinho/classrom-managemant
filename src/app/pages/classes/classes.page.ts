@@ -79,14 +79,6 @@ export class ClassesPage {
 
   async loadClasses() {
     this.classes = await this.storage.loadClasses();
-    this.classes.forEach(async (classItem) => {
-      classItem.students = (await this.storage.loadStudents()).filter(
-        (student) => {
-          return student.class?.id === classItem.id;
-        }
-      );
-      console.log(classItem);
-    });
   }
 
   closeModal(modal: IonModal) {

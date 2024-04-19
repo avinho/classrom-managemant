@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -38,8 +37,7 @@ import {
 } from '@ionic/angular/standalone';
 import { MaskitoDirective } from '@maskito/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
-import Swiper from 'swiper';
+import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
 import { Book, Class, Student } from '../../models';
 import { StorageService } from '../../storage.service';
 
@@ -76,7 +74,7 @@ import { StorageService } from '../../storage.service';
     IonDatetime,
     IonPopover,
     MaskitoDirective,
-    StudentProfileComponent,
+    StudentDataComponent,
   ],
 })
 export class ClassStudentsComponent implements OnInit {
@@ -110,19 +108,14 @@ export class ClassStudentsComponent implements OnInit {
       console.log('Current student:', this.selectedStudent);
       this.selectedBook = this.selectedStudent?.currentBook;
     });
+    this.loadAllStudents();
     this.loadOthersStudents(this.class?.id!).then((data) => {
       this.$students = data;
     });
-    this.loadAllStudents();
   }
 
-  openSelect() {
+  async openSelect() {
     this.selectRef!.open();
-  }
-
-  onTeste() {
-    this.teste = !this.teste;
-    console.log(this.teste);
   }
 
   onAddStudents(e: Student[]) {
@@ -149,9 +142,12 @@ export class ClassStudentsComponent implements OnInit {
   }
 
   async loadStudents(classId: number) {
+    let start = performance.now();
     this.students = (await this.dbService.loadStudents()).filter((student) => {
       return student.class?.id === classId;
     });
+    let end = performance.now();
+    console.log(end - start);
   }
 
   async loadOthersStudents(classId: number) {
@@ -179,7 +175,7 @@ export class ClassStudentsComponent implements OnInit {
   }
 
   async newStudent(modal: IonModal, name: any, birthdate: any) {
-    const _data: Student = {
+    const student: Student = {
       id: Math.floor(Math.random() * 1000),
       name: name,
       birthdate: new Date(birthdate).toLocaleDateString('pt-BR', {
@@ -187,12 +183,12 @@ export class ClassStudentsComponent implements OnInit {
         month: 'numeric',
         day: 'numeric',
       }),
-      class: this.class!,
+      class: null,
     };
 
-    await this.dbService.addStudent(_data);
+    await this.dbService.addStudent(student);
     modal.dismiss();
-    console.log(_data);
+    console.log(student);
   }
 
   dismissModal(modal: IonModal) {

@@ -21,7 +21,7 @@ export interface Student {
   id: number;
   name: string;
   birthdate: string;
-  class?: Class;
+  class: Class | null;
   currentBook?: Book;
 }
 

@@ -107,6 +107,13 @@ export class StorageService {
     await this.storage.set('students', students);
   }
 
+  public async deleteStudent(student: Student) {
+    const students = await this.loadStudents();
+    const index = students.findIndex((s) => s.id === student.id);
+    students.splice(index, 1);
+    await this.storage.set('students', students);
+  }
+
   public async addBook(book: Book) {
     const books = await this.loadBooks();
     books.push(book);

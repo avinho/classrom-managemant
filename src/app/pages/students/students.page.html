@@ -18,16 +18,30 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let student of students" [button]="true"
+        <ion-item
+          *ngFor="let student of students"
+          [button]="true"
+          (click)="clicou(student)"
           ><ion-label>{{ student.name }}</ion-label>
-          <ion-chip *ngIf="student.class" (click)="clicou(student)">
+          <ion-chip *ngIf="student.class" (click)="teste()">
             <ion-icon name="school"></ion-icon>
             <ion-label>{{ student.class.name }}</ion-label>
           </ion-chip>
         </ion-item>
+        <ion-modal #modal>
+          <ng-template>
+            <app-student-profile
+              (closeModal)="dismissModal(modal)"
+              (deleteStudent)="deleteStudent(selectedStudent!)"
+              [student]="selectedStudent"
+              style="height: 100%"
+            ></app-student-profile
+          ></ng-template>
+        </ion-modal>
       </ion-list>
     </ion-card-content>
   </ion-card>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button size="small" id="newStudent">
       <ion-icon size="small" name="person-add"></ion-icon>
