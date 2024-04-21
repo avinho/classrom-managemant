@@ -9,7 +9,7 @@
             type="text"
             disabled="{{ edit }}"
             (ionBlur)="editStudentName(inputName.value)"
-            [value]="student.name"
+            [value]="student().name"
             #inputName
           >
             <ion-button fill="clear" slot="end" (click)="edit = !edit">
@@ -22,7 +22,7 @@
           <ion-input
             class="cardLabel"
             disabled="{{ edit }}"
-            [value]="student.birthdate"
+            [value]="student().birthdate"
           ></ion-input>
         </ion-item>
         <ion-item lines="none">
@@ -30,7 +30,7 @@
           <ion-list class="cardLabel">
             <ion-select
               disabled="{{ edit }}"
-              [value]="student.class"
+              [value]="student().class"
               [compareWith]="compareWithClasses"
               (ionChange)="editStudentClass($event.detail.value)"
             >
@@ -53,7 +53,7 @@
       <ion-select
         class="bookSelect"
         placeholder="Select a book"
-        [value]="student.currentBook"
+        [value]="student().currentBook"
         [compareWith]="compareWith"
         (ionChange)="onBookChange($event.detail.value)"
         interface="popover"
@@ -66,11 +66,11 @@
   </ion-list>
 
   <ion-accordion-group
-    *ngIf="student.currentBook"
+    *ngIf="student().currentBook"
     expand="inset"
     style="padding-top: 0"
   >
-    <ion-accordion *ngFor="let lesson of student.currentBook?.lessons">
+    <ion-accordion *ngFor="let lesson of student().currentBook?.lessons">
       <ion-item slot="header">
         <ion-title>{{ lesson.name }}</ion-title>
         <ion-badge

@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  effect,
+  input,
+  output,
+} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -33,23 +42,19 @@ import { StudentDataComponent } from '../student-data/student-data.component';
     StudentDataComponent,
   ],
 })
-export class StudentProfileComponent implements OnInit {
-  @Output() closeModal = new EventEmitter(false);
-  @Output() deleteStudent = new EventEmitter(false);
-  @Input() student?: Student;
+export class StudentProfileComponent {
+  closeModal = output<boolean>();
+  deleteStudent = output<Student>();
+  student = input.required<Student>();
 
   constructor() {}
-
-  ngOnInit() {
-    return;
-  }
 
   onCloseModal() {
     this.closeModal.emit(false);
   }
 
-  onDeleteStudent(data: Student) {
-    this.deleteStudent.emit(data);
+  onDeleteStudent(student: Student) {
+    this.deleteStudent.emit(student);
     this.onCloseModal();
   }
 }

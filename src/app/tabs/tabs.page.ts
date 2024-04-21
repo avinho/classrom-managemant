@@ -9,26 +9,27 @@ import {
 import { addIcons } from 'ionicons';
 import {
   add,
+  arrowBack,
+  arrowBackOutline,
   arrowUndoSharp,
   book,
-  calendarNumber,
   calendarClear,
+  calendarNumber,
   checkmarkDone,
   checkmarkDoneSharp,
+  close,
   create,
+  listOutline,
   pencil,
   people,
   person,
   personAdd,
   personCircle,
-  arrowBack,
-  school,
-  trash,
-  close,
   pin,
   refresh,
-  listOutline,
-  arrowBackOutline,
+  school,
+  search,
+  trash,
 } from 'ionicons/icons';
 
 @Component({
@@ -43,6 +44,7 @@ export class TabsPage {
 
   constructor() {
     addIcons({
+      search,
       calendarClear,
       personCircle,
       checkmarkDone,

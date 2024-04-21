@@ -6,6 +6,8 @@ import {
   Input,
   OnInit,
   ViewChild,
+  inject,
+  input,
 } from '@angular/core';
 import {
   IonAccordion,
@@ -60,26 +62,27 @@ import { StorageService } from '../../storage.service';
   ],
 })
 export class StudentDataComponent implements OnInit {
-  @Input() student!: Student;
+  private readonly dbService = inject(StorageService);
+  student = input.required<Student>();
   books?: Book[];
   classes?: Class[];
   selectedBook?: Book;
   edit: boolean = true;
 
-  constructor(private dbService: StorageService) {}
+  constructor() {}
   ngOnInit(): void {
     this.loadBooks();
     this.loadClasses();
   }
 
   editStudentName(name: any) {
-    this.student.name = name;
-    this.dbService.updateStudent(this.student);
+    this.student().name = name;
+    this.dbService.updateStudent(this.student());
   }
 
   editStudentClass(newClass: Class) {
-    this.student.class = newClass;
-    this.dbService.updateStudent(this.student);
+    this.student().class = newClass;
+    this.dbService.updateStudent(this.student());
   }
 
   async loadBooks() {
@@ -92,8 +95,8 @@ export class StudentDataComponent implements OnInit {
 
   async onBookChange(book: Book) {
     this.selectedBook = book;
-    this.student.currentBook = book;
-    await this.dbService.updateStudent(this.student);
+    this.student().currentBook = book;
+    await this.dbService.updateStudent(this.student());
   }
 
   isLessonDone(topics: Topic[]) {
@@ -105,7 +108,7 @@ export class StudentDataComponent implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    await this.dbService.updateStudent(this.student);
+    await this.dbService.updateStudent(this.student());
   }
 
   doneLesson(lesson: Lesson, event: any) {

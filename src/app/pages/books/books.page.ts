@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Book } from '../../models';
@@ -11,13 +11,21 @@ import { StorageService } from '../../storage.service';
   styleUrls: ['./books.page.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [IonicModule, CommonModule, FormsModule] /*  */,
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class BooksPage {
+  private readonly store = inject(StorageService);
   books?: Book[];
 
-  constructor(private store: StorageService) {
+  constructor() {
     this.loadBooks();
+  }
+
+  handleRefresh(event: any) {
+    setTimeout(async () => {
+      await this.loadBooks();
+      event.target.complete();
+    }, 1000);
   }
 
   async loadBooks() {

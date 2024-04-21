@@ -1,40 +1,54 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> Students </ion-title>
-    <ion-buttons slot="primary">
-      <ion-button fill="clear" (click)="loadStudents()" color="medium">
-        <ion-icon slot="icon-only" name="refresh"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  @if(!students) {
-  <div class="spinner">
-    <ion-spinner name="crescent"></ion-spinner>
-  </div>
-  } @else {
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card>
+    <ion-card-content>
+      <ion-input
+        placeholder="Student Name"
+        type="text"
+        #searchInput
+        (ionInput)="filter(searchInput.value)"
+      >
+        <ion-icon slot="start" size="small" name="person"></ion-icon>
+        <ion-icon slot="end" size="small" name="search"></ion-icon>
+      </ion-input>
+    </ion-card-content>
+  </ion-card>
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-item
-          *ngFor="let student of students"
-          [button]="true"
-          (click)="clicou(student)"
-          ><ion-label>{{ student.name }}</ion-label>
-          <ion-chip *ngIf="student.class" (click)="teste()">
-            <ion-icon name="school"></ion-icon>
-            <ion-label>{{ student.class.name }}</ion-label>
-          </ion-chip>
-        </ion-item>
+        <ng-container *ngIf="students$ | async as students">
+          @if (students.length === 0) {
+          <ion-item>
+            <ion-label>No students found :(</ion-label>
+          </ion-item>
+          } @else {
+          <ion-item
+            *ngFor="let student of students$ | async"
+            [button]="true"
+            (click)="openProfile(student)"
+            ><ion-label>{{ student.name }}</ion-label>
+            <ion-chip *ngIf="student.class">
+              <ion-icon name="school"></ion-icon>
+              <ion-label>{{ student.class.name }}</ion-label>
+            </ion-chip>
+          </ion-item>
+          }
+        </ng-container>
+
         <ion-modal #modal>
           <ng-template>
             <app-student-profile
               (closeModal)="dismissModal(modal)"
-              (deleteStudent)="deleteStudent(selectedStudent!)"
+              (deleteStudent)="deleteStudent(selectedStudent)"
               [student]="selectedStudent"
-              style="height: 100%"
             ></app-student-profile
           ></ng-template>
         </ion-modal>
@@ -50,15 +64,7 @@
   <ion-modal trigger="newStudent" #newStudentModal>
     <ng-template>
       <ion-content>
-        <form
-          class="ion-padding"
-          style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-          "
-        >
+        <form class="ion-padding">
           <ion-input
             label="Student Name"
             label-placement="stacked"
@@ -106,5 +112,4 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-  }
 </ion-content>

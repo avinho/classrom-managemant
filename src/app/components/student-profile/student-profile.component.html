@@ -27,16 +27,16 @@
               [strong]="true"
               color="danger"
               (click)="popover.dismiss()"
-              (click)="onDeleteStudent(student!)"
+              (click)="onDeleteStudent(student())"
               >Confirm</ion-button
             >
           </ion-buttons>
         </div>
       </ng-template>
     </ion-popover>
-    <ion-title>{{ student?.name }}</ion-title>
+    <ion-title>{{ student().name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <app-student-data [student]="student!"></app-student-data>
+  <app-student-data [student]="student()"></app-student-data>
 </ion-content>

@@ -27,6 +27,8 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  IonRefresherContent,
+  IonRefresher,
 } from '@ionic/angular/standalone';
 import { Book, Class, Student } from '../../models';
 import { StorageService } from '../../storage.service';
@@ -38,6 +40,8 @@ import { ClassStudentsComponent } from '../../components/class-students/class-st
   styleUrls: ['classes.page.scss'],
   standalone: true,
   imports: [
+    IonRefresher,
+    IonRefresherContent,
     IonButtons,
     IonInput,
     IonSpinner,
@@ -81,6 +85,13 @@ export class ClassesPage {
     this.classes = await this.storage.loadClasses();
   }
 
+  handleRefresh(event: any) {
+    setTimeout(async () => {
+      this.loadClasses();
+      event.target.complete();
+    }, 1000);
+  }
+
   closeModal(modal: IonModal) {
     modal.dismiss();
   }
@@ -94,7 +105,7 @@ export class ClassesPage {
     }
   }
 
-  async onAddClass(modal: IonModal, name: any) {
+  async onAddClass(name: any, modal?: IonModal) {
     if (!name) return;
     const newClass: Class = {
       id: Math.floor(Math.random() * 1000),
@@ -103,7 +114,7 @@ export class ClassesPage {
     };
     this.classes?.push(newClass);
     await this.storage.addClass(newClass);
-    modal.dismiss();
+    modal?.dismiss();
   }
 
   async loadStudents(classId: number) {

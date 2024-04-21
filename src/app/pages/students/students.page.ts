@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, inject, viewChild } from '@angular/core';
 import {
   IonAvatar,
   IonButton,
@@ -14,7 +14,6 @@ import {
   IonDatetimeButton,
   IonFab,
   IonFabButton,
-  IonFabList,
   IonGrid,
   IonHeader,
   IonIcon,
@@ -30,10 +29,12 @@ import {
   IonSpinner,
   IonTitle,
   IonToolbar,
+  IonRefresher,
+  IonRefresherContent,
 } from '@ionic/angular/standalone';
+import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
 import { Student } from '../../models';
 import { StorageService } from '../../storage.service';
-import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
 
 @Component({
   selector: 'app-students-page',
@@ -41,6 +42,8 @@ import { StudentProfileComponent } from 'src/app/components/student-profile/stud
   styleUrls: ['students.page.scss'],
   standalone: true,
   imports: [
+    IonRefresherContent,
+    IonRefresher,
     IonInput,
     IonButton,
     IonButtons,
@@ -73,41 +76,58 @@ import { StudentProfileComponent } from 'src/app/components/student-profile/stud
     StudentProfileComponent,
   ],
 })
-export class StudentsPage {
-  students?: Student[];
-  selectedStudent?: Student;
+export class StudentsPage implements OnInit {
+  [x: string]: any;
+  private readonly store = inject(StorageService);
+  students$?: Promise<Student[]>;
+  selectedStudent!: Student;
+  searchTerm = '';
 
-  @ViewChild('modal', { static: false }) modalRef?: IonModal;
+  searchInput = viewChild<IonInput>('searchInput');
+  modalRef = viewChild<IonModal>('modal');
 
-  constructor(private store: StorageService) {
+  constructor() {}
+
+  ngOnInit() {
     this.loadStudents();
   }
 
-  clicou(student: Student) {
-    this.modalRef?.present();
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      this.loadStudents();
+      event.target.complete();
+    }, 1000);
+  }
+
+  openProfile(student: Student) {
     this.selectedStudent = student;
+    this.modalRef()?.present();
     console.log('clicou', student.name);
   }
 
   async loadStudents() {
-    this.students = await this.store.loadStudents();
-    this.sortStudents();
+    this.students$ = this.store.loadStudents().then((students) => {
+      students.sort((a, b) => (a.name > b.name ? 1 : -1));
+      return this.filterStudents(students);
+    });
+    console.log(await this.students$);
   }
 
-  teste() {
-    console.log('teste');
+  filterStudents(students: Student[]): Student[] {
+    return students.filter((student) =>
+      student.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
-  sortStudents() {
-    this.students?.sort((a, b) => (a.name > b.name ? 1 : -1));
+  async filter(query: any) {
+    this.searchTerm = query;
+    await this.loadStudents();
   }
 
   async deleteStudent(student: Student) {
     await this.store.deleteStudent(student);
     await this.loadStudents();
   }
-
-  onAddStudents(e: Student[]) {}
 
   dismissModal(modal: IonModal) {
     modal.dismiss();
@@ -129,9 +149,8 @@ export class StudentsPage {
       class: null,
     };
 
-    this.students?.push(newStudent);
-    this.sortStudents();
     await this.store.addStudent(newStudent);
+    this.loadStudents();
     modal.dismiss();
   }
 }
