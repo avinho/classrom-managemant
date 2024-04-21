@@ -17,6 +17,10 @@ ion-select::part(icon) {
   display: none;
 }
 
+label .toggle-wrapper{
+  justify-content: flex-end!important;
+}
+
 .bookList {
   height: 5vh;
   align-self: flex-start;

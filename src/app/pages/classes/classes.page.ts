@@ -87,7 +87,7 @@ export class ClassesPage {
 
   handleRefresh(event: any) {
     setTimeout(async () => {
-      this.loadClasses();
+      await this.loadClasses();
       event.target.complete();
     }, 1000);
   }

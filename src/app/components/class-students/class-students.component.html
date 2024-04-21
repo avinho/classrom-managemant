@@ -58,10 +58,21 @@
   >
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let teste of students" [button]="true"
-          ><ion-label>{{ teste.name }}</ion-label>
+        <ion-item
+          *ngFor="let std of students"
+          [button]="true"
+          (click)="openProfile(std)"
+          ><ion-label>{{ std.name }}</ion-label>
         </ion-item>
       </ion-list>
+      <ion-modal #modal>
+        <ng-template>
+          <app-student-profile
+            (closeModal)="dismissModal(modal)"
+            [student]="selectedStudent!"
+          ></app-student-profile
+        ></ng-template>
+      </ion-modal>
     </ion-card-content>
   </ion-card>
   } @else {

@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  viewChild,
 } from '@angular/core';
 import {
   IonButton,
@@ -40,6 +41,7 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
 import { Book, Class, Student } from '../../models';
 import { StorageService } from '../../storage.service';
+import { StudentProfileComponent } from '../student-profile/student-profile.component';
 
 @Component({
   selector: 'app-class-students',
@@ -75,6 +77,7 @@ import { StorageService } from '../../storage.service';
     IonPopover,
     MaskitoDirective,
     StudentDataComponent,
+    StudentProfileComponent,
   ],
 })
 export class ClassStudentsComponent implements OnInit {
@@ -86,6 +89,7 @@ export class ClassStudentsComponent implements OnInit {
   @Output() deleteClass = new EventEmitter(false);
   @ViewChild('mySelect', { static: false }) selectRef?: IonSelect;
   swiperModules = [IonicSlides];
+  modalRef = viewChild<IonModal>('modal');
 
   teste: boolean = false;
 
@@ -112,6 +116,12 @@ export class ClassStudentsComponent implements OnInit {
     this.loadOthersStudents(this.class?.id!).then((data) => {
       this.$students = data;
     });
+  }
+
+  openProfile(student: Student) {
+    this.selectedStudent = student;
+    this.modalRef()?.present();
+    console.log('clicou', student.name);
   }
 
   async openSelect() {
