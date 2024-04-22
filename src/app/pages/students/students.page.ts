@@ -77,7 +77,6 @@ import { StorageService } from '../../storage.service';
   ],
 })
 export class StudentsPage implements OnInit {
-  [x: string]: any;
   private readonly store = inject(StorageService);
   students$?: Promise<Student[]>;
   selectedStudent!: Student;

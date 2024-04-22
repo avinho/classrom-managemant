@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="onCloseModal()"
+        ><ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button fill="clear" id="delete-trigger" color="danger">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-popover trigger="delete-trigger" #popover>
+      <ng-template>
+        <ion-title class="ion-padding"> Are you sure about that? </ion-title>
+        <div
+          class="ion-padding"
+          style="display: flex; justify-content: space-between; padding-top: 0"
+        >
+          <ion-buttons slot="start">
+            <ion-button color="medium" (click)="popover.dismiss()"
+              >Cancel</ion-button
+            >
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button
+              [strong]="true"
+              color="danger"
+              (click)="popover.dismiss()"
+              >Confirm</ion-button
+            >
+          </ion-buttons>
+        </div>
+      </ng-template>
+    </ion-popover>
+    <ion-title>{{ book().name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="ion-padding">
+  @for (lessons of book().lessons; track lessons.id) {
+  <ion-card>
+    <ion-card-header style="padding-bottom: 0">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <ion-label slot="start">{{ lessons.name }}</ion-label>
+        <ion-button size="small" slot="end" fill="clear" (click)="edit = !edit">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let topic of lessons.topics">
+        <ion-item>
+          <ion-input
+            type="text"
+            slot="start"
+            disabled="{{ edit }}"
+            [value]="topic.name"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  }
+</ion-content>

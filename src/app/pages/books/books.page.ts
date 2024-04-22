@@ -1,7 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { Component, inject, viewChild } from '@angular/core';
+import {
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonRefresherContent,
+  IonCard,
+  IonList,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonFab,
+  IonFabButton,
+  IonRefresher,
+  IonIcon,
+} from '@ionic/angular/standalone';
+import { BookComponentComponent } from 'src/app/components/book-component/book-component.component';
 import { Book } from '../../models';
 import { StorageService } from '../../storage.service';
 
@@ -10,15 +26,44 @@ import { StorageService } from '../../storage.service';
   templateUrl: './books.page.html',
   styleUrls: ['./books.page.scss'],
   standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonIcon,
+    IonRefresher,
+    IonFabButton,
+    IonFab,
+    IonLabel,
+    IonItem,
+    IonCardContent,
+    IonList,
+    IonCard,
+    IonRefresherContent,
+    IonContent,
+    IonTitle,
+    IonToolbar,
+    IonHeader,
+    CommonModule,
+    BookComponentComponent,
+    IonModal,
+  ],
 })
 export class BooksPage {
   private readonly store = inject(StorageService);
   books?: Book[];
+  selectedBook!: Book;
+  modalRef = viewChild<IonModal>('modal');
 
   constructor() {
     this.loadBooks();
+  }
+
+  openProfile(book: Book) {
+    this.selectedBook = book;
+    this.modalRef()?.present();
+    console.log('clicou', book.name);
+  }
+
+  dismissModal(modal: IonModal) {
+    modal.dismiss();
   }
 
   handleRefresh(event: any) {
