@@ -13,11 +13,11 @@ export class StorageService {
     this.init();
   }
 
-  async init() {
+  private async init() {
     await this.storage.create();
   }
 
-  public async has(key: string) {
+  private async has(key: string) {
     return await this.storage.keys().then((keys) => keys.includes(key));
   }
 
@@ -49,27 +49,27 @@ export class StorageService {
     await this.storage.set(key, value);
   }
 
-  public async get(key: string) {
+  private async get(key: string) {
     return await this.storage.get(key);
   }
 
-  public remove(key: string) {
+  private remove(key: string) {
     this.storage.remove(key);
   }
 
-  public async clear() {
+  private async clear() {
     await this.storage.clear();
   }
 
-  public async keys() {
+  private async keys() {
     return await this.storage.keys();
   }
 
-  public async length() {
+  private async length() {
     return await this.storage.length();
   }
 
-  public async enumerated(key: string, value: any, index: number) {
+  private async enumerated(key: string, value: any, index: number) {
     return this.storage.forEach((key, value, index) => {});
   }
 
@@ -130,5 +130,12 @@ export class StorageService {
     const index = students.findIndex((s) => s.id === student.id);
     students[index] = student;
     await this.storage.set('students', students);
+  }
+
+  public async updateBook(book: Book) {
+    const books = await this.loadBooks();
+    const index = books.findIndex((s) => s.id === book.id);
+    books[index] = book;
+    await this.storage.set('books', books);
   }
 }

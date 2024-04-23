@@ -12,6 +12,7 @@ import {
   arrowBack,
   arrowBackOutline,
   arrowUndoSharp,
+  addCircleOutline,
   book,
   calendarClear,
   calendarNumber,
@@ -45,6 +46,7 @@ export class TabsPage {
   constructor() {
     addIcons({
       search,
+      addCircleOutline,
       calendarClear,
       personCircle,
       checkmarkDone,
