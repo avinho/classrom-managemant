@@ -55,9 +55,11 @@
         <div style="display: flex; align-items: center">
           <ion-icon slot="start" name="book"></ion-icon>
           <ion-input
+            #lessonName
             style="margin-left: 10px"
             type="text"
             disabled="{{ edit }}"
+            (ionBlur)="onEditLesson(lesson, lessonName.value)"
             [value]="lesson.name"
           ></ion-input>
         </div>
@@ -67,7 +69,7 @@
           fill="clear"
           (click)="addTopic(lesson)"
         >
-          <ion-icon slot="icon-only" name="create"></ion-icon>
+          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
         </ion-button>
       </div>
     </ion-card-header>
@@ -75,9 +77,11 @@
       <ion-list *ngFor="let topic of lesson.topics">
         <ion-item>
           <ion-input
+            #topicName
             type="text"
             slot="start"
             disabled="{{ edit }}"
+            (ionBlur)="onEditTopic(topic, topicName.value)"
             [value]="topic.name"
           ></ion-input>
         </ion-item>

@@ -20,8 +20,12 @@
         <ion-item>
           <ion-icon name="calendar-number"></ion-icon>
           <ion-input
+            #inputBirthdate
             class="cardLabel"
             disabled="{{ edit }}"
+            (ionBlur)="editStudentBirthdate(inputBirthdate.value)"
+            [maskito]="birthdateMask"
+            [maskitoElement]="maskPredicate"
             [value]="student().birthdate"
           ></ion-input>
         </ion-item>

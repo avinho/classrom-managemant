@@ -1,4 +1,4 @@
-import { Lesson } from './../../models';
+import { Lesson, Topic } from './../../models';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
@@ -60,18 +60,30 @@ export class BookComponentComponent {
     this.closeModal.emit(false);
   }
 
-  async addLesson() {
+  addLesson() {
     let newLesson: Lesson = {
       id: Math.floor(Math.random() * 1000),
       name: 'New Lesson',
       topics: [],
     };
 
+    this.addTopic(newLesson);
+
     this.book().lessons?.push(newLesson);
-    await this.store.updateBook(this.book());
+    this.store.updateBook(this.book());
   }
 
-  async addTopic(lesson: Lesson) {
+  onEditTopic(topic: Topic, value: any) {
+    topic.name = value;
+    this.store.updateBook(this.book());
+  }
+
+  onEditLesson(lesson: Lesson, value: any) {
+    lesson.name = value;
+    this.store.updateBook(this.book());
+  }
+
+  addTopic(lesson: Lesson) {
     let newTopic = {
       id: Math.floor(Math.random() * 1000),
       name: 'New Topic',
@@ -79,6 +91,6 @@ export class BookComponentComponent {
       conclusion: null,
     };
     lesson.topics?.push(newTopic);
-    await this.store.updateBook(this.book());
+    this.store.updateBook(this.book());
   }
 }

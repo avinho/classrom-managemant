@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  Input,
   OnInit,
-  ViewChild,
   inject,
   input,
 } from '@angular/core';
@@ -19,6 +17,7 @@ import {
   IonContent,
   IonDatetime,
   IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
   IonList,
@@ -26,11 +25,12 @@ import {
   IonSelect,
   IonSelectOption,
   IonTitle,
-  IonInput,
   IonToggle,
 } from '@ionic/angular/standalone';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { Book, Class, Lesson, Student, Topic } from '../../models';
 import { StorageService } from '../../storage.service';
+import { MaskitoDirective } from '@maskito/angular';
 
 @Component({
   selector: 'app-student-data',
@@ -59,6 +59,7 @@ import { StorageService } from '../../storage.service';
     IonCard,
     ScrollingModule,
     CommonModule,
+    MaskitoDirective,
   ],
 })
 export class StudentDataComponent implements OnInit {
@@ -69,7 +70,13 @@ export class StudentDataComponent implements OnInit {
   selectedBook?: Book;
   edit: boolean = true;
 
-  constructor() {}
+  readonly birthdateMask: MaskitoOptions = {
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicate = async (el) =>
+    (el as HTMLIonInputElement).getInputElement();
+
   ngOnInit(): void {
     this.loadBooks();
     this.loadClasses();
@@ -77,6 +84,11 @@ export class StudentDataComponent implements OnInit {
 
   editStudentName(name: any) {
     this.student().name = name;
+    this.dbService.updateStudent(this.student());
+  }
+
+  editStudentBirthdate(birthdate: any) {
+    this.student().birthdate = birthdate;
     this.dbService.updateStudent(this.student());
   }
 
