@@ -40,7 +40,7 @@
             >
               <ion-select-option [value]="null">No class</ion-select-option>
               <ion-select-option
-                *ngFor="let class of classes"
+                *ngFor="let class of classes()"
                 [value]="class"
                 >{{ class.name }}</ion-select-option
               >
@@ -62,7 +62,7 @@
         (ionChange)="onBookChange($event.detail.value)"
         interface="popover"
       >
-        <ion-select-option *ngFor="let book of books" [value]="book">{{
+        <ion-select-option *ngFor="let book of books()" [value]="book">{{
           book.name
         }}</ion-select-option>
       </ion-select>
@@ -70,11 +70,11 @@
   </ion-list>
 
   <ion-accordion-group
-    *ngIf="student().currentBook"
+    *ngIf="selectedBook"
     expand="inset"
     style="padding-top: 0"
   >
-    <ion-accordion *ngFor="let lesson of student().currentBook?.lessons">
+    <ion-accordion *ngFor="let lesson of selectedBook?.lessons">
       <ion-item slot="header">
         <ion-title>{{ lesson.name }}</ion-title>
         <ion-badge
@@ -83,7 +83,7 @@
             display: inline-flex;
             align-items: center;
           "
-          *ngIf="isLessonDone(lesson.topics)"
+          *ngIf="isLessonDone(lesson.topics!)"
         >
           Done
           <ion-icon
@@ -105,7 +105,7 @@
               slot="end"
               aria-label="Toggle topic"
               [enableOnOffLabels]="true"
-              [checked]="isLessonDone(lesson.topics)"
+              [checked]="isLessonDone(lesson.topics!)"
               mode="md"
               (ionChange)="doneLesson(lesson, $event.detail.checked)"
               size="small"

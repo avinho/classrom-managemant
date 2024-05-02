@@ -1,26 +1,41 @@
-import { Lesson, Topic } from './../../models';
+import { LessonRepository } from './../../services/repositories/lesson.repository.service';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
-  IonContent,
-  IonHeader,
+  Component,
+  OnInit,
+  WritableSignal,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import {
   IonButton,
   IonButtons,
-  IonPopover,
-  IonIcon,
-  IonToolbar,
-  IonTitle,
-  IonList,
   IonCard,
-  IonCardHeader,
   IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
-  IonInput,
-  IonCardTitle,
+  IonList,
+  IonPopover,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Book } from 'src/app/models';
-import { StorageService } from 'src/app/storage.service';
+import { StorageService } from 'src/app/services/_storagee.service';
+import { Lesson, Topic } from './../../models';
+import { BookRepository } from 'src/app/services/repositories/book.repository.service';
+import { TopicRepository } from 'src/app/services/repositories/topic.repository.service';
+import { ITopic } from 'src/app/services/repositories/Interfaces';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-book-component',
@@ -47,50 +62,59 @@ import { StorageService } from 'src/app/storage.service';
     CommonModule,
   ],
 })
-export class BookComponentComponent {
-  private readonly store = inject(StorageService);
+export class BookComponentComponent implements OnInit {
+  private readonly bookRepository = inject(BookRepository);
+  private readonly lessonRepository = inject(LessonRepository);
+  private readonly topicRepository = inject(TopicRepository);
   closeModal = output<boolean>();
   deleteBook = output<Book>();
   book = input.required<Book>();
+  lessons: WritableSignal<Lesson[]> = signal([]);
   edit: boolean = true;
 
   constructor() {}
+
+  async ngOnInit() {
+    await this.loadLessons();
+  }
 
   onCloseModal() {
     this.closeModal.emit(false);
   }
 
-  addLesson() {
+  async loadLessons() {
+    this.lessons.set(
+      await this.bookRepository.loadLessonsByBookId(this.book().id)
+    );
+  }
+
+  async addLesson(book: Book) {
     let newLesson: Lesson = {
-      id: Math.floor(Math.random() * 1000),
       name: 'New Lesson',
       topics: [],
+      book: book,
     };
 
-    this.addTopic(newLesson);
-
-    this.book().lessons?.push(newLesson);
-    this.store.updateBook(this.book());
+    await this.lessonRepository.add(newLesson);
+    await this.loadLessons();
   }
 
   onEditTopic(topic: Topic, value: any) {
     topic.name = value;
-    this.store.updateBook(this.book());
+    this.bookRepository.updateBookById(this.book().id, this.book().name);
   }
 
   onEditLesson(lesson: Lesson, value: any) {
     lesson.name = value;
-    this.store.updateBook(this.book());
+    this.bookRepository.updateBookById(this.book().id, this.book().name);
   }
 
-  addTopic(lesson: Lesson) {
-    let newTopic = {
-      id: Math.floor(Math.random() * 1000),
+  async addTopic(lesson: Lesson) {
+    let newTopic: Topic = {
       name: 'New Topic',
-      done: false,
-      conclusion: null,
+      lesson_id: lesson.id,
     };
-    lesson.topics?.push(newTopic);
-    this.store.updateBook(this.book());
+    await this.topicRepository.add(newTopic);
+    lesson.topics = await this.topicRepository.getTopicsByLessonId(lesson.id!);
   }
 }

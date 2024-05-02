@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonAvatar,
   IonButton,
@@ -31,8 +31,10 @@ import {
   IonRefresher,
 } from '@ionic/angular/standalone';
 import { Book, Class, Student } from '../../models';
-import { StorageService } from '../../storage.service';
+import { StorageService } from '../../services/_storagee.service';
 import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
+import { ClassesRepository } from 'src/app/services/repositories/classes.repository.service';
+import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
 
 @Component({
   selector: 'app-classes',
@@ -73,16 +75,18 @@ import { ClassStudentsComponent } from '../../components/class-students/class-st
   ],
 })
 export class ClassesPage {
+  private readonly classRepository = inject(ClassesRepository);
+  private readonly studentRepository = inject(StudentsRepository);
   classes?: Class[];
   students?: Student[];
   books?: Book[];
 
-  constructor(private storage: StorageService) {
+  constructor() {
     this.loadClasses();
   }
 
   async loadClasses() {
-    this.classes = await this.storage.loadClasses();
+    this.classes = await this.classRepository.getClasses();
   }
 
   handleRefresh(event: any) {
@@ -101,7 +105,7 @@ export class ClassesPage {
     const index = this.classes?.indexOf(classItem);
     if (index !== undefined) {
       this.classes?.splice(index, 1);
-      await this.storage.set('classes', this.classes);
+      await this.classRepository.addClass(classItem.name);
     }
   }
 
@@ -113,17 +117,17 @@ export class ClassesPage {
       students: [],
     };
     this.classes?.push(newClass);
-    await this.storage.addClass(newClass);
+    await this.classRepository.addClass(newClass.name);
     modal?.dismiss();
   }
 
   async loadStudents(classId: number) {
-    return (await this.storage.loadStudents()).filter((student) => {
+    return (await this.studentRepository.getStudents()).filter((student) => {
       return student.class!.id === classId;
     });
   }
 
   async loadBooks() {
-    this.books = await this.storage.loadBooks();
+    //this.books = await this.storage.loadBooks();
   }
 }

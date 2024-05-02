@@ -34,7 +34,8 @@ import {
 } from '@ionic/angular/standalone';
 import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
 import { Student } from '../../models';
-import { StorageService } from '../../storage.service';
+import { StorageService } from '../../services/_storagee.service';
+import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
 
 @Component({
   selector: 'app-students-page',
@@ -77,7 +78,7 @@ import { StorageService } from '../../storage.service';
   ],
 })
 export class StudentsPage implements OnInit {
-  private readonly store = inject(StorageService);
+  private readonly store = inject(StudentsRepository);
   students$?: Promise<Student[]>;
   selectedStudent!: Student;
   searchTerm = '';
@@ -105,7 +106,7 @@ export class StudentsPage implements OnInit {
   }
 
   async loadStudents() {
-    this.students$ = this.store.loadStudents().then((students) => {
+    this.students$ = this.store.getStudents().then((students) => {
       students.sort((a, b) => (a.name > b.name ? 1 : -1));
       return this.filterStudents(students);
     });
@@ -124,7 +125,7 @@ export class StudentsPage implements OnInit {
   }
 
   async deleteStudent(student: Student) {
-    await this.store.deleteStudent(student);
+    await this.store.deleteStudentById(student.id!);
     await this.loadStudents();
   }
 

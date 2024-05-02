@@ -1,25 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, viewChild } from '@angular/core';
 import {
-  IonModal,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonRefresherContent,
   IonCard,
-  IonList,
   IonCardContent,
-  IonItem,
-  IonLabel,
+  IonContent,
   IonFab,
   IonFabButton,
-  IonRefresher,
+  IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
+  IonRefresher,
+  IonRefresherContent,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { BookComponentComponent } from 'src/app/components/book-component/book-component.component';
+import { BookRepository } from 'src/app/services/repositories/book.repository.service';
 import { Book } from '../../models';
-import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-books',
@@ -47,7 +47,7 @@ import { StorageService } from '../../storage.service';
   ],
 })
 export class BooksPage {
-  private readonly store = inject(StorageService);
+  private readonly store = inject(BookRepository);
   books?: Book[];
   selectedBook!: Book;
   modalRef = viewChild<IonModal>('modal');
@@ -74,7 +74,7 @@ export class BooksPage {
   }
 
   async loadBooks() {
-    this.books = await this.store.loadBooks();
+    this.books = await this.store.getBooks();
   }
 
   async addBook() {
@@ -84,6 +84,6 @@ export class BooksPage {
     };
 
     this.books?.push(newBook);
-    await this.store.addBook(newBook);
+    await this.store.addBook(newBook.name);
   }
 }

@@ -4,8 +4,11 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   OnInit,
+  WritableSignal,
+  effect,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import {
   IonAccordion,
@@ -29,8 +32,11 @@ import {
 } from '@ionic/angular/standalone';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { Book, Class, Lesson, Student, Topic } from '../../models';
-import { StorageService } from '../../storage.service';
+import { StorageService } from '../../services/_storagee.service';
 import { MaskitoDirective } from '@maskito/angular';
+import { ClassesRepository } from 'src/app/services/repositories/classes.repository.service';
+import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
+import { BookRepository } from 'src/app/services/repositories/book.repository.service';
 
 @Component({
   selector: 'app-student-data',
@@ -63,12 +69,16 @@ import { MaskitoDirective } from '@maskito/angular';
   ],
 })
 export class StudentDataComponent implements OnInit {
-  private readonly dbService = inject(StorageService);
+  private readonly classRepository = inject(ClassesRepository);
+  private readonly studentRepository = inject(StudentsRepository);
+  private readonly bookRepository = inject(BookRepository);
   student = input.required<Student>();
-  books?: Book[];
-  classes?: Class[];
+  books: WritableSignal<Book[]> = signal<Book[]>([]);
+  classes: WritableSignal<Class[]> = signal<Class[]>([]);
   selectedBook?: Book;
   edit: boolean = true;
+
+  constructor() {}
 
   readonly birthdateMask: MaskitoOptions = {
     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
@@ -77,38 +87,52 @@ export class StudentDataComponent implements OnInit {
   readonly maskPredicate: MaskitoElementPredicate = async (el) =>
     (el as HTMLIonInputElement).getInputElement();
 
-  ngOnInit(): void {
-    this.loadBooks();
-    this.loadClasses();
+  async ngOnInit() {
+    await this.loadBooks();
+    await this.loadClasses();
+    console.log(this.student());
+    this.selectedBook = this.student().currentBook!;
   }
 
   editStudentName(name: any) {
     this.student().name = name;
-    this.dbService.updateStudent(this.student());
+    this.studentRepository.updateStudentById(
+      this.student().id!,
+      this.student()
+    );
   }
 
   editStudentBirthdate(birthdate: any) {
     this.student().birthdate = birthdate;
-    this.dbService.updateStudent(this.student());
+    this.studentRepository.updateStudentById(
+      this.student().id!,
+      this.student()
+    );
   }
 
   editStudentClass(newClass: Class) {
     this.student().class = newClass;
-    this.dbService.updateStudent(this.student());
+    this.studentRepository.updateStudentById(
+      this.student().id!,
+      this.student()
+    );
   }
 
   async loadBooks() {
-    this.books = await this.dbService.loadBooks();
+    this.books.set(await this.bookRepository.getBooks());
   }
 
   async loadClasses() {
-    this.classes = await this.dbService.loadClasses();
+    this.classes.set(await this.classRepository.getClasses());
   }
 
   async onBookChange(book: Book) {
     this.selectedBook = book;
     this.student().currentBook = book;
-    await this.dbService.updateStudent(this.student());
+    await this.studentRepository.updateStudentById(
+      this.student().id!,
+      this.student()
+    );
   }
 
   isLessonDone(topics: Topic[]) {
@@ -120,11 +144,14 @@ export class StudentDataComponent implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    await this.dbService.updateStudent(this.student());
+    await this.studentRepository.updateStudentById(
+      this.student().id!,
+      this.student()
+    );
   }
 
   doneLesson(lesson: Lesson, event: any) {
-    lesson.topics.forEach((topic) => {
+    lesson.topics?.forEach((topic) => {
       if (!topic.done) {
         return this.onTopicChange(topic, event);
       }
