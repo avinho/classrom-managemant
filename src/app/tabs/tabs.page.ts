@@ -1,18 +1,18 @@
-import { Component, EnvironmentInjector, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
-  IonIcon,
-  IonLabel,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from '@ionic/angular/standalone';
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  EnvironmentInjector,
+  inject,
+} from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   add,
+  addCircleOutline,
   arrowBack,
   arrowBackOutline,
   arrowUndoSharp,
-  addCircleOutline,
   book,
   calendarClear,
   calendarNumber,
@@ -38,7 +38,8 @@ import {
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
   standalone: true,
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  imports: [IonicModule, CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);

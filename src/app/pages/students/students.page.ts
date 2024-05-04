@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, viewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import {
   IonAvatar,
   IonButton,
@@ -23,19 +30,18 @@ import {
   IonList,
   IonModal,
   IonNote,
+  IonRefresher,
+  IonRefresherContent,
   IonRow,
   IonSelect,
   IonSelectOption,
   IonSpinner,
   IonTitle,
   IonToolbar,
-  IonRefresher,
-  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
+import { StudentService } from 'src/app/services/student.service';
 import { Student } from '../../models';
-import { StorageService } from '../../services/_storagee.service';
-import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
 
 @Component({
   selector: 'app-students-page',
@@ -78,18 +84,18 @@ import { StudentsRepository } from 'src/app/services/repositories/students.repos
   ],
 })
 export class StudentsPage implements OnInit {
-  private readonly store = inject(StudentsRepository);
-  students$?: Promise<Student[]>;
+  private readonly studentService = inject(StudentService);
+  students: WritableSignal<Student[]> = signal<Student[]>([]);
   selectedStudent!: Student;
-  searchTerm = '';
+  searchTerm?: string;
 
   searchInput = viewChild<IonInput>('searchInput');
   modalRef = viewChild<IonModal>('modal');
 
   constructor() {}
 
-  ngOnInit() {
-    this.loadStudents();
+  async ngOnInit() {
+    await this.loadStudents();
   }
 
   handleRefresh(event: any) {
@@ -106,16 +112,35 @@ export class StudentsPage implements OnInit {
   }
 
   async loadStudents() {
-    this.students$ = this.store.getStudents().then((students) => {
-      students.sort((a, b) => (a.name > b.name ? 1 : -1));
-      return this.filterStudents(students);
-    });
-    console.log(await this.students$);
+    try {
+      const students = await this.studentService.loadStudents();
+
+      let filterStudents = students;
+      if (this.searchTerm) {
+        console.log('chegou aqui', students);
+        filterStudents = this.filterStudents(students);
+      }
+      this.students.set(this.sortStudents(filterStudents));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private sortStudents(students: Student[]): Student[] {
+    console.log('students', students);
+    let std = [...students];
+    console.log('std', std);
+    let sortedStudents = std.sort((a, b) => a.name.localeCompare(b.name));
+    /* let sortedStudents = [...students].sort((a, b) =>
+      a.name > b.name ? 1 : -1
+    ); */
+    console.log('sortedStudents', sortedStudents);
+    return sortedStudents;
   }
 
   filterStudents(students: Student[]): Student[] {
     return students.filter((student) =>
-      student.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      student.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
     );
   }
 
@@ -125,7 +150,7 @@ export class StudentsPage implements OnInit {
   }
 
   async deleteStudent(student: Student) {
-    await this.store.deleteStudentById(student.id!);
+    await this.studentService.delete(student);
     await this.loadStudents();
   }
 
@@ -149,7 +174,7 @@ export class StudentsPage implements OnInit {
       class: null,
     };
 
-    await this.store.addStudent(newStudent);
+    await this.studentService.save(newStudent);
     this.loadStudents();
     modal.dismiss();
   }

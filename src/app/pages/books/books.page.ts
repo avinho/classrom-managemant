@@ -18,8 +18,9 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { BookComponentComponent } from 'src/app/components/book-component/book-component.component';
-import { BookRepository } from 'src/app/services/repositories/book.repository.service';
+import { BookRepository } from 'src/app/repositories/book.repository';
 import { Book } from '../../models';
+import { BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-books',
@@ -47,7 +48,7 @@ import { Book } from '../../models';
   ],
 })
 export class BooksPage {
-  private readonly store = inject(BookRepository);
+  private readonly bookService = inject(BookService);
   books?: Book[];
   selectedBook!: Book;
   modalRef = viewChild<IonModal>('modal');
@@ -74,16 +75,15 @@ export class BooksPage {
   }
 
   async loadBooks() {
-    this.books = await this.store.getBooks();
+    this.books = await this.bookService.loadBooks();
   }
 
   async addBook() {
     let newBook: Book = {
-      id: Math.floor(Math.random() * 1000),
       name: 'Novo Livro',
     };
 
-    this.books?.push(newBook);
-    await this.store.addBook(newBook.name);
+    await this.bookService.save(newBook);
+    await this.loadBooks();
   }
 }

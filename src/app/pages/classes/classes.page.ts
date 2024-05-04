@@ -1,3 +1,5 @@
+import { ClassService } from './../../services/class.service';
+import { StudentService } from './../../services/student.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
@@ -22,19 +24,18 @@ import {
   IonList,
   IonModal,
   IonNote,
+  IonRefresher,
+  IonRefresherContent,
   IonRow,
   IonSpinner,
   IonThumbnail,
   IonTitle,
   IonToolbar,
-  IonRefresherContent,
-  IonRefresher,
 } from '@ionic/angular/standalone';
-import { Book, Class, Student } from '../../models';
-import { StorageService } from '../../services/_storagee.service';
+import { ClassesRepository } from 'src/app/repositories/classes.repository';
+import { StudentsRepository } from 'src/app/repositories/students.repository';
 import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
-import { ClassesRepository } from 'src/app/services/repositories/classes.repository.service';
-import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
+import { Book, Class, Student } from '../../models';
 
 @Component({
   selector: 'app-classes',
@@ -75,8 +76,8 @@ import { StudentsRepository } from 'src/app/services/repositories/students.repos
   ],
 })
 export class ClassesPage {
-  private readonly classRepository = inject(ClassesRepository);
-  private readonly studentRepository = inject(StudentsRepository);
+  private readonly classService = inject(ClassService);
+  private readonly studentService = inject(StudentService);
   classes?: Class[];
   students?: Student[];
   books?: Book[];
@@ -86,7 +87,7 @@ export class ClassesPage {
   }
 
   async loadClasses() {
-    this.classes = await this.classRepository.getClasses();
+    this.classes = await this.classService.loadClasses();
   }
 
   handleRefresh(event: any) {
@@ -102,29 +103,23 @@ export class ClassesPage {
 
   async deleteClass(classItem: Class) {
     console.log('classItem', classItem);
-    const index = this.classes?.indexOf(classItem);
-    if (index !== undefined) {
-      this.classes?.splice(index, 1);
-      await this.classRepository.addClass(classItem.name);
-    }
+    await this.classService.delete(classItem);
+    await this.loadClasses();
   }
 
   async onAddClass(name: any, modal?: IonModal) {
     if (!name) return;
     const newClass: Class = {
-      id: Math.floor(Math.random() * 1000),
       name: name,
       students: [],
     };
     this.classes?.push(newClass);
-    await this.classRepository.addClass(newClass.name);
+    await this.classService.save(newClass);
     modal?.dismiss();
   }
 
   async loadStudents(classId: number) {
-    return (await this.studentRepository.getStudents()).filter((student) => {
-      return student.class!.id === classId;
-    });
+    return await this.studentService.loadStudentsByClassId(classId);
   }
 
   async loadBooks() {

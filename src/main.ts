@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, enableProdMode } from '@angular/core';
+import { APP_INITIALIZER, enableProdMode, isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
 import {
@@ -13,11 +13,12 @@ import { defineCustomElements as pwaElements } from '@ionic/pwa-elements/loader'
 import { defineCustomElements as jeepSqlite } from 'jeep-sqlite/loader';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
-import { DbnameVersionService } from './app/services/dbname-version.service';
-import { InitializeAppService } from './app/services/initialize.app.service';
-import { SQLiteService } from './app/services/sqlite.service';
-import { StorageService } from './app/services/storage.service';
+import { DbnameVersionService } from './app/database/dbname-version.service';
+import { InitializeAppService } from './app/database/initialize.app.service';
+import { SQLiteService } from './app/database/sqlite.service';
+import { StorageService } from './app/database/storage.service';
 import { environment } from './environments/environment';
+import { provideServiceWorker } from '@angular/service-worker';
 
 if (environment.production) {
   enableProdMode();
@@ -54,16 +55,20 @@ bootstrapApplication(AppComponent, {
     InitializeAppService,
     StorageService,
     DbnameVersionService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
-    provideRouter(routes),
-    provideHttpClient(),
     {
       provide: APP_INITIALIZER,
       useFactory: initializeFactory,
       deps: [InitializeAppService],
       multi: true,
     },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideIonicAngular(),
+    provideRouter(routes),
+    provideHttpClient(),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 });
 

@@ -1,11 +1,8 @@
-import { LessonRepository } from './../../services/repositories/lesson.repository.service';
 import { CommonModule } from '@angular/common';
 import {
   Component,
   OnInit,
   WritableSignal,
-  computed,
-  effect,
   inject,
   input,
   output,
@@ -30,12 +27,14 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { Book } from 'src/app/models';
-import { StorageService } from 'src/app/services/_storagee.service';
+import { BookRepository } from 'src/app/repositories/book.repository';
+import { TopicRepository } from 'src/app/repositories/topic.repository';
 import { Lesson, Topic } from './../../models';
-import { BookRepository } from 'src/app/services/repositories/book.repository.service';
-import { TopicRepository } from 'src/app/services/repositories/topic.repository.service';
-import { ITopic } from 'src/app/services/repositories/Interfaces';
-import { TestBed } from '@angular/core/testing';
+import { LessonRepository } from '../../repositories/lesson.repository';
+import { TopicService } from 'src/app/services/topic.service';
+import { BookService } from 'src/app/services/book.service';
+import { StudentService } from 'src/app/services/student.service';
+import { LessonService } from 'src/app/services/lesson.service';
 
 @Component({
   selector: 'app-book-component',
@@ -63,9 +62,9 @@ import { TestBed } from '@angular/core/testing';
   ],
 })
 export class BookComponentComponent implements OnInit {
-  private readonly bookRepository = inject(BookRepository);
-  private readonly lessonRepository = inject(LessonRepository);
-  private readonly topicRepository = inject(TopicRepository);
+  private readonly lessonService = inject(LessonService);
+  private readonly bookService = inject(BookService);
+  private readonly topicService = inject(TopicService);
   closeModal = output<boolean>();
   deleteBook = output<Book>();
   book = input.required<Book>();
@@ -84,7 +83,7 @@ export class BookComponentComponent implements OnInit {
 
   async loadLessons() {
     this.lessons.set(
-      await this.bookRepository.loadLessonsByBookId(this.book().id)
+      await this.lessonService.loadLessonsByBookId(this.book().id!)
     );
   }
 
@@ -95,18 +94,18 @@ export class BookComponentComponent implements OnInit {
       book: book,
     };
 
-    await this.lessonRepository.add(newLesson);
+    await this.lessonService.save(newLesson);
     await this.loadLessons();
   }
 
   onEditTopic(topic: Topic, value: any) {
     topic.name = value;
-    this.bookRepository.updateBookById(this.book().id, this.book().name);
+    this.topicService.save(topic);
   }
 
   onEditLesson(lesson: Lesson, value: any) {
     lesson.name = value;
-    this.bookRepository.updateBookById(this.book().id, this.book().name);
+    this.lessonService.save(lesson);
   }
 
   async addTopic(lesson: Lesson) {
@@ -114,7 +113,9 @@ export class BookComponentComponent implements OnInit {
       name: 'New Topic',
       lesson_id: lesson.id,
     };
-    await this.topicRepository.add(newTopic);
-    lesson.topics = await this.topicRepository.getTopicsByLessonId(lesson.id!);
+    await this.topicService.save(newTopic);
+    lesson.topics = (await this.topicService.loadTopicsByLessonId(
+      lesson.id!
+    )) as Topic[];
   }
 }

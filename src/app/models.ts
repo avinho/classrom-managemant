@@ -1,7 +1,5 @@
-import { ITopic } from './services/repositories/Interfaces';
-
 export interface Book {
-  id: number;
+  id?: number;
   name: string;
   lessons?: Lesson[];
 }
@@ -11,6 +9,7 @@ export interface Lesson {
   name: string;
   topics?: Topic[];
   book?: Book | null;
+  book_id?: number;
 }
 
 export interface Topic {
@@ -26,11 +25,13 @@ export interface Student {
   name: string;
   birthdate: string;
   class: Class | null;
+  class_id?: number;
   currentBook?: Book | null;
+  current_book_id?: number;
 }
 
 export interface Class {
-  id: number;
+  id?: number;
   name: string;
   students?: Student[];
 }

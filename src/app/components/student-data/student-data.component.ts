@@ -5,7 +5,6 @@ import {
   Component,
   OnInit,
   WritableSignal,
-  effect,
   inject,
   input,
   signal,
@@ -30,13 +29,15 @@ import {
   IonTitle,
   IonToggle,
 } from '@ionic/angular/standalone';
-import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { Book, Class, Lesson, Student, Topic } from '../../models';
-import { StorageService } from '../../services/_storagee.service';
 import { MaskitoDirective } from '@maskito/angular';
-import { ClassesRepository } from 'src/app/services/repositories/classes.repository.service';
-import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
-import { BookRepository } from 'src/app/services/repositories/book.repository.service';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import { BookRepository } from 'src/app/repositories/book.repository';
+import { ClassesRepository } from 'src/app/repositories/classes.repository';
+import { StudentsRepository } from 'src/app/repositories/students.repository';
+import { Book, Class, Lesson, Student, Topic } from '../../models';
+import { ClassService } from 'src/app/services/class.service';
+import { StudentService } from 'src/app/services/student.service';
+import { BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-student-data',
@@ -69,9 +70,9 @@ import { BookRepository } from 'src/app/services/repositories/book.repository.se
   ],
 })
 export class StudentDataComponent implements OnInit {
-  private readonly classRepository = inject(ClassesRepository);
-  private readonly studentRepository = inject(StudentsRepository);
-  private readonly bookRepository = inject(BookRepository);
+  private readonly classService = inject(ClassService);
+  private readonly studentService = inject(StudentService);
+  private readonly bookService = inject(BookService);
   student = input.required<Student>();
   books: WritableSignal<Book[]> = signal<Book[]>([]);
   classes: WritableSignal<Class[]> = signal<Class[]>([]);
@@ -90,49 +91,36 @@ export class StudentDataComponent implements OnInit {
   async ngOnInit() {
     await this.loadBooks();
     await this.loadClasses();
-    console.log(this.student());
     this.selectedBook = this.student().currentBook!;
   }
 
   editStudentName(name: any) {
     this.student().name = name;
-    this.studentRepository.updateStudentById(
-      this.student().id!,
-      this.student()
-    );
+    this.studentService.save(this.student());
   }
 
   editStudentBirthdate(birthdate: any) {
     this.student().birthdate = birthdate;
-    this.studentRepository.updateStudentById(
-      this.student().id!,
-      this.student()
-    );
+    this.studentService.save(this.student());
   }
 
   editStudentClass(newClass: Class) {
     this.student().class = newClass;
-    this.studentRepository.updateStudentById(
-      this.student().id!,
-      this.student()
-    );
+    this.studentService.save(this.student());
   }
 
   async loadBooks() {
-    this.books.set(await this.bookRepository.getBooks());
+    this.books.set(await this.bookService.loadBooks());
   }
 
   async loadClasses() {
-    this.classes.set(await this.classRepository.getClasses());
+    this.classes.set(await this.classService.loadClasses());
   }
 
   async onBookChange(book: Book) {
     this.selectedBook = book;
     this.student().currentBook = book;
-    await this.studentRepository.updateStudentById(
-      this.student().id!,
-      this.student()
-    );
+    await this.studentService.save(this.student());
   }
 
   isLessonDone(topics: Topic[]) {
@@ -144,10 +132,7 @@ export class StudentDataComponent implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    await this.studentRepository.updateStudentById(
-      this.student().id!,
-      this.student()
-    );
+    await this.studentService.save(this.student());
   }
 
   doneLesson(lesson: Lesson, event: any) {

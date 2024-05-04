@@ -40,10 +40,12 @@ import {
 import { MaskitoDirective } from '@maskito/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
-import { ClassesRepository } from 'src/app/services/repositories/classes.repository.service';
-import { StudentsRepository } from 'src/app/services/repositories/students.repository.service';
+import { ClassesRepository } from 'src/app/repositories/classes.repository';
+import { StudentsRepository } from 'src/app/repositories/students.repository';
 import { Book, Class, Student } from '../../models';
 import { StudentProfileComponent } from '../student-profile/student-profile.component';
+import { ClassService } from 'src/app/services/class.service';
+import { StudentService } from 'src/app/services/student.service';
 
 @Component({
   selector: 'app-class-students',
@@ -83,8 +85,8 @@ import { StudentProfileComponent } from '../student-profile/student-profile.comp
   ],
 })
 export class ClassStudentsComponent implements OnInit {
-  private readonly classRepository = inject(ClassesRepository);
-  private readonly studentRepository = inject(StudentsRepository);
+  private readonly classService = inject(ClassService);
+  private readonly studentService = inject(StudentService);
   students?: Student[];
   @Input() class?: Class;
   selectedBook?: Book;
@@ -145,7 +147,6 @@ export class ClassStudentsComponent implements OnInit {
         });
       });
       console.log(this.AllStudents);
-      //await this.dbService.set('students', this.AllStudents!);
     });
   }
 
@@ -156,19 +157,19 @@ export class ClassStudentsComponent implements OnInit {
 
   async loadStudents(classId: number) {
     let start = performance.now();
-    this.students = await this.classRepository.getStudentsByClassId(classId);
+    this.students = await this.studentService.loadStudentsByClassId(classId);
     let end = performance.now();
     console.log(end - start);
   }
 
   async loadOthersStudents(classId: number) {
-    return (await this.studentRepository.getStudents()).filter((student) => {
+    return (await this.studentService.loadStudents()).filter((student) => {
       return student.class?.id !== classId;
     });
   }
 
   async loadAllStudents() {
-    this.AllStudents = await this.studentRepository.getStudents();
+    this.AllStudents = await this.studentService.loadStudents();
   }
 
   onCloseModal() {
@@ -197,7 +198,7 @@ export class ClassStudentsComponent implements OnInit {
       class: null,
     };
 
-    await this.studentRepository.addStudent(student);
+    await this.studentService.save(student);
     modal.dismiss();
     console.log(student);
   }

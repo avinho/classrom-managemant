@@ -1,24 +1,15 @@
 import { CommonModule } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  effect,
-  input,
-  output,
-} from '@angular/core';
-import {
-  IonHeader,
-  IonToolbar,
   IonBackButton,
-  IonButtons,
   IonButton,
-  IonPopover,
-  IonIcon,
-  IonTitle,
+  IonButtons,
   IonContent,
+  IonHeader,
+  IonIcon,
+  IonPopover,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Student } from 'src/app/models';
 import { StudentDataComponent } from '../student-data/student-data.component';

@@ -1,30 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { BookRepository } from 'src/app/services/repositories/book.repository.service';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  EnvironmentInjector,
+  inject,
+} from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { StorageService } from './database/storage.service';
 import { Lesson, Topic } from './models';
-import { ClassesRepository } from './services/repositories/classes.repository.service';
-import { LessonRepository } from './services/repositories/lesson.repository.service';
-import { StudentsRepository } from './services/repositories/students.repository.service';
-import { TopicRepository } from './services/repositories/topic.repository.service';
-import { StorageService } from './services/storage.service';
+import { BookService } from './services/book.service';
+import { ClassService } from './services/class.service';
+import { LessonService } from './services/lesson.service';
+import { StudentService } from './services/student.service';
+import { TopicService } from './services/topic.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [IonApp, IonRouterOutlet, CommonModule],
+  imports: [IonicModule, CommonModule],
 })
 export class AppComponent {
-  private bookRepository = inject(BookRepository);
-  private studentsRepository = inject(StudentsRepository);
-  private classRepository = inject(ClassesRepository);
-  private lessonRepository = inject(LessonRepository);
-  private topicRepository = inject(TopicRepository);
+  public environmentInjector = inject(EnvironmentInjector);
+  private lessonService = inject(LessonService);
+  private classService = inject(ClassService);
+  private studentService = inject(StudentService);
+  private bookService = inject(BookService);
+  private topicService = inject(TopicService);
+
   private db = inject(StorageService).retrieveDb();
   constructor() {
-    this.init();
+    // this.init();
   }
 
   async init() {
@@ -32,13 +39,13 @@ export class AppComponent {
     let lesson: Lesson = {
       name: 'Teste',
       topics: [],
-      book: await this.bookRepository.loadBookById(1),
+      book: await this.bookService.loadBookById(1),
     };
     let topic: Topic = {
       name: 'Teste',
       lesson_id: lesson.id,
     };
-    console.log(await this.lessonRepository.add(lesson));
-    console.log(await this.topicRepository.add(topic));
+    console.log(await this.lessonService.save(lesson));
+    console.log(await this.topicService.save(topic));
   }
 }
