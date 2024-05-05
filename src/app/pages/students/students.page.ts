@@ -85,10 +85,9 @@ import { Student } from '../../models';
 })
 export class StudentsPage implements OnInit {
   private readonly studentService = inject(StudentService);
-  students: WritableSignal<Student[]> = signal<Student[]>([]);
+  students?: Student[];
   selectedStudent!: Student;
   searchTerm?: string;
-
   searchInput = viewChild<IonInput>('searchInput');
   modalRef = viewChild<IonModal>('modal');
 
@@ -105,45 +104,42 @@ export class StudentsPage implements OnInit {
     }, 1000);
   }
 
-  openProfile(student: Student) {
-    this.selectedStudent = student;
+  async openProfile(student: Student) {
+    this.selectedStudent = (await this.studentService.loadStudentById(
+      student.id!
+    )) as Student;
     this.modalRef()?.present();
     console.log('clicou', student.name);
   }
 
   async loadStudents() {
     try {
-      const students = await this.studentService.loadStudents();
-
-      let filterStudents = students;
+      let loadedStudents = await this.studentService.loadStudents();
       if (this.searchTerm) {
-        console.log('chegou aqui', students);
-        filterStudents = this.filterStudents(students);
+        loadedStudents = [...loadedStudents].filter((student) =>
+          student.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
+        );
       }
-      this.students.set(this.sortStudents(filterStudents));
+      console.log(loadedStudents);
+      this.students = this.sortStudents(loadedStudents);
     } catch (error) {
       console.error(error);
     }
   }
 
-  private sortStudents(students: Student[]): Student[] {
-    console.log('students', students);
-    let std = [...students];
-    console.log('std', std);
-    let sortedStudents = std.sort((a, b) => a.name.localeCompare(b.name));
-    /* let sortedStudents = [...students].sort((a, b) =>
-      a.name > b.name ? 1 : -1
-    ); */
-    console.log('sortedStudents', sortedStudents);
-    return sortedStudents;
+  private sortStudents(students: Student[]) {
+    return [...students].sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  filterStudents(students: Student[]): Student[] {
-    return students.filter((student) =>
+  private filterStudents(students: Student[]): Student[] {
+    return [...students].filter((student) =>
       student.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
     );
   }
 
+  /** TODO
+   *  1. Melhorar filtragem para filtrar somente os dados carregado ao iniciar o componente.
+   */
   async filter(query: any) {
     this.searchTerm = query;
     await this.loadStudents();
@@ -164,7 +160,6 @@ export class StudentsPage implements OnInit {
 
   async newStudent(modal: IonModal, name: any, birthdate: any) {
     const newStudent: Student = {
-      id: Math.floor(Math.random() * 1000),
       name: name,
       birthdate: new Date(birthdate).toLocaleDateString('pt-BR', {
         year: 'numeric',
@@ -172,6 +167,7 @@ export class StudentsPage implements OnInit {
         day: 'numeric',
       }),
       class: null,
+      currentBook: null,
     };
 
     await this.studentService.save(newStudent);

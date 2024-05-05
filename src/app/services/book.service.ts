@@ -29,9 +29,9 @@ export class BookService {
   async loadBooks() {
     const foundBooks = await this.bookRepository.getAll();
     let books: Book[] = [];
-    foundBooks.forEach(async (book) => {
+    for (const book of foundBooks) {
       books.push(await this.loadBookLessons(book));
-    });
+    }
     return books;
   }
 

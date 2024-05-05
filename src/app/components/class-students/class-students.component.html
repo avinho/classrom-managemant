@@ -48,10 +48,6 @@
   <div style="display: flex; flex-direction: column; align-items: center">
     <h4>There are no students in this class</h4>
   </div>
-  } @if (!students) {
-  <div class="spinner">
-    <ion-spinner name="crescent"></ion-spinner>
-  </div>
   } @if (teste) {
   <ion-card
     style="border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 2px"
@@ -67,10 +63,10 @@
       </ion-list>
       <ion-modal #modal>
         <ng-template>
-          <app-student-profile
+          <app-student-data
             (closeModal)="dismissModal(modal)"
             [student]="selectedStudent!"
-          ></app-student-profile
+          ></app-student-data
         ></ng-template>
       </ion-modal>
     </ion-card-content>

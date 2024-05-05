@@ -30,19 +30,19 @@ export class LessonService {
 
   async loadLessons() {
     const foundLessons = await this.lessonRepository.getAll();
-    const lessons: Lesson[] = [];
-    foundLessons?.forEach(async (lesson) => {
+    let lessons: Lesson[] = [];
+    for (const lesson of foundLessons) {
       lessons.push(await this.loadTopicsLesson(lesson));
-    });
+    }
     return lessons;
   }
 
   async loadLessonsByBookId(id: number) {
     const foundLessons = await this.lessonRepository.getLessonsByBookId(id);
-    const lessons: Lesson[] = [];
-    foundLessons?.forEach(async (lesson) => {
+    let lessons: Lesson[] = [];
+    for (const lesson of foundLessons) {
       lessons.push(await this.loadTopicsLesson(lesson));
-    });
+    }
     return lessons;
   }
 

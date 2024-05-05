@@ -17,6 +17,13 @@ ion-select::part(icon) {
   display: none;
 }
 
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  // transform: translate(-50%, -50%);
+}
+
 label .toggle-wrapper{
   justify-content: flex-end!important;
 }

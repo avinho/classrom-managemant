@@ -1,4 +1,10 @@
 <div style="height: 1000px">
+  @if (loading) {
+  <div class="spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else{
+
   <ion-card class="studentCard">
     <ion-card-content style="padding: 0">
       <ion-list>
@@ -154,6 +160,7 @@
       </div>
     </ion-accordion>
   </ion-accordion-group>
+  }
 </div>
 <!--
 <cdk-virtual-scroll-viewport

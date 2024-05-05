@@ -78,6 +78,7 @@ export class StudentDataComponent implements OnInit {
   classes: WritableSignal<Class[]> = signal<Class[]>([]);
   selectedBook?: Book;
   edit: boolean = true;
+  loading: boolean = true;
 
   constructor() {}
 
@@ -88,9 +89,9 @@ export class StudentDataComponent implements OnInit {
   readonly maskPredicate: MaskitoElementPredicate = async (el) =>
     (el as HTMLIonInputElement).getInputElement();
 
-  async ngOnInit() {
-    await this.loadBooks();
-    await this.loadClasses();
+  ngOnInit() {
+    this.loadBooks().then(() => (this.loading = false));
+    this.loadClasses();
     this.selectedBook = this.student().currentBook!;
   }
 
@@ -123,6 +124,10 @@ export class StudentDataComponent implements OnInit {
     await this.studentService.save(this.student());
   }
 
+  /*
+   *  TODO
+   *  Torna metodo assincrono para não ter concorrencia na database
+   */
   isLessonDone(topics: Topic[]) {
     return topics.every((topic) => topic.done);
   }

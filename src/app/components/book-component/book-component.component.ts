@@ -61,7 +61,7 @@ import { LessonService } from 'src/app/services/lesson.service';
     CommonModule,
   ],
 })
-export class BookComponentComponent implements OnInit {
+export class BookComponent implements OnInit {
   private readonly lessonService = inject(LessonService);
   private readonly bookService = inject(BookService);
   private readonly topicService = inject(TopicService);

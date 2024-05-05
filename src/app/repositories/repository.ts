@@ -38,7 +38,7 @@ export abstract class Repository<TEntity> {
       const sql = `UPDATE ${this.tableName} SET ${updates} WHERE id = ? RETURNING *;`;
       const values = [...Object.values(fields), id];
       const result = (await (
-        await this.db.run(sql, values)
+        await this.db.run(sql, values, true, 'all')
       ).changes?.values?.[0]) as T;
 
       return result;

@@ -40,12 +40,10 @@ import {
 import { MaskitoDirective } from '@maskito/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
-import { ClassesRepository } from 'src/app/repositories/classes.repository';
-import { StudentsRepository } from 'src/app/repositories/students.repository';
-import { Book, Class, Student } from '../../models';
-import { StudentProfileComponent } from '../student-profile/student-profile.component';
 import { ClassService } from 'src/app/services/class.service';
 import { StudentService } from 'src/app/services/student.service';
+import { Book, Class, Student } from '../../models';
+import { StudentProfileComponent } from '../student-profile/student-profile.component';
 
 @Component({
   selector: 'app-class-students',

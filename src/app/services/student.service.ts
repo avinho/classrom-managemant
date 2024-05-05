@@ -31,9 +31,9 @@ export class StudentService {
   async loadStudents() {
     const foundStudents = await this.studentRepository.getAll();
     let students: Student[] = [];
-    foundStudents.forEach(async (student) => {
+    for (const student of foundStudents) {
       students.push(await this.loadStudentBookAndClass(student));
-    });
+    }
     return students;
   }
 
@@ -48,9 +48,9 @@ export class StudentService {
   async loadStudentsByClassId(id: number) {
     const foundStudents = await this.studentRepository.getStudentsByClassId(id);
     let students: Student[] = [];
-    foundStudents.forEach(async (student) => {
+    for (const student of foundStudents) {
       students.push(await this.loadStudentBookAndClass(student));
-    });
+    }
     return students;
   }
 

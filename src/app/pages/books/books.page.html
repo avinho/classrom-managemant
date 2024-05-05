@@ -10,6 +10,23 @@
   </ion-refresher>
   <ion-card>
     <ion-card-content>
+      <ion-input
+        placeholder="Book name"
+        type="text"
+        #searchInput
+        (ionInput)="filter(searchInput.value)"
+      >
+        <ion-icon slot="end" size="small" name="search"></ion-icon>
+      </ion-input>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content *ngIf="books">
+      @if (books.length === 0) {
+      <ion-item>
+        <ion-label>Book not found :(</ion-label>
+      </ion-item>
+      } @else {
       <ion-list>
         <ion-item
           *ngFor="let book of books"
@@ -18,6 +35,7 @@
           ><ion-label>{{ book.name }}</ion-label>
         </ion-item>
       </ion-list>
+      }
     </ion-card-content>
   </ion-card>
   <ion-modal #modal>

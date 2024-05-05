@@ -16,11 +16,11 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
+  IonInput,
 } from '@ionic/angular/standalone';
-import { BookComponentComponent } from 'src/app/components/book-component/book-component.component';
-import { BookRepository } from 'src/app/repositories/book.repository';
-import { Book } from '../../models';
+import { BookComponent } from 'src/app/components/book-component/book-component.component';
 import { BookService } from 'src/app/services/book.service';
+import { Book } from '../../models';
 
 @Component({
   selector: 'app-books',
@@ -28,6 +28,7 @@ import { BookService } from 'src/app/services/book.service';
   styleUrls: ['./books.page.scss'],
   standalone: true,
   imports: [
+    IonInput,
     IonIcon,
     IonRefresher,
     IonFabButton,
@@ -43,7 +44,7 @@ import { BookService } from 'src/app/services/book.service';
     IonToolbar,
     IonHeader,
     CommonModule,
-    BookComponentComponent,
+    BookComponent,
     IonModal,
   ],
 })
@@ -52,6 +53,7 @@ export class BooksPage {
   books?: Book[];
   selectedBook!: Book;
   modalRef = viewChild<IonModal>('modal');
+  searchTerm?: string;
 
   constructor() {
     this.loadBooks();
@@ -75,7 +77,25 @@ export class BooksPage {
   }
 
   async loadBooks() {
-    this.books = await this.bookService.loadBooks();
+    try {
+      let loadedBooks = await this.bookService.loadBooks();
+      if (this.searchTerm) {
+        loadedBooks = [...loadedBooks].filter((book) =>
+          book.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
+        );
+      }
+      this.books = loadedBooks;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /** TODO
+   *  1. Melhorar filtragem para filtrar somente os dados carregado ao iniciar o componente.
+   */
+  async filter(query: any) {
+    this.searchTerm = query;
+    await this.loadBooks();
   }
 
   async addBook() {
