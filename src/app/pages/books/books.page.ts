@@ -17,6 +17,7 @@ import {
   IonTitle,
   IonToolbar,
   IonInput,
+  IonChip,
 } from '@ionic/angular/standalone';
 import { BookComponent } from 'src/app/components/book-component/book-component.component';
 import { BookService } from 'src/app/services/book.service';
@@ -28,6 +29,7 @@ import { Book } from '../../models';
   styleUrls: ['./books.page.scss'],
   standalone: true,
   imports: [
+    IonChip,
     IonInput,
     IonIcon,
     IonRefresher,
@@ -66,6 +68,7 @@ export class BooksPage {
   }
 
   dismissModal(modal: IonModal) {
+    this.loadBooks();
     modal.dismiss();
   }
 

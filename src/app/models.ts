@@ -36,11 +36,18 @@ export interface Class {
   students?: Student[];
 }
 
-export interface User {
-  id: number;
-  name: string;
-  active: number;
-  /* for version 2
-     email: string
-     */
+export interface StudentLesson {
+  id?: number;
+  student_id: number;
+  lesson_id: number;
+  done: number;
+  conclusion?: string | null;
+}
+
+export interface StudentTopic {
+  id?: number;
+  student_id: number;
+  topic_id: number;
+  done: number;
+  conclusion?: string | null;
 }

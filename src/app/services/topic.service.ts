@@ -18,16 +18,16 @@ export class TopicService {
     }
   }
 
-  async delete(id: number) {
-    return await this.topicRepository.remove(id);
+  async delete(topicId: number) {
+    return await this.topicRepository.remove(topicId);
   }
 
-  async exists(id: number) {
-    return await this.topicRepository.exists(id);
+  async exists(topicId: number) {
+    return await this.topicRepository.exists(topicId);
   }
 
-  async loadTopicById(id: number) {
-    const topic = await this.topicRepository.getById(id);
+  async loadTopicById(topicId: number) {
+    const topic = await this.topicRepository.getById(topicId);
     return topic ? topic : null;
   }
 
@@ -35,7 +35,7 @@ export class TopicService {
     return await this.topicRepository.getAll();
   }
 
-  async loadTopicsByLessonId(id: number) {
-    return await this.topicRepository.getTopicsByLessonId(id);
+  async loadTopicsByLessonId(lessonId: number) {
+    return await this.topicRepository.getTopicsByLessonId(lessonId);
   }
 }

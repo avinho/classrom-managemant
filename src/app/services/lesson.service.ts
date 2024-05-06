@@ -14,14 +14,15 @@ export class LessonService {
 
   async save(lesson: Lesson) {
     if (lesson.id) {
+      console.log(lesson);
       await this.lessonRepository.update(lesson.id, lesson);
     } else {
       await this.lessonRepository.add(lesson);
     }
   }
 
-  async delete(lesson: Lesson) {
-    await this.lessonRepository.remove(lesson.id!);
+  async delete(id: number) {
+    await this.lessonRepository.remove(id);
   }
 
   async exists(id: number) {
@@ -60,6 +61,7 @@ export class LessonService {
       id: lesson.id,
       name: lesson.name,
       topics: topics?.length ? topics : [],
+      book_id: lesson.book_id,
     };
   }
 }

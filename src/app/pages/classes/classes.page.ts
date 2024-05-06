@@ -1,5 +1,3 @@
-import { ClassService } from './../../services/class.service';
-import { StudentService } from './../../services/student.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
@@ -32,10 +30,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ClassesRepository } from 'src/app/repositories/classes.repository';
-import { StudentsRepository } from 'src/app/repositories/students.repository';
 import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
 import { Book, Class, Student } from '../../models';
+import { ClassService } from './../../services/class.service';
+import { StudentService } from './../../services/student.service';
 
 @Component({
   selector: 'app-classes',
@@ -113,16 +111,12 @@ export class ClassesPage {
       name: name,
       students: [],
     };
-    this.classes?.push(newClass);
     await this.classService.save(newClass);
+    await this.loadClasses();
     modal?.dismiss();
   }
 
   async loadStudents(classId: number) {
     return await this.studentService.loadStudentsByClassId(classId);
-  }
-
-  async loadBooks() {
-    //this.books = await this.storage.loadBooks();
   }
 }

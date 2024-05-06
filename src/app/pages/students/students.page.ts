@@ -109,7 +109,7 @@ export class StudentsPage implements OnInit {
       student.id!
     )) as Student;
     this.modalRef()?.present();
-    console.log('clicou', student.name);
+    console.log('clicou', student);
   }
 
   async loadStudents() {

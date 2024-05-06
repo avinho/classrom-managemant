@@ -33,6 +33,10 @@
           [button]="true"
           (click)="openProfile(book)"
           ><ion-label>{{ book.name }}</ion-label>
+          <ion-chip *ngIf="book.lessons">
+            <ion-icon name="reader-outline"></ion-icon>
+            <ion-label>{{ book.lessons.length }}</ion-label>
+          </ion-chip>
         </ion-item>
       </ion-list>
       }

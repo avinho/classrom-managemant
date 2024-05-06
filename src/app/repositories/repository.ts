@@ -6,7 +6,7 @@ import { StorageService } from '../database/storage.service';
   providedIn: 'root',
 })
 export abstract class Repository<TEntity> {
-  private db: SQLiteDBConnection = inject(StorageService).retrieveDb();
+  protected db: SQLiteDBConnection = inject(StorageService).retrieveDb();
 
   abstract get tableName(): string;
 

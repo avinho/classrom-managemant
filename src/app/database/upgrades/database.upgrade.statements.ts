@@ -11,27 +11,31 @@ export class DataBaseUpgradeStatements {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         book_id INTEGER,
-        FOREIGN KEY (book_id) REFERENCES Book(id)
+        FOREIGN KEY (book_id) REFERENCES Book(id) ON DELETE CASCADE
         );`,
         `CREATE TABLE IF NOT EXISTS Topic (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         lesson_id INTEGER,
-        FOREIGN KEY (lesson_id) REFERENCES Lesson(id)
+        FOREIGN KEY (lesson_id) REFERENCES Lesson(id) ON DELETE CASCADE
         );`,
         `CREATE TABLE IF NOT EXISTS StudentLesson (
-        student_id INTEGER NOT NULL REFERENCES Student(id),
-        lesson_id INTEGER NOT NULL REFERENCES Lesson(id),
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER NOT NULL,
+        lesson_id INTEGER NOT NULL,
         done INTEGER DEFAULT 0 NOT NULL,
         conclusion TEXT,
-        PRIMARY KEY (student_id, lesson_id)
+        FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE,
+        FOREIGN KEY (lesson_id) REFERENCES Lesson(id) ON DELETE CASCADE
         );`,
         `CREATE TABLE IF NOT EXISTS StudentTopic (
-        student_id INTEGER NOT NULL REFERENCES Student(id),
-        topic_id INTEGER NOT NULL REFERENCES Topic(id),
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER NOT NULL,
+        topic_id INTEGER NOT NULL,
         done INTEGER DEFAULT 0 NOT NULL,
         conclusion TEXT,
-        PRIMARY KEY (student_id, topic_id)
+        FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE,
+        FOREIGN KEY (topic_id) REFERENCES Topic(id) ON DELETE CASCADE
         );`,
         `CREATE TABLE IF NOT EXISTS Student (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

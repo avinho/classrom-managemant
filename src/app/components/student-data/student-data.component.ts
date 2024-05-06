@@ -1,6 +1,8 @@
+import { StudentTopicService } from './../../services/student-topic.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
+  AfterContentInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   OnInit,
@@ -34,7 +36,14 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { BookRepository } from 'src/app/repositories/book.repository';
 import { ClassesRepository } from 'src/app/repositories/classes.repository';
 import { StudentsRepository } from 'src/app/repositories/students.repository';
-import { Book, Class, Lesson, Student, Topic } from '../../models';
+import {
+  Book,
+  Class,
+  Lesson,
+  Student,
+  StudentTopic,
+  Topic,
+} from '../../models';
 import { ClassService } from 'src/app/services/class.service';
 import { StudentService } from 'src/app/services/student.service';
 import { BookService } from 'src/app/services/book.service';
@@ -69,10 +78,11 @@ import { BookService } from 'src/app/services/book.service';
     MaskitoDirective,
   ],
 })
-export class StudentDataComponent implements OnInit {
+export class StudentDataComponent implements OnInit, AfterContentInit {
   private readonly classService = inject(ClassService);
   private readonly studentService = inject(StudentService);
   private readonly bookService = inject(BookService);
+  private readonly studentTopicService = inject(StudentTopicService);
   student = input.required<Student>();
   books: WritableSignal<Book[]> = signal<Book[]>([]);
   classes: WritableSignal<Class[]> = signal<Class[]>([]);
@@ -80,7 +90,9 @@ export class StudentDataComponent implements OnInit {
   edit: boolean = true;
   loading: boolean = true;
 
-  constructor() {}
+  ngAfterContentInit(): void {
+    this.studentEdit();
+  }
 
   readonly birthdateMask: MaskitoOptions = {
     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
@@ -93,6 +105,25 @@ export class StudentDataComponent implements OnInit {
     this.loadBooks().then(() => (this.loading = false));
     this.loadClasses();
     this.selectedBook = this.student().currentBook!;
+  }
+
+  async studentEdit() {
+    /* this.student().currentBook?.lessons?.forEach((lesson) => {
+      lesson.topics?.forEach((topic) => {
+        topic.done = true;
+        topic.conclusion = new Date().toISOString();
+        console.log(topic);
+      });
+    }); */
+    console.log(
+      await this.studentTopicService.loadTopicsByStudentId(this.student().id!)
+    );
+    this.student().currentBook?.lessons?.forEach((lesson) => {
+      let topic = lesson.topics?.[0];
+      topic!.done = true;
+      topic!.conclusion = new Date().toISOString();
+      console.log(topic);
+    });
   }
 
   editStudentName(name: any) {
@@ -137,7 +168,16 @@ export class StudentDataComponent implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    await this.studentService.save(this.student());
+    let findTopic = await this.studentTopicService.loadByTopicId(topic.id!);
+
+    findTopic = {
+      id: findTopic?.id,
+      done: topic.done ? 1 : 0,
+      student_id: this.student().id!,
+      topic_id: topic.id!,
+      conclusion: topic.conclusion,
+    };
+    await this.studentTopicService.save(findTopic);
   }
 
   doneLesson(lesson: Lesson, event: any) {

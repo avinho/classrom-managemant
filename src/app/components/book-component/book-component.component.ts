@@ -27,14 +27,10 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { Book } from 'src/app/models';
-import { BookRepository } from 'src/app/repositories/book.repository';
-import { TopicRepository } from 'src/app/repositories/topic.repository';
-import { Lesson, Topic } from './../../models';
-import { LessonRepository } from '../../repositories/lesson.repository';
-import { TopicService } from 'src/app/services/topic.service';
 import { BookService } from 'src/app/services/book.service';
-import { StudentService } from 'src/app/services/student.service';
 import { LessonService } from 'src/app/services/lesson.service';
+import { TopicService } from 'src/app/services/topic.service';
+import { Lesson, Topic } from './../../models';
 
 @Component({
   selector: 'app-book-component',
@@ -85,27 +81,36 @@ export class BookComponent implements OnInit {
     this.lessons.set(
       await this.lessonService.loadLessonsByBookId(this.book().id!)
     );
+    console.log(this.lessons());
   }
 
   async addLesson(book: Book) {
     let newLesson: Lesson = {
       name: 'New Lesson',
       topics: [],
-      book: book,
+      book_id: book.id,
     };
 
     await this.lessonService.save(newLesson);
     await this.loadLessons();
   }
 
-  onEditTopic(topic: Topic, value: any) {
-    topic.name = value;
-    this.topicService.save(topic);
+  async onEditTopic(topic: Topic, value: any) {
+    let editTopic = {
+      ...topic,
+      name: value as string,
+    };
+    await this.topicService.save(editTopic);
+    await this.loadLessons();
   }
 
-  onEditLesson(lesson: Lesson, value: any) {
-    lesson.name = value;
-    this.lessonService.save(lesson);
+  async onEditLesson(lesson: Lesson, value: any) {
+    let editLesson = {
+      ...lesson,
+      name: value as string,
+    };
+    await this.lessonService.save(editLesson);
+    await this.loadLessons();
   }
 
   async addTopic(lesson: Lesson) {
@@ -117,5 +122,16 @@ export class BookComponent implements OnInit {
     lesson.topics = (await this.topicService.loadTopicsByLessonId(
       lesson.id!
     )) as Topic[];
+  }
+
+  async deleteTopic(topicId: number) {
+    await this.topicService.delete(topicId);
+    await this.loadLessons();
+  }
+
+  async deleteLesson(lesosnId: Lesson) {
+    console.log(lesosnId);
+    await this.lessonService.delete(lesosnId.id!);
+    await this.loadLessons();
   }
 }

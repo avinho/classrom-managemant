@@ -1,14 +1,11 @@
-import { Injectable, inject } from '@angular/core';
-import { SQLiteDBConnection } from '@capacitor-community/sqlite';
+import { Injectable } from '@angular/core';
 import { Topic } from 'src/app/models';
-import { StorageService } from '../database/storage.service';
 import { Repository } from './repository';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TopicRepository extends Repository<Topic> {
-  private _db: SQLiteDBConnection = inject(StorageService).retrieveDb();
   get tableName(): string {
     return 'Topic';
   }
@@ -22,7 +19,7 @@ export class TopicRepository extends Repository<Topic> {
 
   async getTopicsByLessonId(id: number) {
     const sql = `SELECT * FROM Topic WHERE lesson_id = ${id};`;
-    const topics = (await this._db.query(sql)).values as Topic[];
+    const topics = (await this.db.query(sql)).values as Topic[];
     return topics;
   }
 }

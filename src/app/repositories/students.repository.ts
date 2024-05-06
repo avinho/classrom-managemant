@@ -1,14 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Student } from 'src/app/models';
-import { StorageService } from '../database/storage.service';
 import { Repository } from './repository';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentsRepository extends Repository<Student> {
-  private _db = inject(StorageService).retrieveDb();
-
   get tableName(): string {
     return 'Student';
   }
@@ -25,7 +22,7 @@ export class StudentsRepository extends Repository<Student> {
 
   async getStudentsByClassId(id: number) {
     let students = (
-      await this._db.query(`SELECT * FROM Student WHERE class_id=${id}`)
+      await this.db.query(`SELECT * FROM Student WHERE class_id=${id}`)
     ).values as Student[];
     return students;
   }
