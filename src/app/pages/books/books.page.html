@@ -10,14 +10,36 @@
   </ion-refresher>
   <ion-card>
     <ion-card-content>
+      <ion-input
+        placeholder="Book name"
+        type="text"
+        #searchInput
+        (ionInput)="filter(searchInput.value)"
+      >
+        <ion-icon slot="end" size="small" name="search"></ion-icon>
+      </ion-input>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content *ngIf="books">
+      @if (books.length === 0) {
+      <ion-item>
+        <ion-label>Book not found :(</ion-label>
+      </ion-item>
+      } @else {
       <ion-list>
         <ion-item
           *ngFor="let book of books"
           [button]="true"
           (click)="openProfile(book)"
           ><ion-label>{{ book.name }}</ion-label>
+          <ion-chip *ngIf="book.lessons">
+            <ion-icon name="reader-outline"></ion-icon>
+            <ion-label>{{ book.lessons.length }}</ion-label>
+          </ion-chip>
         </ion-item>
       </ion-list>
+      }
     </ion-card-content>
   </ion-card>
   <ion-modal #modal>

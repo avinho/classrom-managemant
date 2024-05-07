@@ -12,9 +12,19 @@ ion-header {
   align-items: center!important;
 }
 
-ion-spinner {
-  width: 70px;
-  height: 70px;
+ion-title {
+  font-size: 1rem;
+}
+
+app-student-profile {
+  ion-spinner {
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .spinner {
@@ -22,10 +32,6 @@ ion-spinner {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-ion-title {
-  font-size: 1rem;
 }
 
 /* ion-modal {

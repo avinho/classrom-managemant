@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
   viewChild,
 } from '@angular/core';
 import {
@@ -39,8 +40,9 @@ import {
 import { MaskitoDirective } from '@maskito/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
+import { ClassService } from 'src/app/services/class.service';
+import { StudentService } from 'src/app/services/student.service';
 import { Book, Class, Student } from '../../models';
-import { StorageService } from '../../storage.service';
 import { StudentProfileComponent } from '../student-profile/student-profile.component';
 
 @Component({
@@ -81,6 +83,8 @@ import { StudentProfileComponent } from '../student-profile/student-profile.comp
   ],
 })
 export class ClassStudentsComponent implements OnInit {
+  private readonly classService = inject(ClassService);
+  private readonly studentService = inject(StudentService);
   students?: Student[];
   @Input() class?: Class;
   selectedBook?: Book;
@@ -104,13 +108,12 @@ export class ClassStudentsComponent implements OnInit {
 
   AllStudents?: Student[];
 
-  constructor(private dbService: StorageService) {}
+  constructor() {}
 
   ngOnInit() {
     this.loadStudents(this.class?.id!).then(() => {
       this.selectedStudent = this.students![0];
-      console.log('Current student:', this.selectedStudent);
-      this.selectedBook = this.selectedStudent?.currentBook;
+      this.selectedBook = this.selectedStudent?.currentBook!;
     });
     this.loadAllStudents();
     this.loadOthersStudents(this.class?.id!).then((data) => {
@@ -142,7 +145,6 @@ export class ClassStudentsComponent implements OnInit {
         });
       });
       console.log(this.AllStudents);
-      await this.dbService.set('students', this.AllStudents!);
     });
   }
 
@@ -153,21 +155,19 @@ export class ClassStudentsComponent implements OnInit {
 
   async loadStudents(classId: number) {
     let start = performance.now();
-    this.students = (await this.dbService.loadStudents()).filter((student) => {
-      return student.class?.id === classId;
-    });
+    this.students = await this.studentService.loadStudentsByClassId(classId);
     let end = performance.now();
     console.log(end - start);
   }
 
   async loadOthersStudents(classId: number) {
-    return (await this.dbService.loadStudents()).filter((student) => {
+    return (await this.studentService.loadStudents()).filter((student) => {
       return student.class?.id !== classId;
     });
   }
 
   async loadAllStudents() {
-    this.AllStudents = await this.dbService.loadStudents();
+    this.AllStudents = await this.studentService.loadStudents();
   }
 
   onCloseModal() {
@@ -178,7 +178,7 @@ export class ClassStudentsComponent implements OnInit {
     const activeIndex = data.detail[0].activeIndex;
     if (activeIndex >= 0 && activeIndex < this.students!.length) {
       this.selectedStudent = this.students![activeIndex];
-      this.selectedBook = this.selectedStudent.currentBook;
+      this.selectedBook = this.selectedStudent.currentBook!;
     } else {
       console.warn('Invalid slide index:', activeIndex);
     }
@@ -196,7 +196,7 @@ export class ClassStudentsComponent implements OnInit {
       class: null,
     };
 
-    await this.dbService.addStudent(student);
+    await this.studentService.save(student);
     modal.dismiss();
     console.log(student);
   }

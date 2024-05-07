@@ -1,25 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, viewChild } from '@angular/core';
 import {
-  IonModal,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonRefresherContent,
   IonCard,
-  IonList,
   IonCardContent,
-  IonItem,
-  IonLabel,
+  IonContent,
   IonFab,
   IonFabButton,
-  IonRefresher,
+  IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
+  IonRefresher,
+  IonRefresherContent,
+  IonTitle,
+  IonToolbar,
+  IonInput,
+  IonChip,
 } from '@ionic/angular/standalone';
-import { BookComponentComponent } from 'src/app/components/book-component/book-component.component';
+import { BookComponent } from 'src/app/components/book-component/book-component.component';
+import { BookService } from 'src/app/services/book.service';
 import { Book } from '../../models';
-import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-books',
@@ -27,6 +29,8 @@ import { StorageService } from '../../storage.service';
   styleUrls: ['./books.page.scss'],
   standalone: true,
   imports: [
+    IonChip,
+    IonInput,
     IonIcon,
     IonRefresher,
     IonFabButton,
@@ -42,15 +46,16 @@ import { StorageService } from '../../storage.service';
     IonToolbar,
     IonHeader,
     CommonModule,
-    BookComponentComponent,
+    BookComponent,
     IonModal,
   ],
 })
 export class BooksPage {
-  private readonly store = inject(StorageService);
+  private readonly bookService = inject(BookService);
   books?: Book[];
   selectedBook!: Book;
   modalRef = viewChild<IonModal>('modal');
+  searchTerm?: string;
 
   constructor() {
     this.loadBooks();
@@ -63,6 +68,7 @@ export class BooksPage {
   }
 
   dismissModal(modal: IonModal) {
+    this.loadBooks();
     modal.dismiss();
   }
 
@@ -74,16 +80,33 @@ export class BooksPage {
   }
 
   async loadBooks() {
-    this.books = await this.store.loadBooks();
+    try {
+      let loadedBooks = await this.bookService.loadBooks();
+      if (this.searchTerm) {
+        loadedBooks = [...loadedBooks].filter((book) =>
+          book.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
+        );
+      }
+      this.books = loadedBooks;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /** TODO
+   *  1. Melhorar filtragem para filtrar somente os dados carregado ao iniciar o componente.
+   */
+  async filter(query: any) {
+    this.searchTerm = query;
+    await this.loadBooks();
   }
 
   async addBook() {
     let newBook: Book = {
-      id: Math.floor(Math.random() * 1000),
       name: 'Novo Livro',
     };
 
-    this.books?.push(newBook);
-    await this.store.addBook(newBook);
+    await this.bookService.save(newBook);
+    await this.loadBooks();
   }
 }

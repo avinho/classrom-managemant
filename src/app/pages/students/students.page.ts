@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, viewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import {
   IonAvatar,
   IonButton,
@@ -23,18 +30,18 @@ import {
   IonList,
   IonModal,
   IonNote,
+  IonRefresher,
+  IonRefresherContent,
   IonRow,
   IonSelect,
   IonSelectOption,
   IonSpinner,
   IonTitle,
   IonToolbar,
-  IonRefresher,
-  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
+import { StudentService } from 'src/app/services/student.service';
 import { Student } from '../../models';
-import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-students-page',
@@ -77,18 +84,17 @@ import { StorageService } from '../../storage.service';
   ],
 })
 export class StudentsPage implements OnInit {
-  private readonly store = inject(StorageService);
-  students$?: Promise<Student[]>;
+  private readonly studentService = inject(StudentService);
+  students?: Student[];
   selectedStudent!: Student;
-  searchTerm = '';
-
+  searchTerm?: string;
   searchInput = viewChild<IonInput>('searchInput');
   modalRef = viewChild<IonModal>('modal');
 
   constructor() {}
 
-  ngOnInit() {
-    this.loadStudents();
+  async ngOnInit() {
+    await this.loadStudents();
   }
 
   handleRefresh(event: any) {
@@ -98,33 +104,49 @@ export class StudentsPage implements OnInit {
     }, 1000);
   }
 
-  openProfile(student: Student) {
-    this.selectedStudent = student;
+  async openProfile(student: Student) {
+    this.selectedStudent = (await this.studentService.loadStudentById(
+      student.id!
+    )) as Student;
     this.modalRef()?.present();
-    console.log('clicou', student.name);
+    console.log('clicou', student);
   }
 
   async loadStudents() {
-    this.students$ = this.store.loadStudents().then((students) => {
-      students.sort((a, b) => (a.name > b.name ? 1 : -1));
-      return this.filterStudents(students);
-    });
-    console.log(await this.students$);
+    try {
+      let loadedStudents = await this.studentService.loadStudents();
+      if (this.searchTerm) {
+        loadedStudents = [...loadedStudents].filter((student) =>
+          student.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
+        );
+      }
+      console.log(loadedStudents);
+      this.students = this.sortStudents(loadedStudents);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  filterStudents(students: Student[]): Student[] {
-    return students.filter((student) =>
-      student.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+  private sortStudents(students: Student[]) {
+    return [...students].sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  private filterStudents(students: Student[]): Student[] {
+    return [...students].filter((student) =>
+      student.name.toLowerCase().includes(this.searchTerm!.toLowerCase())
     );
   }
 
+  /** TODO
+   *  1. Melhorar filtragem para filtrar somente os dados carregado ao iniciar o componente.
+   */
   async filter(query: any) {
     this.searchTerm = query;
     await this.loadStudents();
   }
 
   async deleteStudent(student: Student) {
-    await this.store.deleteStudent(student);
+    await this.studentService.delete(student);
     await this.loadStudents();
   }
 
@@ -138,7 +160,6 @@ export class StudentsPage implements OnInit {
 
   async newStudent(modal: IonModal, name: any, birthdate: any) {
     const newStudent: Student = {
-      id: Math.floor(Math.random() * 1000),
       name: name,
       birthdate: new Date(birthdate).toLocaleDateString('pt-BR', {
         year: 'numeric',
@@ -146,9 +167,10 @@ export class StudentsPage implements OnInit {
         day: 'numeric',
       }),
       class: null,
+      currentBook: null,
     };
 
-    await this.store.addStudent(newStudent);
+    await this.studentService.save(newStudent);
     this.loadStudents();
     modal.dismiss();
   }

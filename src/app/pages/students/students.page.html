@@ -11,7 +11,7 @@
   <ion-card>
     <ion-card-content>
       <ion-input
-        placeholder="Student Name"
+        placeholder="Student name"
         type="text"
         #searchInput
         (ionInput)="filter(searchInput.value)"
@@ -23,14 +23,14 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ng-container *ngIf="students$ | async as students">
+        <ng-container *ngIf="students">
           @if (students.length === 0) {
           <ion-item>
-            <ion-label>No students found :(</ion-label>
+            <ion-label>Student not found :(</ion-label>
           </ion-item>
           } @else {
           <ion-item
-            *ngFor="let student of students$ | async"
+            *ngFor="let student of students"
             [button]="true"
             (click)="openProfile(student)"
             ><ion-label>{{ student.name }}</ion-label>

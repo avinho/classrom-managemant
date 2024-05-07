@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonAvatar,
   IonButton,
@@ -22,17 +22,18 @@ import {
   IonList,
   IonModal,
   IonNote,
+  IonRefresher,
+  IonRefresherContent,
   IonRow,
   IonSpinner,
   IonThumbnail,
   IonTitle,
   IonToolbar,
-  IonRefresherContent,
-  IonRefresher,
 } from '@ionic/angular/standalone';
-import { Book, Class, Student } from '../../models';
-import { StorageService } from '../../storage.service';
 import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
+import { Book, Class, Student } from '../../models';
+import { ClassService } from './../../services/class.service';
+import { StudentService } from './../../services/student.service';
 
 @Component({
   selector: 'app-classes',
@@ -73,16 +74,18 @@ import { ClassStudentsComponent } from '../../components/class-students/class-st
   ],
 })
 export class ClassesPage {
+  private readonly classService = inject(ClassService);
+  private readonly studentService = inject(StudentService);
   classes?: Class[];
   students?: Student[];
   books?: Book[];
 
-  constructor(private storage: StorageService) {
+  constructor() {
     this.loadClasses();
   }
 
   async loadClasses() {
-    this.classes = await this.storage.loadClasses();
+    this.classes = await this.classService.loadClasses();
   }
 
   handleRefresh(event: any) {
@@ -98,32 +101,22 @@ export class ClassesPage {
 
   async deleteClass(classItem: Class) {
     console.log('classItem', classItem);
-    const index = this.classes?.indexOf(classItem);
-    if (index !== undefined) {
-      this.classes?.splice(index, 1);
-      await this.storage.set('classes', this.classes);
-    }
+    await this.classService.delete(classItem);
+    await this.loadClasses();
   }
 
   async onAddClass(name: any, modal?: IonModal) {
     if (!name) return;
     const newClass: Class = {
-      id: Math.floor(Math.random() * 1000),
       name: name,
       students: [],
     };
-    this.classes?.push(newClass);
-    await this.storage.addClass(newClass);
+    await this.classService.save(newClass);
+    await this.loadClasses();
     modal?.dismiss();
   }
 
   async loadStudents(classId: number) {
-    return (await this.storage.loadStudents()).filter((student) => {
-      return student.class!.id === classId;
-    });
-  }
-
-  async loadBooks() {
-    this.books = await this.storage.loadBooks();
+    return await this.studentService.loadStudentsByClassId(classId);
   }
 }

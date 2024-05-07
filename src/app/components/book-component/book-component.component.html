@@ -42,7 +42,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen class="ion-padding">
-  @for (lesson of book().lessons; track lesson.id) {
+  @for (lesson of lessons(); track lesson.id) {
   <ion-card>
     <ion-card-header style="padding-bottom: 0">
       <div
@@ -63,14 +63,24 @@
             [value]="lesson.name"
           ></ion-input>
         </div>
-        <ion-button
-          size="small"
-          slot="end"
-          fill="clear"
-          (click)="addTopic(lesson)"
-        >
-          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
-        </ion-button>
+        <ion-buttons size="small">
+          <ion-button
+            size="small"
+            slot="end"
+            fill="clear"
+            (click)="deleteLesson(lesson)"
+          >
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+          <ion-button
+            size="small"
+            slot="end"
+            fill="clear"
+            (click)="addTopic(lesson)"
+          >
+            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </div>
     </ion-card-header>
     <ion-card-content>
@@ -84,6 +94,14 @@
             (ionBlur)="onEditTopic(topic, topicName.value)"
             [value]="topic.name"
           ></ion-input>
+          <ion-button
+            size="small"
+            slot="end"
+            fill="clear"
+            (click)="deleteTopic(topic.id!)"
+          >
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>
@@ -93,7 +111,7 @@
     size="large"
     fill="clear"
     style="display: flex; justify-content: center; align-items: center"
-    (click)="addLesson()"
+    (click)="addLesson(book())"
   >
     <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
   </ion-button>

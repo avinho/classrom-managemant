@@ -1,26 +1,36 @@
-import { Lesson, Topic } from './../../models';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
-  IonContent,
-  IonHeader,
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import {
   IonButton,
   IonButtons,
-  IonPopover,
-  IonIcon,
-  IonToolbar,
-  IonTitle,
-  IonList,
   IonCard,
-  IonCardHeader,
   IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
-  IonInput,
-  IonCardTitle,
+  IonList,
+  IonPopover,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Book } from 'src/app/models';
-import { StorageService } from 'src/app/storage.service';
+import { BookService } from 'src/app/services/book.service';
+import { LessonService } from 'src/app/services/lesson.service';
+import { TopicService } from 'src/app/services/topic.service';
+import { Lesson, Topic } from './../../models';
 
 @Component({
   selector: 'app-book-component',
@@ -47,50 +57,81 @@ import { StorageService } from 'src/app/storage.service';
     CommonModule,
   ],
 })
-export class BookComponentComponent {
-  private readonly store = inject(StorageService);
+export class BookComponent implements OnInit {
+  private readonly lessonService = inject(LessonService);
+  private readonly bookService = inject(BookService);
+  private readonly topicService = inject(TopicService);
   closeModal = output<boolean>();
   deleteBook = output<Book>();
   book = input.required<Book>();
+  lessons: WritableSignal<Lesson[]> = signal([]);
   edit: boolean = true;
 
   constructor() {}
+
+  async ngOnInit() {
+    await this.loadLessons();
+  }
 
   onCloseModal() {
     this.closeModal.emit(false);
   }
 
-  addLesson() {
+  async loadLessons() {
+    this.lessons.set(
+      await this.lessonService.loadLessonsByBookId(this.book().id!)
+    );
+    console.log(this.lessons());
+  }
+
+  async addLesson(book: Book) {
     let newLesson: Lesson = {
-      id: Math.floor(Math.random() * 1000),
       name: 'New Lesson',
       topics: [],
+      book_id: book.id,
     };
 
-    this.addTopic(newLesson);
-
-    this.book().lessons?.push(newLesson);
-    this.store.updateBook(this.book());
+    await this.lessonService.save(newLesson);
+    await this.loadLessons();
   }
 
-  onEditTopic(topic: Topic, value: any) {
-    topic.name = value;
-    this.store.updateBook(this.book());
+  async onEditTopic(topic: Topic, value: any) {
+    let editTopic = {
+      ...topic,
+      name: value as string,
+    };
+    await this.topicService.save(editTopic);
+    await this.loadLessons();
   }
 
-  onEditLesson(lesson: Lesson, value: any) {
-    lesson.name = value;
-    this.store.updateBook(this.book());
+  async onEditLesson(lesson: Lesson, value: any) {
+    let editLesson = {
+      ...lesson,
+      name: value as string,
+    };
+    await this.lessonService.save(editLesson);
+    await this.loadLessons();
   }
 
-  addTopic(lesson: Lesson) {
-    let newTopic = {
-      id: Math.floor(Math.random() * 1000),
+  async addTopic(lesson: Lesson) {
+    let newTopic: Topic = {
       name: 'New Topic',
-      done: false,
-      conclusion: null,
+      lesson_id: lesson.id,
     };
-    lesson.topics?.push(newTopic);
-    this.store.updateBook(this.book());
+    await this.topicService.save(newTopic);
+    lesson.topics = (await this.topicService.loadTopicsByLessonId(
+      lesson.id!
+    )) as Topic[];
+  }
+
+  async deleteTopic(topicId: number) {
+    await this.topicService.delete(topicId);
+    await this.loadLessons();
+  }
+
+  async deleteLesson(lesosnId: Lesson) {
+    console.log(lesosnId);
+    await this.lessonService.delete(lesosnId.id!);
+    await this.loadLessons();
   }
 }

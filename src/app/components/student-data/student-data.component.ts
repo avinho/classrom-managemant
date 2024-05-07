@@ -1,11 +1,16 @@
+import { StudentTopicService } from './../../services/student-topic.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
+  AfterContentInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  InputSignal,
   OnInit,
+  WritableSignal,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import {
   IonAccordion,
@@ -27,10 +32,22 @@ import {
   IonTitle,
   IonToggle,
 } from '@ionic/angular/standalone';
-import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { Book, Class, Lesson, Student, Topic } from '../../models';
-import { StorageService } from '../../storage.service';
 import { MaskitoDirective } from '@maskito/angular';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import { BookRepository } from 'src/app/repositories/book.repository';
+import { ClassesRepository } from 'src/app/repositories/classes.repository';
+import { StudentsRepository } from 'src/app/repositories/students.repository';
+import {
+  Book,
+  Class,
+  Lesson,
+  Student,
+  StudentTopic,
+  Topic,
+} from '../../models';
+import { ClassService } from 'src/app/services/class.service';
+import { StudentService } from 'src/app/services/student.service';
+import { BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-student-data',
@@ -62,13 +79,22 @@ import { MaskitoDirective } from '@maskito/angular';
     MaskitoDirective,
   ],
 })
-export class StudentDataComponent implements OnInit {
-  private readonly dbService = inject(StorageService);
+export class StudentDataComponent implements OnInit, AfterContentInit {
+  private readonly classService = inject(ClassService);
+  private readonly studentService = inject(StudentService);
+  private readonly bookService = inject(BookService);
+  private readonly studentTopicService = inject(StudentTopicService);
   student = input.required<Student>();
-  books?: Book[];
-  classes?: Class[];
+  books: WritableSignal<Book[]> = signal<Book[]>([]);
+  classes: WritableSignal<Class[]> = signal<Class[]>([]);
   selectedBook?: Book;
   edit: boolean = true;
+  loading: boolean = true;
+
+  async ngAfterContentInit(): Promise<void> {
+    // this.studentEdit()
+    return;
+  }
 
   readonly birthdateMask: MaskitoOptions = {
     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
@@ -77,40 +103,60 @@ export class StudentDataComponent implements OnInit {
   readonly maskPredicate: MaskitoElementPredicate = async (el) =>
     (el as HTMLIonInputElement).getInputElement();
 
-  ngOnInit(): void {
-    this.loadBooks();
+  ngOnInit() {
+    this.loadBooks().then(() => (this.loading = false));
     this.loadClasses();
+    this.selectedBook = this.student().currentBook!;
+  }
+
+  async studentEdit() {
+    /* this.student().currentBook?.lessons?.forEach((lesson) => {
+      lesson.topics?.forEach(async (topic) => {
+        let topicProgres = await this.studentTopicService.loadByTopicId(
+          topic.id!
+        );
+        topic.done = topicProgres?.done == 1 ? true : false;
+        topic.conclusion = topicProgres?.conclusion;
+      });
+      console.log(lesson.topics);
+    }); */
   }
 
   editStudentName(name: any) {
     this.student().name = name;
-    this.dbService.updateStudent(this.student());
+    this.studentService.save(this.student());
   }
 
   editStudentBirthdate(birthdate: any) {
     this.student().birthdate = birthdate;
-    this.dbService.updateStudent(this.student());
+    this.studentService.save(this.student());
   }
 
   editStudentClass(newClass: Class) {
     this.student().class = newClass;
-    this.dbService.updateStudent(this.student());
+    this.studentService.save(this.student());
   }
 
   async loadBooks() {
-    this.books = await this.dbService.loadBooks();
+    this.books.set(await this.bookService.loadBooks());
   }
 
   async loadClasses() {
-    this.classes = await this.dbService.loadClasses();
+    this.classes.set(await this.classService.loadClasses());
   }
 
   async onBookChange(book: Book) {
     this.selectedBook = book;
     this.student().currentBook = book;
-    await this.dbService.updateStudent(this.student());
+    await this.studentService.save(this.student());
+    this.student().currentBook =
+      await this.studentService.loadStudentBookProgress(this.student());
   }
 
+  /*
+   *  TODO
+   *  Torna metodo assincrono para não ter concorrencia na database
+   */
   isLessonDone(topics: Topic[]) {
     return topics.every((topic) => topic.done);
   }
@@ -120,11 +166,20 @@ export class StudentDataComponent implements OnInit {
     topic.done
       ? (topic.conclusion = new Date().toISOString())
       : (topic.conclusion = null);
-    await this.dbService.updateStudent(this.student());
+    let findTopic = await this.studentTopicService.loadByTopicId(topic.id!);
+
+    findTopic = {
+      id: findTopic?.id,
+      done: topic.done ? 1 : 0,
+      student_id: this.student().id!,
+      topic_id: topic.id!,
+      conclusion: topic.conclusion,
+    };
+    await this.studentTopicService.save(findTopic);
   }
 
   doneLesson(lesson: Lesson, event: any) {
-    lesson.topics.forEach((topic) => {
+    lesson.topics?.forEach((topic) => {
       if (!topic.done) {
         return this.onTopicChange(topic, event);
       }
