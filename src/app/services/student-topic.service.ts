@@ -20,6 +20,10 @@ export class StudentTopicService {
     }
   }
 
+  async loadAll() {
+    return await this.studentTopicRepository.getAll();
+  }
+
   async delete(studentTopic: StudentTopic) {
     await this.studentTopicRepository.remove(studentTopic.id!);
   }

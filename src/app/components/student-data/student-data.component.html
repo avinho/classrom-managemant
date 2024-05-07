@@ -68,9 +68,9 @@
         (ionChange)="onBookChange($event.detail.value)"
         interface="popover"
       >
-        <ion-select-option *ngFor="let book of books()" [value]="book">{{
-          book.name
-        }}</ion-select-option>
+        <ion-select-option *ngFor="let book of books()" [value]="book"
+          >{{ book.name }}
+        </ion-select-option>
       </ion-select>
     </div>
   </ion-list>

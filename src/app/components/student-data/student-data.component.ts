@@ -5,6 +5,7 @@ import {
   AfterContentInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  InputSignal,
   OnInit,
   WritableSignal,
   inject,
@@ -90,8 +91,9 @@ export class StudentDataComponent implements OnInit, AfterContentInit {
   edit: boolean = true;
   loading: boolean = true;
 
-  ngAfterContentInit(): void {
-    this.studentEdit();
+  async ngAfterContentInit(): Promise<void> {
+    // this.studentEdit()
+    return;
   }
 
   readonly birthdateMask: MaskitoOptions = {
@@ -109,21 +111,15 @@ export class StudentDataComponent implements OnInit, AfterContentInit {
 
   async studentEdit() {
     /* this.student().currentBook?.lessons?.forEach((lesson) => {
-      lesson.topics?.forEach((topic) => {
-        topic.done = true;
-        topic.conclusion = new Date().toISOString();
-        console.log(topic);
+      lesson.topics?.forEach(async (topic) => {
+        let topicProgres = await this.studentTopicService.loadByTopicId(
+          topic.id!
+        );
+        topic.done = topicProgres?.done == 1 ? true : false;
+        topic.conclusion = topicProgres?.conclusion;
       });
+      console.log(lesson.topics);
     }); */
-    console.log(
-      await this.studentTopicService.loadTopicsByStudentId(this.student().id!)
-    );
-    this.student().currentBook?.lessons?.forEach((lesson) => {
-      let topic = lesson.topics?.[0];
-      topic!.done = true;
-      topic!.conclusion = new Date().toISOString();
-      console.log(topic);
-    });
   }
 
   editStudentName(name: any) {
@@ -153,6 +149,8 @@ export class StudentDataComponent implements OnInit, AfterContentInit {
     this.selectedBook = book;
     this.student().currentBook = book;
     await this.studentService.save(this.student());
+    this.student().currentBook =
+      await this.studentService.loadStudentBookProgress(this.student());
   }
 
   /*
