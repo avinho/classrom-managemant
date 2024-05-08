@@ -31,7 +31,8 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
-import { Book, Class, Student } from '../../models';
+import { Book, Class } from '../../models';
+import { Student } from '../../interfaces/models/student.model';
 import { ClassService } from './../../services/class.service';
 import { StudentService } from './../../services/student.service';
 

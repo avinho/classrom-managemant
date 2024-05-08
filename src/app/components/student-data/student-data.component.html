@@ -40,7 +40,7 @@
           <ion-list class="cardLabel">
             <ion-select
               disabled="{{ edit }}"
-              [value]="student().class"
+              [value]="student().currentClass"
               [compareWith]="compareWithClasses"
               (ionChange)="editStudentClass($event.detail.value)"
             >

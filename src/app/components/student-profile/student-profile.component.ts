@@ -11,7 +11,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { Student } from 'src/app/models';
+import { Student } from 'src/app/interfaces/models/student.model';
 import { StudentDataComponent } from '../student-data/student-data.component';
 
 @Component({

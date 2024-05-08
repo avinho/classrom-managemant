@@ -1,11 +1,9 @@
-import { StudentTopicService } from './../../services/student-topic.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
   AfterContentInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  InputSignal,
   OnInit,
   WritableSignal,
   inject,
@@ -34,20 +32,12 @@ import {
 } from '@ionic/angular/standalone';
 import { MaskitoDirective } from '@maskito/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { BookRepository } from 'src/app/repositories/book.repository';
-import { ClassesRepository } from 'src/app/repositories/classes.repository';
-import { StudentsRepository } from 'src/app/repositories/students.repository';
-import {
-  Book,
-  Class,
-  Lesson,
-  Student,
-  StudentTopic,
-  Topic,
-} from '../../models';
+import { BookService } from 'src/app/services/book.service';
 import { ClassService } from 'src/app/services/class.service';
 import { StudentService } from 'src/app/services/student.service';
-import { BookService } from 'src/app/services/book.service';
+import { Student } from 'src/app/interfaces/models/student.model';
+import { Book, Class, Lesson, Topic } from '../../models';
+import { StudentTopicService } from './../../services/student-topic.service';
 
 @Component({
   selector: 'app-student-data',
@@ -133,7 +123,7 @@ export class StudentDataComponent implements OnInit, AfterContentInit {
   }
 
   editStudentClass(newClass: Class) {
-    this.student().class = newClass;
+    this.student().currentClass = newClass;
     this.studentService.save(this.student());
   }
 
@@ -151,6 +141,7 @@ export class StudentDataComponent implements OnInit, AfterContentInit {
     await this.studentService.save(this.student());
     this.student().currentBook =
       await this.studentService.loadStudentBookProgress(this.student());
+    console.log(this.student());
   }
 
   /*

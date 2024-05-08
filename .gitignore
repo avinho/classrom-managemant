@@ -9,6 +9,10 @@
 UserInterfaceState.xcuserstate
 $RECYCLE.BIN/
 
+/.nx
+
+/src/assets/sql-wasm.wasm
+
 *.log
 log.txt
 

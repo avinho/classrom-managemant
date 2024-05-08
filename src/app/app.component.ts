@@ -31,21 +31,11 @@ export class AppComponent {
 
   private db = inject(StorageService).retrieveDb();
   constructor() {
-    // this.init();
+    this.init();
   }
 
   async init() {
-    console.log(await this.db.exportToJson('full', false));
-    let lesson: Lesson = {
-      name: 'Teste',
-      topics: [],
-      book: await this.bookService.loadBookById(1),
-    };
-    let topic: Topic = {
-      name: 'Teste',
-      lesson_id: lesson.id,
-    };
-    console.log(await this.lessonService.save(lesson));
-    console.log(await this.topicService.save(topic));
+    const student = await this.studentService.loadStudentById(1);
+    console.log(student);
   }
 }

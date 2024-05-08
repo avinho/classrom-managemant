@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Student } from 'src/app/models';
+import { StudentEntity } from '../interfaces/entities/student.entity';
 import { Repository } from './repository';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StudentsRepository extends Repository<Student> {
+export class StudentsRepository extends Repository<StudentEntity> {
   get tableName(): string {
     return 'Student';
   }
 
-  mapToDbFields(entity: Student) {
+  mapToDbFields({
+    id,
+    name,
+    birthdate,
+    class_id,
+    current_book_id,
+  }: StudentEntity) {
     return {
-      id: entity.id,
-      name: entity.name,
-      birthdate: entity.birthdate,
-      class_id: entity.class?.id,
-      current_book_id: entity.currentBook?.id,
+      id,
+      name,
+      birthdate,
+      class_id,
+      current_book_id,
     };
   }
 
   async getStudentsByClassId(id: number) {
     let students = (
       await this.db.query(`SELECT * FROM Student WHERE class_id=${id}`)
-    ).values as Student[];
+    ).values as StudentEntity[];
     return students;
   }
 }

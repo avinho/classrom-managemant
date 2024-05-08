@@ -41,7 +41,7 @@ import {
 } from '@ionic/angular/standalone';
 import { StudentProfileComponent } from 'src/app/components/student-profile/student-profile.component';
 import { StudentService } from 'src/app/services/student.service';
-import { Student } from '../../models';
+import { Student } from '../../interfaces/models/student.model';
 
 @Component({
   selector: 'app-students-page',
@@ -166,7 +166,7 @@ export class StudentsPage implements OnInit {
         month: 'numeric',
         day: 'numeric',
       }),
-      class: null,
+      currentClass: null,
       currentBook: null,
     };
 

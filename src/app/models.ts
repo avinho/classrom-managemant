@@ -1,3 +1,5 @@
+import { Student } from './interfaces/models/student.model';
+
 export interface Book {
   id?: number;
   name: string;
@@ -18,16 +20,6 @@ export interface Topic {
   done?: boolean;
   conclusion?: string | null;
   lesson_id?: number;
-}
-
-export interface Student {
-  id?: number;
-  name: string;
-  birthdate: string;
-  class: Class | null;
-  class_id?: number;
-  currentBook?: Book | null;
-  current_book_id?: number;
 }
 
 export interface Class {

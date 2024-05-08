@@ -34,9 +34,9 @@
             [button]="true"
             (click)="openProfile(student)"
             ><ion-label>{{ student.name }}</ion-label>
-            <ion-chip *ngIf="student.class">
+            <ion-chip *ngIf="student.currentClass">
               <ion-icon name="school"></ion-icon>
-              <ion-label>{{ student.class.name }}</ion-label>
+              <ion-label>{{ student.currentClass.name }}</ion-label>
             </ion-chip>
           </ion-item>
           }

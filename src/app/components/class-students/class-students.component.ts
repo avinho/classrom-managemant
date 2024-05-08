@@ -42,7 +42,8 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
 import { ClassService } from 'src/app/services/class.service';
 import { StudentService } from 'src/app/services/student.service';
-import { Book, Class, Student } from '../../models';
+import { Book, Class } from '../../models';
+import { Student } from '../../interfaces/models/student.model';
 import { StudentProfileComponent } from '../student-profile/student-profile.component';
 
 @Component({
@@ -133,14 +134,14 @@ export class ClassStudentsComponent implements OnInit {
 
   onAddStudents(e: Student[]) {
     e.forEach(async (value) => {
-      value.class = this.class!;
+      value.currentClass = this.class!;
       this.students?.push(value);
       this.selectedStudent = this.students![0];
       this.AllStudents?.map((student) => {
         this.students?.forEach((data) => {
           if (student.id === data.id) {
             student.currentBook = data.currentBook;
-            student.class = this.class!;
+            student.currentClass = this.class!;
           }
         });
       });
@@ -162,7 +163,7 @@ export class ClassStudentsComponent implements OnInit {
 
   async loadOthersStudents(classId: number) {
     return (await this.studentService.loadStudents()).filter((student) => {
-      return student.class?.id !== classId;
+      return student.currentClass?.id !== classId;
     });
   }
 
@@ -193,7 +194,8 @@ export class ClassStudentsComponent implements OnInit {
         month: 'numeric',
         day: 'numeric',
       }),
-      class: null,
+      currentBook: null,
+      currentClass: null,
     };
 
     await this.studentService.save(student);
