@@ -46,7 +46,7 @@
           <ng-template>
             <app-student-profile
               (closeModal)="dismissModal(modal)"
-              (deleteStudent)="deleteStudent(selectedStudent)"
+              (deleteStudent)="deleteStudent(selectedStudent.id!)"
               [student]="selectedStudent"
             ></app-student-profile
           ></ng-template>

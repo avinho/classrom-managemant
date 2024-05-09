@@ -26,11 +26,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { Book } from 'src/app/models';
+import { Book } from '../../interfaces/models/book.model';
 import { BookService } from 'src/app/services/book.service';
 import { LessonService } from 'src/app/services/lesson.service';
 import { TopicService } from 'src/app/services/topic.service';
-import { Lesson, Topic } from './../../models';
+import { Lesson } from '../../interfaces/models/lesson.model';
+import { Topic } from '../../interfaces/models/topic.model';
 
 @Component({
   selector: 'app-book-component',
@@ -116,6 +117,8 @@ export class BookComponent implements OnInit {
   async addTopic(lesson: Lesson) {
     let newTopic: Topic = {
       name: 'New Topic',
+      done: false,
+      conclusion: null,
       lesson_id: lesson.id,
     };
     await this.topicService.save(newTopic);

@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { LessonRepository } from '../repositories/lesson.repository';
 import { TopicService } from './topic.service';
-import { Lesson } from '../models';
+import { Lesson } from '../interfaces/models/lesson.model';
+import { LessonMapper } from '../mappers/lessonMapper';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,9 @@ export class LessonService {
 
   constructor() {}
 
-  async save(lesson: Lesson) {
+  async save(source: Lesson) {
+    const lesson = LessonMapper.toEntity(source);
     if (lesson.id) {
-      console.log(lesson);
       await this.lessonRepository.update(lesson.id, lesson);
     } else {
       await this.lessonRepository.add(lesson);
@@ -30,7 +31,9 @@ export class LessonService {
   }
 
   async loadLessons() {
-    const foundLessons = await this.lessonRepository.getAll();
+    const foundLessons = (await this.lessonRepository.getAll()).map(
+      LessonMapper.toModel
+    );
     let lessons: Lesson[] = [];
     for (const lesson of foundLessons) {
       lessons.push(await this.loadTopicsLesson(lesson));
@@ -39,7 +42,10 @@ export class LessonService {
   }
 
   async loadLessonsByBookId(id: number) {
-    const foundLessons = await this.lessonRepository.getLessonsByBookId(id);
+    const foundLessons = (
+      await this.lessonRepository.getLessonsByBookId(id)
+    ).map(LessonMapper.toModel);
+
     let lessons: Lesson[] = [];
     for (const lesson of foundLessons) {
       lessons.push(await this.loadTopicsLesson(lesson));
@@ -52,7 +58,7 @@ export class LessonService {
     if (!foudLesson) {
       return null;
     }
-    return await this.loadTopicsLesson(foudLesson);
+    return await this.loadTopicsLesson(LessonMapper.toModel(foudLesson));
   }
 
   private async loadTopicsLesson(lesson: Lesson): Promise<Lesson> {

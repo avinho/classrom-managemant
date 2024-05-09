@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StudentTopic } from '../models';
+import { StudentTopic } from '../interfaces/entities/studentTopic.entity';
 import { Repository } from './repository';
 
 @Injectable({
@@ -11,13 +11,7 @@ export class StudentTopicRepository extends Repository<StudentTopic> {
   }
 
   mapToDbFields(entity: StudentTopic) {
-    return {
-      id: entity.id,
-      student_id: entity.student_id,
-      topic_id: entity.topic_id,
-      done: entity.done,
-      conclusion: entity.conclusion,
-    };
+    return entity;
   }
 
   async getTopicsByStudentId(id: number) {

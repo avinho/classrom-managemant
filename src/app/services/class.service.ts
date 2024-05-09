@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ClassesRepository } from '../repositories/classes.repository';
-import { Class } from '../models';
+import { ClassMapper } from '../mappers/classMapper';
+import { Class } from '../interfaces/models/class.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,16 +9,17 @@ import { Class } from '../models';
 export class ClassService {
   private readonly classRepository = inject(ClassesRepository);
 
-  async save(_class: Class) {
-    if (_class.id) {
-      await this.classRepository.update(_class.id, _class);
+  async save(source: Class) {
+    const cls = ClassMapper.toEntity(source);
+    if (cls.id) {
+      await this.classRepository.update(cls.id, cls);
     } else {
-      await this.classRepository.add(_class);
+      await this.classRepository.add(cls);
     }
   }
 
-  async delete(_class: Class) {
-    await this.classRepository.remove(_class.id!);
+  async delete(classId: number) {
+    await this.classRepository.remove(classId);
   }
 
   async exists(id: number) {
@@ -25,14 +27,14 @@ export class ClassService {
   }
 
   async loadClasses() {
-    return await this.classRepository.getAll();
+    return (await this.classRepository.getAll()).map(ClassMapper.toModel);
   }
 
   async loadClassById(id: number) {
-    let foundClass = await this.classRepository.loadClassById(id);
+    let foundClass = await this.classRepository.getById(id);
     if (!foundClass) {
       return null;
     }
-    return foundClass;
+    return ClassMapper.toModel(foundClass);
   }
 }

@@ -21,7 +21,7 @@ import {
 } from '@ionic/angular/standalone';
 import { BookComponent } from 'src/app/components/book-component/book-component.component';
 import { BookService } from 'src/app/services/book.service';
-import { Book } from '../../models';
+import { Book } from '../../interfaces/models/book.model';
 
 @Component({
   selector: 'app-books',
@@ -104,6 +104,7 @@ export class BooksPage {
   async addBook() {
     let newBook: Book = {
       name: 'Novo Livro',
+      lessons: [],
     };
 
     await this.bookService.save(newBook);

@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Book } from 'src/app/models';
 import { Repository } from './repository';
+import { BookEntity } from '../interfaces/entities/book.entity';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BookRepository extends Repository<Book> {
+export class BookRepository extends Repository<BookEntity> {
   get tableName(): string {
     return 'Book';
   }
 
-  mapToDbFields(entity: Book): any {
-    return {
-      id: entity.id,
-      name: entity.name,
-    };
+  mapToDbFields(entity: BookEntity): any {
+    return entity;
   }
 }

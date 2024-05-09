@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { StudentTopic } from '../models';
+import { StudentTopic } from '../interfaces/entities/studentTopic.entity';
 import { StudentTopicRepository } from '../repositories/studentTopicRepository';
 import { StudentsRepository } from '../repositories/students.repository';
 import { TopicService } from './topic.service';

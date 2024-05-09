@@ -1,4 +1,3 @@
-import { Book } from './book.model';
 import { Topic } from './topic.model';
 
 export interface Lesson {

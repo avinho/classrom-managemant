@@ -1,13 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  Component,
-  EnvironmentInjector,
-  inject,
-} from '@angular/core';
+import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { StorageService } from './database/storage.service';
-import { Lesson, Topic } from './models';
 import { BookService } from './services/book.service';
 import { ClassService } from './services/class.service';
 import { LessonService } from './services/lesson.service';
@@ -18,7 +12,6 @@ import { TopicService } from './services/topic.service';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [IonicModule, CommonModule],
 })
 export class AppComponent {
@@ -31,7 +24,7 @@ export class AppComponent {
 
   private db = inject(StorageService).retrieveDb();
   constructor() {
-    this.init();
+    //this.init();
   }
 
   async init() {

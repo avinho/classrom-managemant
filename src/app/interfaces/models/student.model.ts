@@ -1,4 +1,5 @@
-import { Class, Book } from 'src/app/models';
+import { Book } from 'src/app/interfaces/models/book.model';
+import { Class } from 'src/app/interfaces/models/class.model';
 
 export interface Student {
   id?: number;

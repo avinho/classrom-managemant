@@ -10,20 +10,8 @@ export class StudentsRepository extends Repository<StudentEntity> {
     return 'Student';
   }
 
-  mapToDbFields({
-    id,
-    name,
-    birthdate,
-    class_id,
-    current_book_id,
-  }: StudentEntity) {
-    return {
-      id,
-      name,
-      birthdate,
-      class_id,
-      current_book_id,
-    };
+  mapToDbFields(entity: StudentEntity) {
+    return entity;
   }
 
   async getStudentsByClassId(id: number) {

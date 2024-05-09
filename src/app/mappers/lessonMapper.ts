@@ -1,5 +1,5 @@
-import { Lesson } from '../models/lesson.model';
-import { LessonEntity } from '../entities/lesson.entity';
+import { Lesson } from '../interfaces/models/lesson.model';
+import { LessonEntity } from '../interfaces/entities/lesson.entity';
 
 export class LessonMapper {
   static toModel({ id, name, book_id }: LessonEntity): Lesson {

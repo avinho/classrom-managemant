@@ -31,7 +31,8 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { ClassStudentsComponent } from '../../components/class-students/class-students.component';
-import { Book, Class } from '../../models';
+import { Book } from '../../interfaces/models/book.model';
+import { Class } from '../../interfaces/models/class.model';
 import { Student } from '../../interfaces/models/student.model';
 import { ClassService } from './../../services/class.service';
 import { StudentService } from './../../services/student.service';
@@ -102,7 +103,7 @@ export class ClassesPage {
 
   async deleteClass(classItem: Class) {
     console.log('classItem', classItem);
-    await this.classService.delete(classItem);
+    await this.classService.delete(classItem.id!);
     await this.loadClasses();
   }
 
@@ -110,7 +111,6 @@ export class ClassesPage {
     if (!name) return;
     const newClass: Class = {
       name: name,
-      students: [],
     };
     await this.classService.save(newClass);
     await this.loadClasses();

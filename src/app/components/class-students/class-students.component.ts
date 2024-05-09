@@ -42,7 +42,8 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { StudentDataComponent } from 'src/app/components/student-data/student-data.component';
 import { ClassService } from 'src/app/services/class.service';
 import { StudentService } from 'src/app/services/student.service';
-import { Book, Class } from '../../models';
+import { Book } from '../../interfaces/models/book.model';
+import { Class } from '../../interfaces/models/class.model';
 import { Student } from '../../interfaces/models/student.model';
 import { StudentProfileComponent } from '../student-profile/student-profile.component';
 

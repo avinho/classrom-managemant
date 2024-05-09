@@ -145,8 +145,8 @@ export class StudentsPage implements OnInit {
     await this.loadStudents();
   }
 
-  async deleteStudent(student: Student) {
-    await this.studentService.delete(student);
+  async deleteStudent(studentId: number) {
+    await this.studentService.delete(studentId);
     await this.loadStudents();
   }
 

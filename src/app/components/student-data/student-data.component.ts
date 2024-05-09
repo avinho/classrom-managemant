@@ -36,7 +36,10 @@ import { BookService } from 'src/app/services/book.service';
 import { ClassService } from 'src/app/services/class.service';
 import { StudentService } from 'src/app/services/student.service';
 import { Student } from 'src/app/interfaces/models/student.model';
-import { Book, Class, Lesson, Topic } from '../../models';
+import { Class } from '../../interfaces/models/class.model';
+import { Book } from '../../interfaces/models/book.model';
+import { Topic } from '../../interfaces/models/topic.model';
+import { Lesson } from 'src/app/interfaces/models/lesson.model';
 import { StudentTopicService } from './../../services/student-topic.service';
 
 @Component({

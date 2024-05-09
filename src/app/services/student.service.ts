@@ -4,7 +4,7 @@ import { StudentsRepository } from '../repositories/students.repository';
 import { BookService } from './book.service';
 import { ClassService } from './class.service';
 import { Student } from '../interfaces/models/student.model';
-import { StudentMapper } from '../interfaces/mappers/studentMapper';
+import { StudentMapper } from '../mappers/studentMapper';
 import { StudentEntity } from '../interfaces/entities/student.entity';
 
 @Injectable({
@@ -25,8 +25,8 @@ export class StudentService {
     }
   }
 
-  async delete(student: Student) {
-    await this.studentRepository.remove(student.id!);
+  async delete(studentId: number) {
+    await this.studentRepository.remove(studentId);
   }
 
   async exists(id: number) {
@@ -87,7 +87,6 @@ export class StudentService {
 
     const std = StudentMapper.toModel(student);
     std.currentClass = studentClass;
-    console.log(std);
     const topicMap = new Map(studentTopics.map((topic) => [topic.id, topic]));
     studentBook?.lessons?.forEach((lesson) => {
       lesson.topics?.forEach((topic) => {
